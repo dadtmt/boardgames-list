@@ -3,7 +3,7 @@ import {shallow} from 'enzyme';
 import {expect} from 'chai';
 import BoardGame from './BoardGame';
 
-const mockItem = () => ({
+export const mockItem = () => ({
   name: 'Dungeon'
 });
 
