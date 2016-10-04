@@ -1,8 +1,6 @@
-import React from 'react';
+import {connect} from 'react-redux';
 import BoardGameList from '../components/BoardGameList';
 
-const BoardGameListContainer = () => (
-  <BoardGameList />
-);
 
-export default BoardGameListContainer;
+export default connect(BoardGameList);
+export {BoardGameList as PureBoardGameListContainer};

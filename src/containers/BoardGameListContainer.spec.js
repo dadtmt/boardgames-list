@@ -1,12 +1,15 @@
 import React from 'react';
 import {shallow} from 'enzyme';
 import {expect} from 'chai';
-import BoardGameListContainer from './BoardGameListContainer';
+import {PureBoardGameListContainer} from './BoardGameListContainer';
 import BoardGameList from '../components/BoardGameList';
 
+// see when it comes to test redux connect
+
 describe('<BoardGameListContainer />', () => {
-  it('should contain <BoardGameList />', () => {
-    const wrapper = shallow(<BoardGameListContainer />);
-    expect(wrapper.find(BoardGameList)).to.be.length(1);
+  it('should renders same as <BoardGameList />', () => {
+    const wrapperContainer = shallow(<PureBoardGameListContainer items={[]} />);
+    const wrapper = shallow(<BoardGameList items={[]} />);
+    expect(wrapperContainer.html()).to.equals(wrapper.html());
   });
 });
