@@ -3,17 +3,25 @@ import {shallow} from 'enzyme';
 import {expect} from 'chai';
 import BoardGameList from './BoardGameList';
 import BoardGame from './BoardGame';
-import {mockItem} from './BoardGame.spec';
+
+const mockItemList = () => [
+  {
+    name: 'Earth Reborn'
+  },
+  {
+    name: 'Dungeon Twister'
+  }
+];
 
 describe('<BoardGameList />', () => {
   it('renders the entire list of items with <BoardGame>', () => {
-    const items = [mockItem(), mockItem()];
+    const items = mockItemList();
     const wrapper = shallow(<BoardGameList items = {items}/>);
     const boardGameWrappers = wrapper.find(BoardGame);
     expect(boardGameWrappers).to.have.length(items.length);
   });
   it('renders each <BoardGame> with a unique key>', () => {
-    const items = [mockItem(), mockItem()];
+    const items = mockItemList();
     const wrapper = shallow(<BoardGameList items = {items}/>);
     const boardGameWrappers = wrapper.find(BoardGame);
     let seen = new Set();
