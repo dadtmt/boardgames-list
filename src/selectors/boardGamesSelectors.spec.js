@@ -32,13 +32,14 @@ describe('boardGamesArraySelector', () => {
         }
       }
     };
-    expect(boardGamesArraySelector(fakeState)).to.eql([
+    const expected = [
       {
         name: 'Dungeon Twister'
       },
       {
         name: 'Earth Reborn'
       }
-    ]);
+    ];
+    expect(boardGamesArraySelector(fakeState)).to.eql(expected);
   });
 });
