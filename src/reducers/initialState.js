@@ -1,5 +1,12 @@
 export default {
-  boardGames: [],
+  boardGames: {
+    1: {
+      name: 'Dungeon Twister'
+    },
+    2: {
+      name: 'Earth Reborn'
+    }
+  },
   fuelSavings: {
     newMpg: '',
     tradeMpg: '',

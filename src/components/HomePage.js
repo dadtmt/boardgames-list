@@ -1,11 +1,12 @@
 import React from 'react';
 import {Link} from 'react-router';
+import BoardGameList from '../containers/BoardGameListContainer';
 
 const HomePage = () => {
   return (
     <div>
-      <h1>React Slingshot</h1>
-
+      <h1>BoardGame List</h1>
+      <BoardGameList />
       <h2>Get Started</h2>
       <ol>
         <li>Review the <Link to="fuel-savings">demo app</Link></li>
