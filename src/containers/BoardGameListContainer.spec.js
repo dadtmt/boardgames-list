@@ -13,14 +13,25 @@ describe('<BoardGameListContainer />', () => {
 });
 
 describe('BoardGameListContainer mapStateToProps', () => {
-  it('should return {items: state.boardGames}', () => {
+  it('should return {items: array of state.boardGames}', () => {
     const fakeState = {
-      boardGames: [{
+      boardGames: {
+        1: {
+          name: 'Dungeon Twister'
+        },
+        2: {
+          name: 'Earth Reborn'
+        }
+      }
+    };
+    const expected = [
+      {
         name: 'Dungeon Twister'
       },
       {
         name: 'Earth Reborn'
-      }]};
-    expect(mapStateToProps(fakeState).items).to.eql(fakeState.boardGames);
+      }
+    ];
+    expect(mapStateToProps(fakeState).items).to.eql(expected);
   });
 });
