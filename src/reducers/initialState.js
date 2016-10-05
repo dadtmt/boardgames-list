@@ -1,4 +1,5 @@
 export default {
+  boardGames: [],
   fuelSavings: {
     newMpg: '',
     tradeMpg: '',
