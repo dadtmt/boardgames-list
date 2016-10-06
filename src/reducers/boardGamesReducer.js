@@ -1,7 +1,10 @@
 import initialState from './initialState';
+import createReducer from './createReducer';
+import {REMOVE_BOARDGAME} from '../constants/actionTypes';
+import {deleteItemFromStateByAction} from './itemsUtils';
 
-export default function boardGamesReducer(state = initialState.boardGames, action){
-  switch (action.type) {
-    default: return state;
-  }
-}
+const handlers = {
+  [REMOVE_BOARDGAME]: deleteItemFromStateByAction
+};
+
+export default createReducer(initialState.boardGames, handlers);
