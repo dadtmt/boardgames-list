@@ -4,7 +4,8 @@ import BoardGame from './BoardGame';
 const BoardGameList = ({items, removeItem}) => (
   <div>
     {items.map((item, key) => <BoardGame
-      key={key} {...item}
+      key={key}
+      {...item}
       onRemove={() => removeItem(item.id)}
       />
     )}
