@@ -4,14 +4,14 @@ import {expect} from 'chai';
 import sinon from 'sinon';
 import BoardGame from './BoardGame';
 
-export const mockItem = () => ({
+const item = {
   name: 'Dungeon Twister'
-});
+};
+const onRemove = sinon.spy();
+const wrapper = shallow(<BoardGame {...item} onRemove={onRemove} />);
 
 describe('<BoardGame />', () => {
   it('should have a h4 containing game name', () => {
-    const item = mockItem();
-    const wrapper = shallow(<BoardGame {...item} />);
     const actual = wrapper.find('h4').text();
     const expected = item.name;
 
@@ -21,9 +21,6 @@ describe('<BoardGame />', () => {
 
 describe('<BoardGame />', () => {
   it('should have a remove button that call onRemove function', () => {
-    const item = mockItem();
-    const onRemove = sinon.spy();
-    const wrapper = shallow(<BoardGame {...item} onRemove={onRemove} />);
     const removeButtonWrapper = wrapper.find('button');
     const expected = 'remove';
 
