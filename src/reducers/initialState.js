@@ -1,10 +1,12 @@
 export default {
   boardGames: {
     1: {
-      name: 'Dungeon Twister'
+      name: 'Dungeon Twister',
+      id: 1
     },
     2: {
-      name: 'Earth Reborn'
+      name: 'Earth Reborn',
+      id: 2
     }
   },
   fuelSavings: {
