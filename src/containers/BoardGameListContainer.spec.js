@@ -3,9 +3,11 @@ import {shallow} from 'enzyme';
 import {expect} from 'chai';
 import {
   PureBoardGameListContainer,
-   mapStateToProps
+   mapStateToProps,
+   mapDispatchToProps
  } from './BoardGameListContainer';
 import BoardGameList from '../components/BoardGameList';
+import {removeBoardGame} from '../actions/boardGamesActions';
 
 describe('<BoardGameListContainer />', () => {
   it('should renders same as <BoardGameList />', () => {
@@ -38,5 +40,14 @@ describe('BoardGameListContainer mapStateToProps', () => {
       }
     ];
     expect(mapStateToProps(fakeState).items).to.eql(expected);
+  });
+});
+
+describe('BoardGameListContainer mapDispatchToProps', () => {
+  it('should return {removeItem: a function that dispatch removeBoardGame}', () => {
+    const fakeDispatch = (someFunction) => someFunction;
+
+    expect(mapDispatchToProps(fakeDispatch).removeItem(1))
+    .to.eql(removeBoardGame(1));
   });
 });
