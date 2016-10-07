@@ -48,6 +48,155 @@ describe('getIdAsStringFromActionPayload', () => {
   })
 })
 
+describe('getNextId', () => {
+  it('should return nextId', () => {
+    const fakeState = {
+      1: {
+        name: 'Dungeon Twister'
+      },
+      2: {
+        name: 'Earth Reborn'
+      },
+      nextId: 3
+    }
+    expect(ItemsUtils.getNextId(fakeState)).to.equal(3)
+  })
+})
+
+describe('setNextId', () => {
+  it('should set nextId prop', () => {
+    const fakeState = {
+      nextId:4
+    }
+    const expected = {
+      nextId:10
+    }
+    expect(ItemsUtils.setNextId(10, fakeState)).to.eql(expected)
+  })
+})
+
+describe('incNextId', () => {
+  it('should increments nextId prop', () => {
+    const fakeState = {
+      1: {
+        name: 'Dungeon Twister'
+      },
+      nextId:4
+    }
+    const expected = {
+      1: {
+        name: 'Dungeon Twister'
+      },
+      nextId:5
+    }
+    expect(ItemsUtils.incNextId(fakeState)).to.eql(expected)
+  })
+})
+
+describe('addItemById', () => {
+  it('should add an item to id and set the item id', () => {
+    const item = {
+      name: 'Blood Bowl'
+    }
+    const fakeState = {
+      1: {
+        name: 'Dungeon Twister',
+        id: 1
+      },
+      2: {
+        name: 'Earth Reborn',
+        id: 2
+      }
+    }
+    const expected = {
+      1: {
+        name: 'Dungeon Twister',
+        id: 1
+      },
+      2: {
+        name: 'Earth Reborn',
+        id: 2
+      },
+      3: {
+        name: 'Blood Bowl',
+        id: 3
+      }
+    }
+    expect(ItemsUtils.addItemById(3, item, fakeState)).to.eql(expected)
+  })
+})
+
+describe('addItemToNextIdAndIncNextId', () => {
+  it('should add an item with nextId key and increments nextId', () => {
+    const item = {
+      name: 'Blood Bowl'
+    }
+    const fakeState = {
+      1: {
+        name: 'Dungeon Twister',
+        id: 1
+      },
+      2: {
+        name: 'Earth Reborn',
+        id: 2
+      },
+      nextId: 3
+    }
+    const expected = {
+      1: {
+        name: 'Dungeon Twister',
+        id: 1
+      },
+      2: {
+        name: 'Earth Reborn',
+        id: 2
+      },
+      3: {
+        name: 'Blood Bowl',
+        id: 3
+      },
+      nextId: 4
+    }
+    expect(ItemsUtils.addItemToNextIdAndIncNextId(item, fakeState)).to.eql(expected)
+  })
+})
+
+describe('addItemToStateByAction', () => {
+  it('should add action.payload as item with id: nextId and increments nextId', () => {
+    const action = { payload: {
+      name: 'Blood Bowl'
+    }}
+    const fakeState = {
+      1: {
+        name: 'Dungeon Twister',
+        id: 1
+      },
+      2: {
+        name: 'Earth Reborn',
+        id: 2
+      },
+      nextId: 3
+    }
+    const expected = {
+      1: {
+        name: 'Dungeon Twister',
+        id: 1
+      },
+      2: {
+        name: 'Earth Reborn',
+        id: 2
+      },
+      3: {
+        name: 'Blood Bowl',
+        id: 3
+      },
+      nextId: 4
+    }
+    expect(ItemsUtils.addItemToStateByAction(fakeState, action)).eql(expected)
+  })
+})
+
+
 describe('deleteItemFromStateByAction', () => {
   it('should delete item with action.payload.id', () => {
     const action = { payload: {
