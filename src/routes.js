@@ -8,10 +8,10 @@ import AboutPage from './components/AboutPage.js'
 import NotFoundPage from './components/NotFoundPage.js'
 
 export default (
-  <Route path="/" component={App}>
+  <Route path='/' component={App}>
     <IndexRoute component={HomePage}/>
-    <Route path="fuel-savings" component={FuelSavingsPage}/>
-    <Route path="about" component={AboutPage}/>
-    <Route path="*" component={NotFoundPage}/>
+    <Route path='fuel-savings' component={FuelSavingsPage}/>
+    <Route path='about' component={AboutPage}/>
+    <Route path='*' component={NotFoundPage}/>
   </Route>
 )

@@ -19,7 +19,7 @@ const FuelSavingsResults = ({savings}) => {
     <table>
       <tbody>
       <tr>
-        <td className="fuel-savings-label">{resultLabel}</td>
+        <td className='fuel-savings-label'>{resultLabel}</td>
         <td>
           <table>
             <tbody>
