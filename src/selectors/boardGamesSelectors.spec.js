@@ -1,8 +1,8 @@
-import { expect } from 'chai';
+import { expect } from 'chai'
 import {
   allBoardGamesSelector,
   boardGamesArraySelector
-} from './boardGamesSelectors';
+} from './boardGamesSelectors'
 
 describe('allBoardGamesSelector', () => {
   it('should return boardGames from state', () => {
@@ -15,10 +15,10 @@ describe('allBoardGamesSelector', () => {
           name: 'Earth Reborn'
         }
       }
-    };
-    expect(allBoardGamesSelector(fakeState)).to.eql(fakeState.boardGames);
-  });
-});
+    }
+    expect(allBoardGamesSelector(fakeState)).to.eql(fakeState.boardGames)
+  })
+})
 
 describe('boardGamesArraySelector', () => {
   it('should return an array with boardgames from state', () => {
@@ -31,7 +31,7 @@ describe('boardGamesArraySelector', () => {
           name: 'Earth Reborn'
         }
       }
-    };
+    }
     const expected = [
       {
         name: 'Dungeon Twister'
@@ -39,7 +39,7 @@ describe('boardGamesArraySelector', () => {
       {
         name: 'Earth Reborn'
       }
-    ];
-    expect(boardGamesArraySelector(fakeState)).to.eql(expected);
-  });
-});
+    ]
+    expect(boardGamesArraySelector(fakeState)).to.eql(expected)
+  })
+})

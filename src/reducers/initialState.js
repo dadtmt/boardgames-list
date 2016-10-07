@@ -25,4 +25,4 @@ export default {
       threeYear: 0
     }
   }
-};
+}

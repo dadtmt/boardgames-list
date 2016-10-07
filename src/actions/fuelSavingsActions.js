@@ -1,6 +1,6 @@
-import * as types from '../constants/actionTypes';
+import * as types from '../constants/actionTypes'
 
-import dateHelper from '../utils/dateHelper';
+import dateHelper from '../utils/dateHelper'
 
 // example of a thunk using the redux-thunk middleware
 export function saveFuelSavings(settings) {
@@ -11,8 +11,8 @@ export function saveFuelSavings(settings) {
       type: types.SAVE_FUEL_SAVINGS,
       dateModified: dateHelper.getFormattedDateTime(),
       settings
-    });
-  };
+    })
+  }
 }
 
 export function calculateFuelSavings(settings, fieldName, value) {
@@ -22,5 +22,5 @@ export function calculateFuelSavings(settings, fieldName, value) {
     settings,
     fieldName,
     value
-  };
+  }
 }

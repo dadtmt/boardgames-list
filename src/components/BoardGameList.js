@@ -1,5 +1,5 @@
-import React, {PropTypes} from 'react';
-import BoardGame from './BoardGame';
+import React, {PropTypes} from 'react'
+import BoardGame from './BoardGame'
 
 const BoardGameList = ({items, removeItem}) => (
   <div>
@@ -10,11 +10,11 @@ const BoardGameList = ({items, removeItem}) => (
       />
     )}
   </div>
-);
+)
 
 BoardGameList.propTypes = {
   items: PropTypes.array.isRequired,
   removeItem: PropTypes.func.isRequired
-};
+}
 
-export default BoardGameList;
+export default BoardGameList

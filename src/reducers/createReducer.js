@@ -1,5 +1,5 @@
-import R from 'ramda';
-import {getActionType} from './itemsUtils';
+import R from 'ramda'
+import {getActionType} from './itemsUtils'
 
 export default function createReducer(initialState, handlers) {
   return function reducer(state = initialState, action) {
@@ -7,6 +7,6 @@ export default function createReducer(initialState, handlers) {
       R.identity,
       getActionType(action),
       handlers
-    )(state, action);
-  };
+    )(state, action)
+  }
 }
