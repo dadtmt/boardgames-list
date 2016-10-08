@@ -4,38 +4,45 @@ export const getActionType = R.prop('type')
 
 export const getActionPayload = R.prop('payload')
 
-export const getIdFromActionPayload = R.pipe(getActionPayload, R.prop('id'))
+export const getIdFromActionPayload = R.path(['payload', 'id'])
 
-export const getIdAsStringFromActionPayload = R.pipe(
-  getIdFromActionPayload,
-  String
+export const lensItems = R.lensProp('items')
+
+export const lensNextId = R.lensProp('nextId')
+
+export const addItemToNextId = R.curry(
+  (item, state) => R.pipe(
+    R.over(lensItems, R.append(R.assoc('id', R.view(lensNextId, state), item))),
+    R.over(lensNextId, R.inc)
+  )(state)
 )
 
-export const getNextId = R.prop('nextId')
+export const getItemById = (id, state) => R.pipe(
+    R.view(lensItems),
+    R.find(R.propEq('id', id))
+)(state)
 
-export const setNextId = (nextId, state) => R.assoc('nextId', nextId, state)
+export const getItemByName = (name, state) => R.pipe(
+  R.view(lensItems),
+  R.find(R.propEq('name', name))
+)(state)
 
-export const incNextId = (state) => setNextId(R.inc(getNextId(state)), state)
+export const isItemNameNew = R.curry(
+  (item, state) => R.isNil(getItemByName(R.prop('name', item), state))
+)
 
-export const addItemById = (id, item, state) =>
-  R.assoc(id, R.assoc('id', id, item), state)
-
-export const convertItemsObjectToArray = (state) =>
-  R.map(R.prop(R.__, state), R.keys(R.filter(R.has('id'), state)))
-
-export const findByItemName = (name, state) =>
-  R.find(R.propEq('name', name), convertItemsObjectToArray(state))
-
-export const addItemToNextIdAndIncNextId = (item, state) =>
-// should read about ramda lenses, decorators
+export const addItemIfNewName = (item, state) =>
   R.ifElse(
-    R.isNil(findByItemName(R.prop('name',item),state)),
-    state,
-    incNextId(addItemById(getNextId(state), item, state))
-  )
+    isItemNameNew(item),
+    addItemToNextId(item),
+    R.identity
+  )(state)
+
+export const deleteItemById = (id, state) =>
+  R.over(lensItems, R.without([getItemById(id, state)]))(state)
 
 export const addItemToStateByAction = (state, action) =>
-  addItemToNextIdAndIncNextId(getActionPayload(action),state)
+  addItemIfNewName(getActionPayload(action),state)
 
 export const deleteItemFromStateByAction = (state, action) =>
-  R.omit(getIdAsStringFromActionPayload(action), state)
+  deleteItemById(getIdFromActionPayload(action), state)
