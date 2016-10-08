@@ -1,11 +1,11 @@
 import {connect} from 'react-redux'
 import BoardGameList from '../components/BoardGameList'
-import {boardGamesArraySelector} from '../selectors/boardGamesSelectors'
+import {sortedBoardGamesArraySelector} from '../selectors/boardGamesSelectors'
 import {removeBoardGame} from '../actions/boardGamesActions'
 
 export function mapStateToProps(state){
   return {
-    items: boardGamesArraySelector(state)
+    items: sortedBoardGamesArraySelector(state)
   }
 }
 

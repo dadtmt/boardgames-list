@@ -20,22 +20,30 @@ describe('<BoardGameListContainer />', () => {
 })
 
 describe('BoardGameListContainer mapStateToProps', () => {
-  it('should return {items: array of state.boardGames}', () => {
+  it('should return {items: sorted by name array of items}', () => {
     const fakeState = {
       boardGames: {
-        1: {
-          name: 'Dungeon Twister'
-        },
-        2: {
-          name: 'Earth Reborn'
-        }
+        items: [
+          {
+            id: 1,
+            name: 'Earth Reborn'
+          },
+          {
+            id: 2,
+            name: 'Dungeon Twister'
+          }
+        ],
+        nextId: 3
       }
     }
+
     const expected = [
       {
+        id: 2,
         name: 'Dungeon Twister'
       },
       {
+        id: 1,
         name: 'Earth Reborn'
       }
     ]
