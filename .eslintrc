@@ -30,7 +30,7 @@
     "no-debugger": 1,
     "no-var": 1,
     "semi": ["error", "never"],
-    "no-trailing-spaces": 0,
+    "no-trailing-spaces": ["error"],
     "eol-last": 0,
     "no-underscore-dangle": 0,
     "no-alert": 0,
