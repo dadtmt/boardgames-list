@@ -20,8 +20,19 @@ export const incNextId = (state) => setNextId(R.inc(getNextId(state)), state)
 export const addItemById = (id, item, state) =>
   R.assoc(id, R.assoc('id', id, item), state)
 
+export const convertItemsObjectToArray = (state) =>
+  R.map(R.prop(R.__, state), R.keys(R.filter(R.has('id'), state)))
+
+export const findByItemName = (name, state) =>
+  R.find(R.propEq('name', name), convertItemsObjectToArray(state))
+
 export const addItemToNextIdAndIncNextId = (item, state) =>
-  incNextId(addItemById(getNextId(state), item, state))
+// should read about ramda lenses, decorators
+  R.ifElse(
+    R.isNil(findByItemName(R.prop('name',item),state)),
+    state,
+    incNextId(addItemById(getNextId(state), item, state))
+  )
 
 export const addItemToStateByAction = (state, action) =>
   addItemToNextIdAndIncNextId(getActionPayload(action),state)
