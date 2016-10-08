@@ -1,13 +1,16 @@
 export default {
   boardGames: {
-    1: {
-      name: 'Dungeon Twister',
-      id: 1
-    },
-    2: {
-      name: 'Earth Reborn',
-      id: 2
-    }
+    items: [
+      {
+        id: 1,
+        name: 'Earth Reborn'
+      },
+      {
+        id: 2,
+        name: 'Dungeon Twister'
+      }
+    ],
+    nextId: 3
   },
   fuelSavings: {
     newMpg: '',
