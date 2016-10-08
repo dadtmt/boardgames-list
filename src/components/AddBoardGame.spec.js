@@ -2,11 +2,11 @@ import React from 'react'
 import {shallow} from 'enzyme'
 import {expect} from 'chai'
 import sinon from 'sinon'
-import {PureAddBoardGameForm as AddBoardGameForm} from './AddBoardGameForm'
+import {PureAddBoardGame as AddBoardGame} from './AddBoardGame'
 
-describe('<AddBoardGameForm />',() => {
+describe('<AddBoardGame />',() => {
   const fakeSubmit = sinon.spy()
-  const wrapper = shallow(<AddBoardGameForm handleSubmit={fakeSubmit}/>)
+  const wrapper = shallow(<AddBoardGame handleSubmit={fakeSubmit}/>)
 
   it('should have a <form /> with onSubmit function', () => {
     const formWrapper = wrapper.find('form')
