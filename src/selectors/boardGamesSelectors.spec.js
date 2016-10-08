@@ -1,45 +1,57 @@
 import { expect } from 'chai'
 import {
   allBoardGamesSelector,
-  boardGamesArraySelector
+  sortedBoardGamesArraySelector
 } from './boardGamesSelectors'
 
 describe('allBoardGamesSelector', () => {
-  it('should return boardGames from state', () => {
+  it('should return boardGames state slice from state', () => {
     const fakeState = {
       boardGames: {
-        1: {
-          name: 'Dungeon Twister'
-        },
-        2: {
-          name: 'Earth Reborn'
-        }
+        items: [
+          {
+            id: 1,
+            name: 'Earth Reborn'
+          },
+          {
+            id: 2,
+            name: 'Dungeon Twister'
+          }
+        ],
+        nextId: 3
       }
     }
     expect(allBoardGamesSelector(fakeState)).to.eql(fakeState.boardGames)
   })
 })
 
-describe('boardGamesArraySelector', () => {
+describe('sortedBoardGamesArraySelector', () => {
   it('should return an array with boardgames from state', () => {
     const fakeState = {
       boardGames: {
-        1: {
-          name: 'Dungeon Twister'
-        },
-        2: {
-          name: 'Earth Reborn'
-        }
+        items: [
+          {
+            id: 1,
+            name: 'Earth Reborn'
+          },
+          {
+            id: 2,
+            name: 'Dungeon Twister'
+          }
+        ],
+        nextId: 3
       }
     }
     const expected = [
       {
+        id: 2,
         name: 'Dungeon Twister'
       },
       {
+        id: 1,
         name: 'Earth Reborn'
       }
     ]
-    expect(boardGamesArraySelector(fakeState)).to.eql(expected)
+    expect(sortedBoardGamesArraySelector(fakeState)).to.eql(expected)
   })
 })

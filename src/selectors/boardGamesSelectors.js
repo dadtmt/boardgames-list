@@ -1,9 +1,11 @@
-import {prop, map, keys, __} from 'ramda'
+
+import R from 'ramda'
 import {createSelector} from 'reselect'
+import {getItemsSortByName} from '../reducers/itemsUtils'
 
-export const allBoardGamesSelector = prop('boardGames')
+export const allBoardGamesSelector = R.prop('boardGames')
 
-export const boardGamesArraySelector = createSelector(
+export const sortedBoardGamesArraySelector = createSelector(
   allBoardGamesSelector,
-  (state) => map(prop(__, state), keys(state))
+  getItemsSortByName
 )

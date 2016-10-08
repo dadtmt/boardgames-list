@@ -27,6 +27,11 @@ export const getItemByName = (name, state) => R.pipe(
   R.find(R.propEq('name', name))
 )(state)
 
+export const getItemsSortByName = R.pipe(
+    R.view(lensItems),
+    R.sortBy(R.compose(R.toLower, R.prop('name')))
+  )
+
 export const isItemNameNew = R.curry(
   (item, state) => R.isNil(getItemByName(R.prop('name', item), state))
 )

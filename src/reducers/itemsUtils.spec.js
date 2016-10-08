@@ -120,6 +120,22 @@ describe('getItemByName', () => {
   })
 })
 
+describe('getItemsSortByName', () => {
+  it('should return items sorted by name', () => {
+    const expected = [
+      {
+        id: 2,
+        name: 'Dungeon Twister'
+      },
+      {
+        id: 1,
+        name: 'Earth Reborn'
+      }
+    ]
+    expect(ItemsUtils.getItemsSortByName(fakeState)).to.eql(expected)
+  })
+})
+
 describe('isItemNameNew', () => {
   it('should return true if an item name in not in state', () => {
     const itemWithNewName = {
