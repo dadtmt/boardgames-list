@@ -1,0 +1,16 @@
+import {connect} from 'react-redux'
+import TEMPLATE from '../components/TEMPLATE'
+import {} from '../actions/boardGamesActions'
+
+export function mapStateToProps(state){
+  return {
+  }
+}
+
+export function mapDispatchToProps(dispatch){
+  return {
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TEMPLATE)
+export {TEMPLATE as PureTEMPLATEContainer}
