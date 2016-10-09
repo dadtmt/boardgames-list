@@ -22,23 +22,34 @@ export const getItemById = (id, state) => R.pipe(
     R.find(R.propEq('id', id))
 )(state)
 
-export const getItemByName = (name, state) => R.pipe(
+export const getItemByName = R.curry((name, state) => R.pipe(
   R.view(lensItems),
   R.find(R.propEq('name', name))
-)(state)
+)(state))
 
 export const getItemsSortByName = R.pipe(
     R.view(lensItems),
     R.sortBy(R.compose(R.toLower, R.prop('name')))
   )
 
-export const isItemNameNew = R.curry(
-  (item, state) => R.isNil(getItemByName(R.prop('name', item), state))
+export const isNameNew = R.curry(
+  (name, state) => R.isNil(getItemByName(name, state))
 )
 
-export const addItemIfNewName = (item, state) =>
+export const isItemNameValid = R.curry(
+  (item, state) => R.allPass(
+    [
+      R.complement(R.isNil),
+      R.complement(R.isEmpty),
+      R.is(String),
+      R.flip(isNameNew)(state)
+    ]
+  )(R.prop('name', item))
+)
+
+export const addItemIfValid = (item, state) =>
   R.ifElse(
-    isItemNameNew(item),
+    isItemNameValid(item),
     addItemToNextId(item),
     R.identity
   )(state)
@@ -47,7 +58,7 @@ export const deleteItemById = (id, state) =>
   R.over(lensItems, R.without([getItemById(id, state)]))(state)
 
 export const addItemToStateByAction = (state, action) =>
-  addItemIfNewName(getActionPayload(action),state)
+  addItemIfValid(getActionPayload(action),state)
 
 export const deleteItemFromStateByAction = (state, action) =>
   deleteItemById(getIdFromActionPayload(action), state)

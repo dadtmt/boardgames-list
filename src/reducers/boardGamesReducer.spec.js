@@ -28,7 +28,7 @@ describe('Reducers::boardGames', ()=> {
     nextId: 3
   }
 
-  it('should handle ADD_BOARDGAME action: add a boardGame only if it is not present checking by name', () => {
+  it('should handle ADD_BOARDGAME action: add a boardGame only if it is not present checking by name and name defined', () => {
     const expected = {
       items: [
         {
@@ -48,6 +48,7 @@ describe('Reducers::boardGames', ()=> {
     }
     expect(reducer(fakeState, addBoardGame('Blood Bowl'))).to.be.eql(expected)
     expect(reducer(fakeState, addBoardGame('Earth Reborn'))).to.be.eql(fakeState)
+    expect(reducer(fakeState, addBoardGame())).to.be.eql(fakeState)
   })
 
   it('should handle REMOVE_BOARDGAME action delete an item if it is present chencking by id', () => {

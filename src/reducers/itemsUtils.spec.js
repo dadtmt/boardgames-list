@@ -110,7 +110,7 @@ describe('getItemById', () => {
 })
 
 describe('getItemByName', () => {
-  it('should return item with name or undefined if not found', () => {
+  it('should return item with name or undefined if not found or if name is undefined', () => {
     const expected = {
       id: 1,
       name: 'Earth Reborn'
@@ -136,26 +136,63 @@ describe('getItemsSortByName', () => {
   })
 })
 
-describe('isItemNameNew', () => {
-  it('should return true if an item name in not in state', () => {
-    const itemWithNewName = {
-      name: 'Blood Bowl'
-    }
-    const itemWithExistingName = {
-      name: 'Dungeon Twister'
-    }
-    expect(ItemsUtils.isItemNameNew(itemWithNewName, fakeState)).to.be.true
-    expect(ItemsUtils.isItemNameNew(itemWithExistingName, fakeState)).to.be.false
+describe('isNameNew', () => {
+  it('should return true if a name in not in state', () => {
+    const name = 'Blood Bowl'
+    expect(ItemsUtils.isNameNew(name, fakeState)).to.be.true
+  })
+  it('should return false if a name is in state', () => {
+    const name = 'Dungeon Twister'
+    expect(ItemsUtils.isNameNew(name, fakeState)).to.be.false
   })
 })
 
-describe('addItemIfNewName', ()=>{
-  it('should add the item only if there is no item with the same name', () => {
+describe('isItemNameValid', () => {
+  it('should return true if an item name in not in state', () => {
     const item = {
       name: 'Blood Bowl'
     }
-    const badItem = {
+    expect(ItemsUtils.isItemNameValid(item, fakeState)).to.be.true
+  })
+  it('should return false if an item name is in state', () => {
+    const item = {
       name: 'Dungeon Twister'
+    }
+    expect(ItemsUtils.isItemNameValid(item, fakeState)).to.be.false
+  })
+  it('should return false if item has no name', () => {
+    const item = {
+      id:5
+    }
+    expect(ItemsUtils.isItemNameValid(item, fakeState)).to.be.false
+  })
+  it('should return false if item name is not a string', () => {
+    const item = {
+      name: {
+        foo: 'bar'
+      }
+    }
+    expect(ItemsUtils.isItemNameValid(item, fakeState)).to.be.false
+  })
+  it('should return false if item name is undefined', () => {
+    const item = {
+      name: undefined
+    }
+    expect(ItemsUtils.isItemNameValid(item, fakeState)).to.be.false
+  })
+  it('should return false if item name is empty', () => {
+    const item = {
+      name: ''
+    }
+    expect(ItemsUtils.isItemNameValid(item, fakeState)).to.be.false
+  })
+})
+
+describe('addItemIfValid', ()=>{
+
+  it('should add the item', () => {
+    const item = {
+      name: 'Blood Bowl'
     }
     const expected = {
       items: [
@@ -174,8 +211,35 @@ describe('addItemIfNewName', ()=>{
       ],
       nextId: 4
     }
-    expect(ItemsUtils.addItemIfNewName(item, fakeState)).eql(expected)
-    expect(ItemsUtils.addItemIfNewName(badItem, fakeState)).equal(fakeState)
+    expect(ItemsUtils.addItemIfValid(item, fakeState)).eql(expected)
+  })
+
+  it('should no add the item only if there is no item with the same name', () => {
+    const item = {
+      name: 'Dungeon Twister'
+    }
+    expect(ItemsUtils.addItemIfValid(item, fakeState)).equal(fakeState)
+  })
+
+  it('should add the item only if prop name exist', () => {
+    const item = {
+      id:5
+    }
+    expect(ItemsUtils.addItemIfValid(item, fakeState)).equal(fakeState)
+  })
+
+  it('should add the item only if prop name is not empty', () => {
+    const item = {
+      name: ''
+    }
+    expect(ItemsUtils.addItemIfValid(item, fakeState)).equal(fakeState)
+  })
+
+  it('should add the item only if prop name is a string', () => {
+    const item = {
+      name: {foo: 'bar'}
+    }
+    expect(ItemsUtils.addItemIfValid(item, fakeState)).equal(fakeState)
   })
 })
 
