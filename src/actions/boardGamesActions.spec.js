@@ -3,15 +3,18 @@ import {ADD_BOARDGAME, REMOVE_BOARDGAME} from '../constants/actionTypes'
 import {addBoardGame, removeBoardGame} from './boardGamesActions'
 
 describe('ADD_BOARDGAME action', () => {
-  it('should create an action with ADD_BOARDGAME type and a name in payload', () => {
+  it('should create an action with ADD_BOARDGAME type item as payload', () => {
 
+    const item = {
+      name: 'Blood Bowl'
+    }
     const expected = {
       type: ADD_BOARDGAME,
       payload: {
         name: 'Blood Bowl'
       }
     }
-    expect(addBoardGame('Blood Bowl')).to.eql(expected)
+    expect(addBoardGame(item)).to.eql(expected)
   })
 })
 

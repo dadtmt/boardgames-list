@@ -1,10 +1,8 @@
 import {ADD_BOARDGAME, REMOVE_BOARDGAME} from '../constants/actionTypes'
 
-export const addBoardGame = (name) => ({
+export const addBoardGame = (item) => ({
   type: ADD_BOARDGAME,
-  payload: {
-    name
-  }
+  payload: item
 })
 
 export const removeBoardGame = (id) => ({

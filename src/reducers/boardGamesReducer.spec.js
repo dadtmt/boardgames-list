@@ -28,7 +28,10 @@ describe('Reducers::boardGames', ()=> {
     nextId: 3
   }
 
-  it('should handle ADD_BOARDGAME action: add a boardGame only if it is not present checking by name and name defined', () => {
+  it('should handle ADD_BOARDGAME action: add a boardGame', () => {
+    const item = {
+      name: 'Blood Bowl'
+    }
     const expected = {
       items: [
         {
@@ -46,9 +49,18 @@ describe('Reducers::boardGames', ()=> {
       ],
       nextId: 4
     }
-    expect(reducer(fakeState, addBoardGame('Blood Bowl'))).to.be.eql(expected)
-    expect(reducer(fakeState, addBoardGame('Earth Reborn'))).to.be.eql(fakeState)
-    expect(reducer(fakeState, addBoardGame())).to.be.eql(fakeState)
+    expect(reducer(fakeState, addBoardGame(item))).to.be.eql(expected)
+  })
+
+  it('should handle ADD_BOARDGAME action: not add item if name already in state', () => {
+    const item = {
+      name: 'Dungeon Twister'
+    }
+    expect(reducer(fakeState, addBoardGame(item))).to.be.eql(fakeState)
+  })
+
+  it('should handle ADD_BOARDGAME action: not add if item is empty', () => {
+    expect(reducer(fakeState, addBoardGame({}))).to.be.eql(fakeState)
   })
 
   it('should handle REMOVE_BOARDGAME action delete an item if it is present chencking by id', () => {
