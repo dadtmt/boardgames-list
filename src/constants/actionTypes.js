@@ -1,2 +1,5 @@
 export const ADD_BOARDGAME = 'ADD_BOARDGAME'
 export const REMOVE_BOARDGAME = 'REMOVE_BOARDGAME'
+
+export const ADD_PLAYER = 'ADD_PLAYER'
+export const REMOVE_PLAYER = 'REMOVE_PLAYER'

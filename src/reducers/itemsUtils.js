@@ -17,6 +17,7 @@ export const addItemToNextId = R.curry(
   )(state)
 )
 
+// another solution would be to use indexBy in selector
 export const getItemById = (id, state) => R.pipe(
     R.view(lensItems),
     R.find(R.propEq('id', id))
@@ -36,6 +37,7 @@ export const isNameNew = R.curry(
   (name, state) => R.isNil(getItemByName(name, state))
 )
 
+// check if some tests are still useful when using flow
 export const isItemNameValid = R.curry(
   (item, state) => R.allPass(
     [

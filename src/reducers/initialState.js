@@ -11,5 +11,22 @@ export default {
       }
     ],
     nextId: 3
+  },
+  players: {
+    items: [
+      {
+        id: 1,
+        name: 'Tom'
+      },
+      {
+        id: 2,
+        name: 'Sim'
+      },
+      {
+        id: 3,
+        name: 'Quen'
+      }
+    ],
+    nextId: 4
   }
 }
