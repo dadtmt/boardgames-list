@@ -68,7 +68,7 @@ export default {
             win: false
           },
           {
-            player:3,
+            player:2,
             score: 0,
             win: true
           }
