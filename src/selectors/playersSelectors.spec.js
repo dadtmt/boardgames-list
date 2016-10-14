@@ -1,7 +1,8 @@
 import { expect } from 'chai'
 import {
   allPlayersSelector,
-  sortedPlayersArraySelector
+  sortedPlayersArraySelector,
+  indexPlayers
 } from './playersSelectors'
 
 describe('allPlayersSelector', () => {
@@ -65,5 +66,44 @@ describe('sortedPlayersArraySelector', () => {
       }
     ]
     expect(sortedPlayersArraySelector(fakeState)).to.eql(expected)
+  })
+})
+
+describe('indexPlayers', () => {
+  it('should return an object of players with ids as keys', () => {
+    const fakeState = {
+      players: {
+        items: [
+          {
+            id: 1,
+            name: 'Tom'
+          },
+          {
+            id: 2,
+            name: 'Sim'
+          },
+          {
+            id: 3,
+            name: 'Quen'
+          }
+        ],
+        nextId: 4
+      }
+    }
+    const expected = {
+      1: {
+        id: 1,
+        name: 'Tom'
+      },
+      2: {
+        id: 2,
+        name: 'Sim'
+      },
+      3: {
+        id: 3,
+        name: 'Quen'
+      }
+    }
+    expect(indexPlayers(fakeState)).to.eql(expected)
   })
 })

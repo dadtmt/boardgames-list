@@ -24,6 +24,11 @@ export const getItemById = (id, state) => R.pipe(
     R.find(R.propEq('id', id))
 )(state)
 
+export const indexById = R.pipe(
+  R.view(lensItems),
+  R.indexBy(R.prop('id'))
+)
+
 export const getItemByName = R.curry((name, state) => R.pipe(
   R.view(lensItems),
   R.find(R.propEq('name', name))

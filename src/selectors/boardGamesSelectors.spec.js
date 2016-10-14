@@ -1,7 +1,8 @@
 import { expect } from 'chai'
 import {
   allBoardGamesSelector,
-  sortedBoardGamesArraySelector
+  sortedBoardGamesArraySelector,
+  indexBoardGames
 } from './boardGamesSelectors'
 
 describe('allBoardGamesSelector', () => {
@@ -53,5 +54,36 @@ describe('sortedBoardGamesArraySelector', () => {
       }
     ]
     expect(sortedBoardGamesArraySelector(fakeState)).to.eql(expected)
+  })
+})
+
+describe('indexBoardGames', () => {
+  it('should return an object of boardGames with ids as keys', () => {
+    const fakeState = {
+      boardGames: {
+        items: [
+          {
+            id: 1,
+            name: 'Earth Reborn'
+          },
+          {
+            id: 2,
+            name: 'Dungeon Twister'
+          }
+        ],
+        nextId: 3
+      }
+    }
+    const expected = {
+      1: {
+        id: 1,
+        name: 'Earth Reborn'
+      },
+      2: {
+        id: 2,
+        name: 'Dungeon Twister'
+      }
+    }
+    expect(indexBoardGames(fakeState)).to.eql(expected)
   })
 })

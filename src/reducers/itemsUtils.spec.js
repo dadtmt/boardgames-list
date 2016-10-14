@@ -98,6 +98,8 @@ describe('addItemToNextId', ()=>{
   })
 })
 
+
+
 describe('getItemById', () => {
   it('should return item with id or undefined if not found', () => {
     const expected = {
@@ -117,6 +119,22 @@ describe('getItemByName', () => {
     }
     expect(ItemsUtils.getItemByName('Earth Reborn', fakeState)).eql(expected)
     expect(ItemsUtils.getItemByName('some name', fakeState)).equal(undefined)
+  })
+})
+
+describe('indexById', () => {
+  it('should return items indexed by id', () => {
+    const expected = {
+      1: {
+        id: 1,
+        name: 'Earth Reborn'
+      },
+      2: {
+        id: 2,
+        name: 'Dungeon Twister'
+      }
+    }
+    expect(ItemsUtils.indexById(fakeState)).to.eql(expected)
   })
 })
 
