@@ -12,12 +12,13 @@ export const lensNextId = R.lensProp('nextId')
 
 export const addItemToNextId = R.curry(
   (item, state) => R.pipe(
-    R.over(lensItems, R.append(R.assoc('id', R.view(lensNextId, state), item))),
+    R.over(lensItems, R.append(
+      R.assoc('id', R.view(lensNextId, state), item))
+    ),
     R.over(lensNextId, R.inc)
   )(state)
 )
 
-// another solution would be to use indexBy in selector
 export const getItemById = (id, state) => R.pipe(
     R.view(lensItems),
     R.find(R.propEq('id', id))
@@ -33,8 +34,9 @@ export const getItemsSortByName = R.pipe(
     R.sortBy(R.compose(R.toLower, R.prop('name')))
   )
 
-export const isNameNew = R.curry(
-  (name, state) => R.isNil(getItemByName(name, state))
+export const isNameNew = R.pipe(
+  getItemByName,
+  R.isNil
 )
 
 // check if some tests are still useful when using flow
