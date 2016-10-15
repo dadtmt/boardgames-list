@@ -1,6 +1,8 @@
 import {connect} from 'react-redux'
 import AddBoardGame from '../components/AddBoardGame'
-import {addBoardGame} from '../actions/boardGamesActions'
+import { BOARDGAME } from '../constants/itemCategory'
+import { addItemByName } from '../actions/itemActions'
+
 
 export function mapStateToProps(){
   return {
@@ -9,7 +11,7 @@ export function mapStateToProps(){
 
 export function mapDispatchToProps(dispatch){
   return {
-    onSubmit: (item) => dispatch(addBoardGame(item))
+    onSubmit: (item) => dispatch(addItemByName(BOARDGAME, item))
   }
 }
 

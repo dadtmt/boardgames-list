@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
 import GameList from '../components/GameList'
 import { populateGames } from '../selectors/gamesSelectors'
-import { removeGame } from '../actions/gamesActions'
-// import {} from '../actions/gamesActions'
+import { GAME } from '../constants/itemCategory'
+import { deleteItem } from '../actions/itemActions'
 
 export function mapStateToProps(state){
   return {
@@ -12,7 +12,7 @@ export function mapStateToProps(state){
 
 export function mapDispatchToProps(dispatch){
   return {
-    removeItem: (id) => dispatch(removeGame(id))
+    removeItem: (id) => dispatch(deleteItem(GAME, id))
   }
 }
 

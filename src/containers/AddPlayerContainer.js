@@ -1,6 +1,7 @@
 import {connect} from 'react-redux'
 import AddPlayer from '../components/AddPlayer'
-import {addPlayer} from '../actions/playersActions'
+import { PLAYER } from '../constants/itemCategory'
+import { addItemByName } from '../actions/itemActions'
 
 export function mapStateToProps(){
   return {
@@ -9,7 +10,7 @@ export function mapStateToProps(){
 
 export function mapDispatchToProps(dispatch){
   return {
-    onSubmit: (item) => dispatch(addPlayer(item))
+    onSubmit: (item) => dispatch(addItemByName(PLAYER, item))
   }
 }
 

@@ -1,9 +1,10 @@
-import {expect} from 'chai'
+import { expect } from 'chai'
 import {
    mapStateToProps,
    mapDispatchToProps
  } from './AddBoardGameContainer'
-import {addBoardGame} from '../actions/boardGamesActions'
+import { BOARDGAME } from '../constants/itemCategory'
+import { addItemByName } from '../actions/itemActions'
 
 // TOFIX unable to apply because o redux-form
 // TypeError: Cannot read property 'contextTypes' of undefined
@@ -29,7 +30,7 @@ describe('AddBoardGameContainer mapStateToProps', () => {
 describe('AddBoardGameContainer mapDispatchToProps', () => {
   it('should return {onSubmit: function that dispatch addBoardGame}', () => {
     const fakeDispatch = (someFunction) => someFunction
-    const expected = addBoardGame({name: 'some boardgame'})
+    const expected = addItemByName(BOARDGAME, {name: 'some boardgame'})
     expect(mapDispatchToProps(fakeDispatch)
     .onSubmit({name: 'some boardgame'})).to.eql(expected)
   })

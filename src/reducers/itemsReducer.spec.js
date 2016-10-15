@@ -1,12 +1,6 @@
 import { expect } from 'chai'
 import createReducer from './createReducer'
-import { buildActionType, deletable, addByNameable } from './itemsReducer'
-
-describe('buildActionType', () => {
-  it('should return TYPE_CATEGORY', () => {
-    expect(buildActionType('DELETE', 'CATEGORY')).to.equal('DELETE_CATEGORY')
-  })
-})
+import { deletable, addByNameable } from './itemsReducer'
 
 describe('deletable', () => {
   it('should return a reducer that handles DELETE_CATEGORY action', () => {

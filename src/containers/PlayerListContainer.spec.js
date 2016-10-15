@@ -2,27 +2,28 @@ import React from 'react'
 import {shallow} from 'enzyme'
 import {expect} from 'chai'
 import {
-  PureBoardGameListContainer,
+  PurePlayerListContainer,
    mapStateToProps,
    mapDispatchToProps
- } from './BoardGameListContainer'
-import BoardGameList from '../components/BoardGameList'
-import {removeBoardGame} from '../actions/boardGamesActions'
+ } from './PlayerListContainer'
+import PlayerList from '../components/PlayerList'
+import { PLAYER } from '../constants/itemCategory'
+import { deleteItem } from '../actions/itemActions'
 
-describe('<BoardGameListContainer />', () => {
-  it('should renders same as <BoardGameList />', () => {
+describe('<PlayerListContainer />', () => {
+  it('should renders same as <PlayerList />', () => {
     const wrapperContainer = shallow(
-      <PureBoardGameListContainer items={[]} removeItem={()=>{}} />
+      <PurePlayerListContainer items={[]} removeItem={()=>{}} />
     )
-    const wrapper = shallow(<BoardGameList items={[]} removeItem={()=>{}} />)
+    const wrapper = shallow(<PlayerList items={[]} removeItem={()=>{}} />)
     expect(wrapperContainer.html()).to.equals(wrapper.html())
   })
 })
 
-describe('BoardGameListContainer mapStateToProps', () => {
+describe('PlayerListContainer mapStateToProps', () => {
   it('should return {items: sorted by name array of items}', () => {
     const fakeState = {
-      boardGames: {
+      players: {
         items: [
           {
             id: 1,
@@ -51,11 +52,11 @@ describe('BoardGameListContainer mapStateToProps', () => {
   })
 })
 
-describe('BoardGameListContainer mapDispatchToProps', () => {
-  it('should return {removeItem: a function that dispatch removeBoardGame}', () => {
+describe('PlayerListContainer mapDispatchToProps', () => {
+  it('should return {removeItem: a function that dispatch removePlayer}', () => {
     const fakeDispatch = (someFunction) => someFunction
 
     expect(mapDispatchToProps(fakeDispatch).removeItem(1))
-    .to.eql(removeBoardGame(1))
+    .to.eql(deleteItem(PLAYER, 1))
   })
 })

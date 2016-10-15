@@ -7,14 +7,15 @@ import {
    mapDispatchToProps
  } from './GameListContainer'
 import GameList from '../components/GameList'
-import { removeGame } from '../actions/gamesActions'
+import { GAME } from '../constants/itemCategory'
+import { deleteItem } from '../actions/itemActions'
 
 describe('<GameListContainer />', () => {
   it('should renders same as <GameList />', () => {
     const wrapperContainer = shallow(
-      <PureGameListContainer items={[]} />
+      <PureGameListContainer items={[]} removeItem={()=>{}} />
     )
-    const wrapper = shallow(<GameList items={[]} />)
+    const wrapper = shallow(<GameList items={[]} removeItem={()=>{}} />)
     expect(wrapperContainer.html()).to.equals(wrapper.html())
   })
 })
@@ -179,6 +180,6 @@ describe('GameListContainer mapDispatchToProps', () => {
     const fakeDispatch = (someFunction) => someFunction
 
     expect(mapDispatchToProps(fakeDispatch).removeItem(1))
-    .to.eql(removeGame(1))
+    .to.eql(deleteItem(GAME, 1))
   })
 })

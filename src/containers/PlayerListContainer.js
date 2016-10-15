@@ -1,7 +1,8 @@
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import PlayerList from '../components/PlayerList'
-import {sortedPlayersArraySelector} from '../selectors/playersSelectors'
-import {removePlayer} from '../actions/playersActions'
+import { sortedPlayersArraySelector } from '../selectors/playersSelectors'
+import { PLAYER } from '../constants/itemCategory'
+import { deleteItem } from '../actions/itemActions'
 
 export function mapStateToProps(state){
   return {
@@ -11,7 +12,7 @@ export function mapStateToProps(state){
 
 export function mapDispatchToProps(dispatch){
   return {
-    removeItem: (id) => dispatch(removePlayer(id))
+    removeItem: (id) => dispatch(deleteItem(PLAYER,id))
   }
 }
 

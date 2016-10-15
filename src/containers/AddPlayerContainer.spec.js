@@ -3,7 +3,8 @@ import {
    mapStateToProps,
    mapDispatchToProps
  } from './AddPlayerContainer'
-import {addPlayer} from '../actions/playersActions'
+import { PLAYER } from '../constants/itemCategory'
+import { addItemByName } from '../actions/itemActions'
 
 describe('AddPlayerContainer mapStateToProps', () => {
   it('should return {}', () => {
@@ -17,7 +18,7 @@ describe('AddPlayerContainer mapStateToProps', () => {
 describe('AddPlayerContainer mapDispatchToProps', () => {
   it('should return {onSubmit: function that dispatch addPlayer}', () => {
     const fakeDispatch = (someFunction) => someFunction
-    const expected = addPlayer({name: 'some boardgame'})
+    const expected = addItemByName(PLAYER, {name: 'some boardgame'})
     expect(mapDispatchToProps(fakeDispatch)
     .onSubmit({name: 'some boardgame'})).to.eql(expected)
   })

@@ -1,14 +1,25 @@
 import { combineReducers } from 'redux'
-import {routerReducer} from 'react-router-redux'
-import {reducer as form} from 'redux-form'
-import boardGames from './boardGamesReducer'
-import players from './playersReducer'
-import games from './gamesReducer'
+import { routerReducer } from 'react-router-redux'
+import { reducer as form } from 'redux-form'
+import createReducer from './createReducer'
+import { deletable, addByNameable } from './itemsReducer'
+import { BOARDGAME, PLAYER, GAME} from '../constants/itemCategory'
+import initialState from './initialState'
 
 const rootReducer = combineReducers({
-  boardGames,
-  players,
-  games,
+  boardGames: addByNameable(
+    deletable(
+      createReducer(initialState.boardGames, {}), BOARDGAME
+    ), BOARDGAME
+  ),
+  players: addByNameable(
+    deletable(
+      createReducer(initialState.players, {}), PLAYER
+    ), PLAYER
+  ),
+  games: deletable(
+    createReducer(initialState.players, {}), GAME
+  ),
   routing: routerReducer,
   form
 })

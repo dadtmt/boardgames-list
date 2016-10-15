@@ -7,7 +7,8 @@ import {
    mapDispatchToProps
  } from './BoardGameListContainer'
 import BoardGameList from '../components/BoardGameList'
-import {removeBoardGame} from '../actions/boardGamesActions'
+import { BOARDGAME } from '../constants/itemCategory'
+import { deleteItem } from '../actions/itemActions'
 
 describe('<BoardGameListContainer />', () => {
   it('should renders same as <BoardGameList />', () => {
@@ -52,10 +53,9 @@ describe('BoardGameListContainer mapStateToProps', () => {
 })
 
 describe('BoardGameListContainer mapDispatchToProps', () => {
-  it('should return {removeItem: a function that dispatch removeBoardGame}', () => {
+  it('should return {removeItem: a function that dispatch deleteItem}', () => {
     const fakeDispatch = (someFunction) => someFunction
-
     expect(mapDispatchToProps(fakeDispatch).removeItem(1))
-    .to.eql(removeBoardGame(1))
+    .to.eql(deleteItem(BOARDGAME, 1))
   })
 })

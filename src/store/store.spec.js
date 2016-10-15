@@ -2,8 +2,8 @@ import { expect } from 'chai'
 import { createStore } from 'redux'
 import initialState from '../reducers/initialState'
 import rootReducer from '../reducers'
-import * as BoardGamesActions from '../actions/boardGamesActions'
-import * as PlayersActions from '../actions/playersActions'
+import * as ItemActions from '../actions/itemActions'
+import * as ItemCategory from '../constants/itemCategory'
 
 describe('Store', () =>{
 
@@ -27,8 +27,9 @@ describe('Store', () =>{
 
   it('should handle actions for boardGames', () => {
     const store = createStore(rootReducer, initialState)
-    store.dispatch(BoardGamesActions.removeBoardGame(1))
-    store.dispatch(BoardGamesActions.addBoardGame(
+    store.dispatch(ItemActions.deleteItem(ItemCategory.BOARDGAME, 1))
+    store.dispatch(ItemActions.addItemByName(
+      ItemCategory.BOARDGAME,
       {name: 'RuneWars'}
     ))
     const expected = {
@@ -47,7 +48,7 @@ describe('Store', () =>{
     expect(store.getState().boardGames).to.deep.equal(expected)
   })
 
-  it('should be initialState for players', () => {
+  it('should set initialState for players', () => {
     const store = createStore(rootReducer, initialState)
     const expected = {
       items: [
@@ -71,8 +72,9 @@ describe('Store', () =>{
 
   it('should handle actions for players', () => {
     const store = createStore(rootReducer, initialState)
-    store.dispatch(PlayersActions.removePlayer(1))
-    store.dispatch(PlayersActions.addPlayer(
+    store.dispatch(ItemActions.deleteItem(ItemCategory.PLAYER, 1))
+    store.dispatch(ItemActions.addItemByName(
+      ItemCategory.PLAYER,
       {name: 'Jojo'}
     ))
     const expected = {
@@ -93,5 +95,89 @@ describe('Store', () =>{
       nextId: 5
     }
     expect(store.getState().players).to.deep.equal(expected)
+  })
+
+  it('should set initialState for games', () => {
+    const store = createStore(rootReducer, initialState)
+    const expected = {
+      nextId: 3,
+      items: [
+        {
+          id: 1,
+          boardGame: 1,
+          players: [
+            {
+              player:2,
+              score: 5,
+              win: false
+            },
+            {
+              player:1,
+              score: 25,
+              win: true
+            },
+            {
+              player:3,
+              score: 5,
+              win: false
+            }
+          ]
+        },
+        {
+          id: 2,
+          boardGame: 2,
+          players: [
+            {
+              player:3,
+              score: 5,
+              win: true
+            },
+            {
+              player:1,
+              score: 0,
+              win: false
+            },
+            {
+              player:2,
+              score: 0,
+              win: true
+            }
+          ]
+        }
+      ]
+    }
+    expect(store.getState().games).to.deep.equal(expected)
+  })
+
+  it('should handle actions for games', () => {
+    const store = createStore(rootReducer, initialState)
+    store.dispatch(ItemActions.deleteItem(ItemCategory.GAME, 1))
+    const expected = {
+      nextId: 3,
+      items: [
+        {
+          id: 2,
+          boardGame: 2,
+          players: [
+            {
+              player:3,
+              score: 5,
+              win: true
+            },
+            {
+              player:1,
+              score: 0,
+              win: false
+            },
+            {
+              player:2,
+              score: 0,
+              win: true
+            }
+          ]
+        }
+      ]
+    }
+    expect(store.getState().games).to.deep.equal(expected)
   })
 })
