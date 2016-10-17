@@ -2,23 +2,11 @@ import React from 'react'
 import {shallow} from 'enzyme'
 import {expect} from 'chai'
 import {
-  PurePlayerListContainer,
    mapStateToProps,
    mapDispatchToProps
  } from './PlayerListContainer'
-import PlayerList from '../components/PlayerList'
 import { PLAYER } from '../constants/itemCategory'
 import { deleteItem } from '../actions/itemActions'
-
-describe('<PlayerListContainer />', () => {
-  it('should renders same as <PlayerList />', () => {
-    const wrapperContainer = shallow(
-      <PurePlayerListContainer items={[]} removeItem={()=>{}} />
-    )
-    const wrapper = shallow(<PlayerList items={[]} removeItem={()=>{}} />)
-    expect(wrapperContainer.html()).to.equals(wrapper.html())
-  })
-})
 
 describe('PlayerListContainer mapStateToProps', () => {
   it('should return {items: sorted by name array of items}', () => {
@@ -53,10 +41,12 @@ describe('PlayerListContainer mapStateToProps', () => {
 })
 
 describe('PlayerListContainer mapDispatchToProps', () => {
-  it('should return {removeItem: a function that dispatch removePlayer}', () => {
+  it('should return {itemsHOF: a higher function that build onDelete function', () => {
     const fakeDispatch = (someFunction) => someFunction
-
-    expect(mapDispatchToProps(fakeDispatch).removeItem(1))
+    const fakeItem = {
+      id: 1
+    }
+    expect(mapDispatchToProps(fakeDispatch).itemsHOF(fakeItem).onDelete())
     .to.eql(deleteItem(PLAYER, 1))
   })
 })

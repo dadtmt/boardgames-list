@@ -1,24 +1,10 @@
-import React from 'react'
-import {shallow} from 'enzyme'
 import {expect} from 'chai'
 import {
-  PureGameListContainer,
    mapStateToProps,
    mapDispatchToProps
  } from './GameListContainer'
-import GameList from '../components/GameList'
 import { GAME } from '../constants/itemCategory'
 import { deleteItem } from '../actions/itemActions'
-
-describe('<GameListContainer />', () => {
-  it('should renders same as <GameList />', () => {
-    const wrapperContainer = shallow(
-      <PureGameListContainer items={[]} removeItem={()=>{}} />
-    )
-    const wrapper = shallow(<GameList items={[]} removeItem={()=>{}} />)
-    expect(wrapperContainer.html()).to.equals(wrapper.html())
-  })
-})
 
 describe('GameListContainer mapStateToProps', () => {
   it('should return { items: populateGames}', () => {
@@ -176,10 +162,12 @@ describe('GameListContainer mapStateToProps', () => {
 })
 
 describe('GameListContainer mapDispatchToProps', () => {
-  it('should return {removeItem: a function that dispatch removeGame}', () => {
+  it('should return {itemsHOF: a higher function that build onDelete function', () => {
     const fakeDispatch = (someFunction) => someFunction
-
-    expect(mapDispatchToProps(fakeDispatch).removeItem(1))
+    const fakeItem = {
+      id: 1
+    }
+    expect(mapDispatchToProps(fakeDispatch).itemsHOF(fakeItem).onDelete())
     .to.eql(deleteItem(GAME, 1))
   })
 })

@@ -1,15 +1,13 @@
 import React, {PropTypes} from 'react'
 
-const BoardGame = ({name, onRemove}) => (
+const BoardGame = ({name}) => (
 <div>
   <h4>{name}</h4>
-  <button onClick={onRemove}>remove</button>
 </div>
 )
 
 BoardGame.propTypes = {
-  name: PropTypes.string.isRequired,
-  onRemove: PropTypes.func.isRequired
+  name: PropTypes.string.isRequired
 }
 
 export default BoardGame

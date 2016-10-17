@@ -1,24 +1,10 @@
-import React from 'react'
-import {shallow} from 'enzyme'
 import {expect} from 'chai'
 import {
-  PureBoardGameListContainer,
    mapStateToProps,
    mapDispatchToProps
  } from './BoardGameListContainer'
-import BoardGameList from '../components/BoardGameList'
 import { BOARDGAME } from '../constants/itemCategory'
 import { deleteItem } from '../actions/itemActions'
-
-describe('<BoardGameListContainer />', () => {
-  it('should renders same as <BoardGameList />', () => {
-    const wrapperContainer = shallow(
-      <PureBoardGameListContainer items={[]} removeItem={()=>{}} />
-    )
-    const wrapper = shallow(<BoardGameList items={[]} removeItem={()=>{}} />)
-    expect(wrapperContainer.html()).to.equals(wrapper.html())
-  })
-})
 
 describe('BoardGameListContainer mapStateToProps', () => {
   it('should return {items: sorted by name array of items}', () => {
@@ -53,9 +39,12 @@ describe('BoardGameListContainer mapStateToProps', () => {
 })
 
 describe('BoardGameListContainer mapDispatchToProps', () => {
-  it('should return {removeItem: a function that dispatch deleteItem}', () => {
+  it('should return {itemsHOF: a higher function that build onDelete function', () => {
     const fakeDispatch = (someFunction) => someFunction
-    expect(mapDispatchToProps(fakeDispatch).removeItem(1))
+    const fakeItem = {
+      id: 1
+    }
+    expect(mapDispatchToProps(fakeDispatch).itemsHOF(fakeItem).onDelete())
     .to.eql(deleteItem(BOARDGAME, 1))
   })
 })

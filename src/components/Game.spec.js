@@ -1,7 +1,6 @@
 import React from 'react'
 import {shallow} from 'enzyme'
 import {expect} from 'chai'
-import sinon from 'sinon'
 import Game from './Game'
 import GamePlayer from './GamePlayer'
 
@@ -38,23 +37,13 @@ const item = {
   ]
 }
 
-const onRemove = sinon.spy()
-const wrapper = shallow(<Game {...item} onRemove={onRemove} />)
+const wrapper = shallow(<Game {...item} />)
 
 describe('<Game />', () => {
   it('should contains boardgame name', () => {
     const expected = item.boardGame.name
 
     expect(wrapper.text()).to.contains(expected)
-  })
-
-  it('should have a remove button that call onRemove function', () => {
-    const removeButtonWrapper = wrapper.find('button')
-    const expected = 'remove'
-
-    expect(removeButtonWrapper.text()).to.equal(expected)
-    removeButtonWrapper.simulate('click')
-    expect(onRemove.calledOnce).to.be.true
   })
 
   const gamePlayerWrappers = wrapper.find(GamePlayer)

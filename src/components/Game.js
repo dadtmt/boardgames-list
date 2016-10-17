@@ -1,11 +1,10 @@
 import React, {PropTypes} from 'react'
 import GamePlayer from './GamePlayer'
 
-const Game = ({boardGame: {name}, players, onRemove}) => (
+const Game = ({boardGame: {name}, players}) => (
 <div>
   <h4>Played to {name}</h4>
   <div>{players.map((item, key) => <GamePlayer key={key} {...item} /> )}</div>
-  <button onClick={onRemove}>remove</button>
 </div>
 )
 
@@ -15,8 +14,7 @@ Game.propTypes = {
       name: PropTypes.string.isRequired
     }
   ).isRequired,
-  players: PropTypes.array.isRequired,
-  onRemove: PropTypes.func.isRequired
+  players: PropTypes.array.isRequired
 }
 
 export default Game

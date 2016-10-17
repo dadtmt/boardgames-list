@@ -1,8 +1,10 @@
 import {connect} from 'react-redux'
-import BoardGameList from '../components/BoardGameList'
 import {sortedBoardGamesArraySelector} from '../selectors/boardGamesSelectors'
 import { BOARDGAME } from '../constants/itemCategory'
 import { deleteItem } from '../actions/itemActions'
+import deletableItem from '../hoc/deletableItem'
+import listableItem from '../hoc/listableItem'
+import BoardGame from '../components/BoardGame'
 
 export function mapStateToProps(state){
   return {
@@ -12,9 +14,12 @@ export function mapStateToProps(state){
 
 export function mapDispatchToProps(dispatch){
   return {
-    removeItem: (id) => dispatch(deleteItem(BOARDGAME, id))
+    itemsHOF: (item) => ({
+      onDelete: ()=> dispatch(deleteItem(BOARDGAME, item.id))
+    })
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(BoardGameList)
-export {BoardGameList as PureBoardGameListContainer}
+export default connect(mapStateToProps, mapDispatchToProps)(
+  listableItem(deletableItem(BoardGame))
+)

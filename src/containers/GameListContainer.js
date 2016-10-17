@@ -1,8 +1,10 @@
 import { connect } from 'react-redux'
-import GameList from '../components/GameList'
 import { populateGames } from '../selectors/gamesSelectors'
 import { GAME } from '../constants/itemCategory'
 import { deleteItem } from '../actions/itemActions'
+import deletableItem from '../hoc/deletableItem'
+import listableItem from '../hoc/listableItem'
+import Game from '../components/Game'
 
 export function mapStateToProps(state){
   return {
@@ -12,9 +14,12 @@ export function mapStateToProps(state){
 
 export function mapDispatchToProps(dispatch){
   return {
-    removeItem: (id) => dispatch(deleteItem(GAME, id))
+    itemsHOF: (item) => ({
+      onDelete: ()=> dispatch(deleteItem(GAME, item.id))
+    })
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(GameList)
-export {GameList as PureGameListContainer}
+export default connect(mapStateToProps, mapDispatchToProps)(
+  listableItem(deletableItem(Game))
+)

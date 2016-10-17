@@ -17,14 +17,3 @@ describe('<BoardGame />', () => {
     expect(wrapper.text()).to.contains(expected)
   })
 })
-
-describe('<BoardGame />', () => {
-  it('should have a remove button that call onRemove function', () => {
-    const removeButtonWrapper = wrapper.find('button')
-    const expected = 'remove'
-
-    expect(removeButtonWrapper.text()).to.equal(expected)
-    removeButtonWrapper.simulate('click')
-    expect(onRemove.calledOnce).to.be.true
-  })
-})
