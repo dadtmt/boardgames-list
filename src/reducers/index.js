@@ -18,7 +18,7 @@ const rootReducer = combineReducers({
     ), PLAYER
   ),
   games: deletable(
-    createReducer(initialState.players, {}), GAME
+    createReducer(initialState.games, {}), GAME
   ),
   routing: routerReducer,
   form
