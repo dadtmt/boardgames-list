@@ -1,6 +1,17 @@
 import { expect } from 'chai'
 import createReducer from './createReducer'
-import { deletable, addByNameable } from './itemsReducer'
+import { enhanceReducer, deletable, addByNameable} from './itemsReducer'
+
+describe('enhanceReducer', () => {
+  it('should enhance a reducer with action handlers', () => {
+    const handlers = {
+      'SOME_ACTION_TYPE': () => 'some state'
+    }
+    const reducer = createReducer('initial state', {})
+    expect(enhanceReducer(handlers)(reducer)('initial state', { type: 'SOME_ACTION_TYPE' }))
+      .to.equal('some state')
+  })
+})
 
 describe('deletable', () => {
   it('should return a reducer that handles DELETE_CATEGORY action', () => {
@@ -29,7 +40,7 @@ describe('deletable', () => {
       ],
       nextId: 3
     }
-    const deletableReducer = deletable(createReducer({}, {}), 'CATEGORY')
+    const deletableReducer = deletable('CATEGORY')(createReducer({}, {}))
     expect (deletableReducer(fakeState, action)).to.eql(expected)
   })
 
@@ -41,8 +52,9 @@ describe('deletable', () => {
       type: 'someActionType'
     }
     const initialState = 'initialState'
-    const reducer = createReducer(initialState, handlers)
-    const deletableReducer = deletable(reducer, 'CATEGORY')
+    const deletableReducer = deletable('CATEGORY')(
+      createReducer(initialState, handlers)
+    )
     expect(deletableReducer(initialState, handledAction))
     .to.equal('modified state')
   })
@@ -86,7 +98,7 @@ describe('addByNameable', () => {
       ],
       nextId: 4
     }
-    const addByNameableReducer = addByNameable(createReducer({}, {}), 'CATEGORY')
+    const addByNameableReducer = addByNameable('CATEGORY')(createReducer({}, {}))
     expect (addByNameableReducer(fakeState, action)).to.eql(expected)
   })
 
@@ -111,7 +123,7 @@ describe('addByNameable', () => {
       nextId: 3
     }
     const expected = fakeState
-    const addByNameableReducer = addByNameable(createReducer({}, {}), 'CATEGORY')
+    const addByNameableReducer = addByNameable('CATEGORY')(createReducer({}, {}))
     expect (addByNameableReducer(fakeState, action)).to.eql(expected)
   })
 
@@ -123,8 +135,9 @@ describe('addByNameable', () => {
       type: 'someActionType'
     }
     const initialState = 'initialState'
-    const reducer = createReducer(initialState, handlers)
-    const addByNameableReducer = addByNameable(reducer, 'CATEGORY')
+    const addByNameableReducer = addByNameable('CATEGORY')(
+      createReducer({}, handlers)
+    )
     expect(addByNameableReducer(initialState, handledAction))
     .to.equal('modified state')
   })

@@ -1,3 +1,4 @@
+import R from 'ramda'
 import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
 import { reducer as form } from 'redux-form'
@@ -7,19 +8,15 @@ import { BOARDGAME, PLAYER, GAME} from '../constants/itemCategory'
 import initialState from './initialState'
 
 const rootReducer = combineReducers({
-  boardGames: addByNameable(
-    deletable(
-      createReducer(initialState.boardGames, {}), BOARDGAME
-    ), BOARDGAME
-  ),
-  players: addByNameable(
-    deletable(
-      createReducer(initialState.players, {}), PLAYER
-    ), PLAYER
-  ),
-  games: deletable(
-    createReducer(initialState.games, {}), GAME
-  ),
+  boardGames: R.pipe(
+      deletable(BOARDGAME),
+      addByNameable(BOARDGAME)
+    )(createReducer(initialState.boardGames, {})),
+  players: R.pipe(
+        deletable(PLAYER),
+        addByNameable(PLAYER)
+    )(createReducer(initialState.players, {})),
+  games: deletable(GAME)(createReducer(initialState.games, {})),
   routing: routerReducer,
   form
 })
