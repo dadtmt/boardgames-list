@@ -25,3 +25,32 @@ export const addByNameable  = (category)  =>
     [buildActionType(ItemsActionTypes.ADDBYNAME, category)]:
       addItemToStateByAction
   })
+
+//WTF linkedcategory is not in action got bed
+export const isLinked = (linkedCategory, action) => R.pipe(
+  R.view(
+    R.lensPath(
+      [
+        'items',
+        R.path(['payload', 'id'], action),
+        linkedCategory
+      ]
+    )
+  ),
+  R.complement(R.isEmpty)
+)
+
+export const linkable = R.curry((linkedCategory, category, reducer) =>
+  enhanceReducer({
+    [buildActionType(ItemsActionTypes.DELETE, category)]:
+      (state, action) =>
+        R.ifElse(
+          isLinked(linkedCategory, action),
+          R.assoc('linkError', action),
+          R.pipe(
+            R.dissoc('linkError'),
+            R.flip(reducer)(action)
+          )
+      )(state)
+  })(reducer)
+)

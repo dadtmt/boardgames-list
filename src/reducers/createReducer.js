@@ -10,3 +10,5 @@ export default function createReducer(initialState, handlers) {
     )(state, action)
   }
 }
+
+export const curriedReducer = R.curry(createReducer)

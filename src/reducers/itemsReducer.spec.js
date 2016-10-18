@@ -1,6 +1,13 @@
+import R from 'ramda'
 import { expect } from 'chai'
-import createReducer from './createReducer'
-import { enhanceReducer, deletable, addByNameable} from './itemsReducer'
+import createReducer,{ curriedReducer } from './createReducer'
+import {
+  enhanceReducer,
+  deletable,
+  addByNameable,
+  linkable,
+  isLinked
+} from './itemsReducer'
 
 describe('enhanceReducer', () => {
   it('should enhance a reducer with action handlers', () => {
@@ -10,6 +17,154 @@ describe('enhanceReducer', () => {
     const reducer = createReducer('initial state', {})
     expect(enhanceReducer(handlers)(reducer)('initial state', { type: 'SOME_ACTION_TYPE' }))
       .to.equal('some state')
+  })
+})
+
+describe('isLinked', () => {
+  it('should return true if the item has links with item id and linkedCategory from action payload', () => {
+    const fakeState = {
+      items: {
+        1: {
+          id: 1,
+          LINKED_CATEGORY: [1]
+        },
+        2: {
+          id: 2,
+          LINKED_CATEGORY: []
+        }
+      },
+      nextId: 3
+    }
+    const invalidDeleteAction = {
+      type: 'DELETE_CATEGORY',
+      payload: {
+        id: 1
+      }
+    }
+    const validDeleteAction = {
+      type: 'DELETE_CATEGORY',
+      payload: {
+        id: 2
+      }
+    }
+    expect(isLinked('LINKED_CATEGORY', invalidDeleteAction)(fakeState))
+      .to.be.true
+    expect(isLinked('LINKED_CATEGORY', validDeleteAction)(fakeState))
+      .to.be.false
+  })
+})
+
+describe('linkable', () => {
+  const invalidDeleteAction = {
+    type: 'DELETE_CATEGORY',
+    payload: {
+      id: 1
+    }
+  }
+  const validDeleteAction = {
+    type: 'DELETE_CATEGORY',
+    payload: {
+      id: 2
+    }
+  }
+  const fakeState = {
+    items: {
+      1: {
+        id: 1,
+        LINKED_CATEGORY: [1]
+      },
+      2: {
+        id: 2,
+        LINKED_CATEGORY: []
+      }
+    },
+    nextId: 3
+  }
+
+  it('should return state with same items and the action in linkError if item has link', () => {
+    const expected = {
+      items: {
+        1: {
+          id: 1,
+          LINKED_CATEGORY: [1]
+        },
+        2: {
+          id: 2,
+          LINKED_CATEGORY: []
+        }
+      },
+      nextId: 3,
+      linkError: {
+        type: 'DELETE_CATEGORY',
+        payload: {
+          id: 1
+        }
+      }
+    }
+    const linkableReducer = linkable(
+      'LINKED_CATEGORY',
+      'CATEGORY')(curriedReducer({}, {}))
+    expect(linkableReducer(fakeState, invalidDeleteAction)).to.eql(expected)
+  })
+
+  it('should return state with same items if item has no link', () => {
+    const expected = {
+      items: {
+        1: {
+          id: 1,
+          LINKED_CATEGORY: [1]
+        },
+        2: {
+          id: 2,
+          LINKED_CATEGORY: []
+        }
+      },
+      nextId: 3
+    }
+    const linkableReducer = linkable(
+      'LINKED_CATEGORY',
+      'CATEGORY')(curriedReducer({}, {}))
+    expect(linkableReducer(fakeState, validDeleteAction)).to.eql(expected)
+  })
+
+  it('should delete item with no link when combined with deletable', () => {
+    const expected = {
+      items: {
+        1: {
+          id: 1,
+          LINKED_CATEGORY: [1]
+        }
+      },
+      nextId: 3
+    }
+    const linkableDeletableReducer = R.pipe(
+      deletable('CATEGORY'),
+      linkable('LINKED_CATEGORY', 'CATEGORY')
+    )(curriedReducer({}, {}))
+    expect(linkableDeletableReducer(fakeState, validDeleteAction))
+      .to.eql(expected)
+  })
+
+  it('should clear linkError when a delete action is valid', () => {
+    const expected = {
+      items: {
+        1: {
+          id: 1,
+          LINKED_CATEGORY: [1]
+        }
+      },
+      nextId: 3
+    }
+    const linkableDeletableReducer = R.pipe(
+      deletable('CATEGORY'),
+      linkable('LINKED_CATEGORY', 'CATEGORY')
+    )(curriedReducer({}, {}))
+    const stateWithLinkError = linkableDeletableReducer(
+      fakeState,
+      invalidDeleteAction
+    )
+    expect(linkableDeletableReducer(stateWithLinkError, validDeleteAction))
+      .to.eql(expected)
   })
 })
 

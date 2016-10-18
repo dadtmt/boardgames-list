@@ -65,6 +65,52 @@ describe('lensItems', ()=>{
   })
 })
 
+describe('lensItem', ()=>{
+  it('should return item by its id', () => {
+    const expected = {
+      id: 2,
+      name: 'Dungeon Twister'
+    }
+    expect(R.view(ItemsUtils.lensItem(2), fakeState)).eql(expected)
+  })
+})
+
+describe('lensItem', ()=>{
+  it('should return item by its id', () => {
+    const expected = {
+      id: 2,
+      name: 'Dungeon Twister'
+    }
+    expect(R.view(ItemsUtils.lensItem(2), fakeState)).eql(expected)
+  })
+})
+
+
+describe('lensItemLinksForCategory', ()=>{
+  it('should return item by its id', () => {
+    const fakeState = {
+      items: {
+        1: {
+          id: 1,
+          name: 'Earth Reborn',
+          'GAME': [1, 2]
+        },
+        2: {
+          id: 2,
+          name: 'Dungeon Twister',
+          'GAME': []
+        }
+      },
+      nextId: 3
+    }
+    const expected = [1, 2]
+
+    expect(R.view(ItemsUtils.lensItemLinksForCategory(1, 'GAME'), fakeState))
+      .eql(expected)
+  })
+})
+
+
 describe('lensNextId', ()=>{
   it('should return nextId', () => {
     const expected = 3
@@ -97,8 +143,6 @@ describe('addItemToNextId', ()=>{
     expect(ItemsUtils.addItemToNextId(item, fakeState)).eql(expected)
   })
 })
-
-
 
 describe('getItemById', () => {
   it('should return item with id or undefined if not found', () => {
@@ -262,6 +306,8 @@ describe('deleteItemById', () => {
     expect(ItemsUtils.deleteItemById(invalidId)(fakeState)).to.eql(fakeState)
   })
 })
+
+
 
 describe('addItemToStateByAction', () => {
   it('should add action.payload as item with id: nextId and increments nextId', () => {

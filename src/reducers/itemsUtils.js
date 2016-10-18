@@ -8,6 +8,11 @@ export const getIdFromActionPayload = R.path(['payload', 'id'])
 
 export const lensItems = R.lensProp('items')
 
+export const lensItem = id => R.lensPath(['items', id])
+
+export const lensItemLinksForCategory = (id, linkedCategory) =>
+  R.lensPath(['items', id, linkedCategory])
+
 export const lensNextId = R.lensProp('nextId')
 
 export const addItemToNextId = R.curry(
@@ -20,10 +25,7 @@ export const addItemToNextId = R.curry(
   )(state)
 )
 
-export const getItemById = (id) => R.pipe(
-    R.view(lensItems),
-    R.prop(id)
-)
+export const getItemById = id => R.view(lensItem(id))
 
 export const getItemByName = name => R.pipe(
   R.view(lensItems),
