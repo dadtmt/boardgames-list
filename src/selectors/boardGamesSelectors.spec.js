@@ -9,16 +9,16 @@ describe('allBoardGamesSelector', () => {
   it('should return boardGames state slice from state', () => {
     const fakeState = {
       boardGames: {
-        items: [
-          {
+        items: {
+          1: {
             id: 1,
             name: 'Earth Reborn'
           },
-          {
+          2: {
             id: 2,
             name: 'Dungeon Twister'
           }
-        ],
+        },
         nextId: 3
       }
     }
@@ -30,16 +30,16 @@ describe('sortedBoardGamesArraySelector', () => {
   it('should return an array with boardgames from state', () => {
     const fakeState = {
       boardGames: {
-        items: [
-          {
+        items: {
+          1: {
             id: 1,
             name: 'Earth Reborn'
           },
-          {
+          2: {
             id: 2,
             name: 'Dungeon Twister'
           }
-        ],
+        },
         nextId: 3
       }
     }
@@ -61,16 +61,16 @@ describe('indexBoardGames', () => {
   it('should return an object of boardGames with ids as keys', () => {
     const fakeState = {
       boardGames: {
-        items: [
-          {
+        items: {
+          1: {
             id: 1,
             name: 'Earth Reborn'
           },
-          {
+          2: {
             id: 2,
             name: 'Dungeon Twister'
           }
-        ],
+        },
         nextId: 3
       }
     }

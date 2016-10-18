@@ -22,22 +22,22 @@ describe('deletable', () => {
       }
     }
     const fakeState = {
-      items: [
-        {
+      items: {
+        1: {
           id: 1,
         },
-        {
+        2: {
           id: 2,
         }
-      ],
+      },
       nextId: 3
     }
     const expected = {
-      items: [
-        {
+      items: {
+        2: {
           id: 2,
         }
-      ],
+      },
       nextId: 3
     }
     const deletableReducer = deletable('CATEGORY')(createReducer({}, {}))
@@ -69,33 +69,33 @@ describe('addByNameable', () => {
       }
     }
     const fakeState = {
-      items: [
-        {
+      items: {
+        1: {
           id: 1,
           name: 'old'
         },
-        {
+        2: {
           id: 2,
           name: 'another one'
         }
-      ],
+      },
       nextId: 3
     }
     const expected = {
-      items: [
-        {
+      items: {
+        1: {
           id: 1,
           name: 'old'
         },
-        {
+        2: {
           id: 2,
           name: 'another one'
         },
-        {
+        3: {
           id: 3,
           name: 'new'
         }
-      ],
+      },
       nextId: 4
     }
     const addByNameableReducer = addByNameable('CATEGORY')(createReducer({}, {}))
@@ -110,16 +110,16 @@ describe('addByNameable', () => {
       }
     }
     const fakeState = {
-      items: [
-        {
+      items: {
+        1: {
           id: 1,
           name: 'old'
         },
-        {
+        2: {
           id: 2,
           name: 'another one'
         }
-      ],
+      },
       nextId: 3
     }
     const expected = fakeState

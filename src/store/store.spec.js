@@ -10,16 +10,16 @@ describe('Store', () =>{
   it('should be initialState for boardGames', () => {
     const store = createStore(rootReducer, initialState)
     const expected = {
-      items: [
-        {
+      items: {
+        1: {
           id: 1,
           name: 'Earth Reborn'
         },
-        {
+        2: {
           id: 2,
           name: 'Dungeon Twister'
         }
-      ],
+      },
       nextId: 3
     }
     expect(store.getState().boardGames).to.deep.equal(expected)
@@ -33,16 +33,16 @@ describe('Store', () =>{
       {name: 'RuneWars'}
     ))
     const expected = {
-      items: [
-        {
+      items: {
+        2: {
           id: 2,
           name: 'Dungeon Twister'
         },
-        {
+        3: {
           id: 3,
           name: 'RuneWars'
         }
-      ],
+      },
       nextId: 4
     }
     expect(store.getState().boardGames).to.deep.equal(expected)
@@ -51,20 +51,20 @@ describe('Store', () =>{
   it('should set initialState for players', () => {
     const store = createStore(rootReducer, initialState)
     const expected = {
-      items: [
-        {
+      items: {
+        1: {
           id: 1,
           name: 'Tom'
         },
-        {
+        2: {
           id: 2,
           name: 'Sim'
         },
-        {
+        3: {
           id: 3,
           name: 'Quen'
         }
-      ],
+      },
       nextId: 4
     }
     expect(store.getState().players).to.deep.equal(expected)
@@ -78,20 +78,20 @@ describe('Store', () =>{
       {name: 'Jojo'}
     ))
     const expected = {
-      items: [
-        {
+      items: {
+        2: {
           id: 2,
           name: 'Sim'
         },
-        {
+        3: {
           id: 3,
           name: 'Quen'
         },
-        {
+        4: {
           id: 4,
           name: 'Jojo'
         }
-      ],
+      },
       nextId: 5
     }
     expect(store.getState().players).to.deep.equal(expected)
@@ -101,8 +101,8 @@ describe('Store', () =>{
     const store = createStore(rootReducer, initialState)
     const expected = {
       nextId: 3,
-      items: [
-        {
+      items: {
+        1: {
           id: 1,
           boardGame: 1,
           players: [
@@ -123,7 +123,7 @@ describe('Store', () =>{
             }
           ]
         },
-        {
+        2: {
           id: 2,
           boardGame: 2,
           players: [
@@ -144,7 +144,7 @@ describe('Store', () =>{
             }
           ]
         }
-      ]
+      }
     }
     expect(store.getState().games).to.deep.equal(expected)
   })
@@ -154,8 +154,8 @@ describe('Store', () =>{
     store.dispatch(ItemActions.deleteItem(ItemCategory.GAME, 1))
     const expected = {
       nextId: 3,
-      items: [
-        {
+      items: {
+        2: {
           id: 2,
           boardGame: 2,
           players: [
@@ -176,7 +176,7 @@ describe('Store', () =>{
             }
           ]
         }
-      ]
+      }
     }
     expect(store.getState().games).to.deep.equal(expected)
   })

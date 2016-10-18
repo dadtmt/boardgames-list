@@ -12,62 +12,63 @@ export const lensNextId = R.lensProp('nextId')
 
 export const addItemToNextId = R.curry(
   (item, state) => R.pipe(
-    R.over(lensItems, R.append(
+    R.over(lensItems, R.assoc(
+      R.view(lensNextId, state),
       R.assoc('id', R.view(lensNextId, state), item))
     ),
     R.over(lensNextId, R.inc)
   )(state)
 )
 
-export const getItemById = (id, state) => R.pipe(
+export const getItemById = (id) => R.pipe(
     R.view(lensItems),
-    R.find(R.propEq('id', id))
-)(state)
-
-export const indexById = R.pipe(
-  R.view(lensItems),
-  R.indexBy(R.prop('id'))
+    R.prop(id)
 )
 
-export const getItemByName = R.curry((name, state) => R.pipe(
+export const getItemByName = name => R.pipe(
   R.view(lensItems),
-  R.find(R.propEq('name', name))
-)(state))
+  R.pickBy(R.propEq('name', name)),
+  R.values,
+  R.head
+)
 
 export const getItemsSortByName = R.pipe(
-    R.view(lensItems),
-    R.sortBy(R.compose(R.toLower, R.prop('name')))
-  )
+  R.view(lensItems),
+  R.values,
+  R.sortBy(R.compose(R.toLower, R.prop('name')))
+)
 
-export const isNameNew = R.pipe(
-  getItemByName,
+export const isNameNew = name =>  R.pipe(
+  getItemByName(name),
   R.isNil
 )
 
 // check if some tests are still useful when using flow
-export const isItemNameValid = R.curry(
-  (item, state) => R.allPass(
-    [
-      R.complement(R.isNil),
-      R.complement(R.isEmpty),
-      R.is(String),
-      R.flip(isNameNew)(state)
-    ]
-  )(R.prop('name', item))
-)
+export const isItemNameValid = item =>
+  R.pipe(
+    isNameNew (R.prop('name', item)),
+    R.and(
+      R.allPass(
+        [
+          R.complement(R.isNil),
+          R.complement(R.isEmpty),
+          R.is(String)
+        ]
+      )(R.prop('name', item))
+    )
+  )
 
-export const addItemIfValid = (item, state) =>
+export const addItemIfValid = item =>
   R.ifElse(
     isItemNameValid(item),
     addItemToNextId(item),
     R.identity
-  )(state)
+  )
 
-export const deleteItemById = (id, state) =>
-  R.over(lensItems, R.without([getItemById(id, state)]))(state)
+export const deleteItemById = id => R.over(lensItems, R.dissoc(String(id)))
 
 export const addItemToStateByAction = (state, action) =>
-  addItemIfValid(getActionPayload(action),state)
+  addItemIfValid(getActionPayload(action))(state)
 
 export const deleteItemFromStateByAction = (state, action) =>
-  deleteItemById(getIdFromActionPayload(action), state)
+  deleteItemById(getIdFromActionPayload(action))(state)

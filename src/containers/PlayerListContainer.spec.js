@@ -12,28 +12,35 @@ describe('PlayerListContainer mapStateToProps', () => {
   it('should return {items: sorted by name array of items}', () => {
     const fakeState = {
       players: {
-        items: [
-          {
+        items: {
+          1: {
             id: 1,
-            name: 'Earth Reborn'
+            name: 'Tom'
           },
-          {
+          2: {
             id: 2,
-            name: 'Dungeon Twister'
+            name: 'Sim'
+          },
+          3: {
+            id: 3,
+            name: 'Quen'
           }
-        ],
-        nextId: 3
+        },
+        nextId: 4
       }
     }
-
     const expected = [
       {
+        id: 3,
+        name: 'Quen'
+      },
+      {
         id: 2,
-        name: 'Dungeon Twister'
+        name: 'Sim'
       },
       {
         id: 1,
-        name: 'Earth Reborn'
+        name: 'Tom'
       }
     ]
     expect(mapStateToProps(fakeState).items).to.eql(expected)

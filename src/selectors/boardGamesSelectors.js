@@ -1,7 +1,7 @@
 
 import R from 'ramda'
 import {createSelector} from 'reselect'
-import {getItemsSortByName,indexById} from '../reducers/itemsUtils'
+import {getItemsSortByName, lensItems} from '../reducers/itemsUtils'
 
 export const allBoardGamesSelector = R.prop('boardGames')
 
@@ -12,5 +12,5 @@ export const sortedBoardGamesArraySelector = createSelector(
 
 export const indexBoardGames = createSelector(
   allBoardGamesSelector,
-  indexById
+  R.view(lensItems)
 )

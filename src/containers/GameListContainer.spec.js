@@ -10,39 +10,39 @@ describe('GameListContainer mapStateToProps', () => {
   it('should return { items: populateGames}', () => {
     const fakeState = {
       boardGames: {
-        items: [
-          {
+        items: {
+          1: {
             id: 1,
             name: 'Earth Reborn'
           },
-          {
+          2: {
             id: 2,
             name: 'Dungeon Twister'
           }
-        ],
+        },
         nextId: 3
       },
       players: {
-        items: [
-          {
+        items: {
+          1: {
             id: 1,
             name: 'Tom'
           },
-          {
+          2: {
             id: 2,
             name: 'Sim'
           },
-          {
+          3: {
             id: 3,
             name: 'Quen'
           }
-        ],
+        },
         nextId: 4
       },
       games: {
         nextId: 3,
-        items: [
-          {
+        items: {
+          1: {
             id: 1,
             boardGame: 1,
             players: [
@@ -63,7 +63,7 @@ describe('GameListContainer mapStateToProps', () => {
               }
             ]
           },
-          {
+          2: {
             id: 2,
             boardGame: 2,
             players: [
@@ -84,7 +84,7 @@ describe('GameListContainer mapStateToProps', () => {
               }
             ]
           }
-        ]
+        }
       }
     }
     const expected = {

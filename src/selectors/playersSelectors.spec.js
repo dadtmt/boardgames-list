@@ -9,20 +9,20 @@ describe('allPlayersSelector', () => {
   it('should return players state slice from state', () => {
     const fakeState = {
       players: {
-        items: [
-          {
+        items: {
+          1: {
             id: 1,
             name: 'Tom'
           },
-          {
+          2: {
             id: 2,
             name: 'Sim'
           },
-          {
+          3: {
             id: 3,
             name: 'Quen'
           }
-        ],
+        },
         nextId: 4
       }
     }
@@ -34,20 +34,20 @@ describe('sortedPlayersArraySelector', () => {
   it('should return an array with players from state', () => {
     const fakeState = {
       players: {
-        items: [
-          {
+        items: {
+          1: {
             id: 1,
             name: 'Tom'
           },
-          {
+          2: {
             id: 2,
             name: 'Sim'
           },
-          {
+          3: {
             id: 3,
             name: 'Quen'
           }
-        ],
+        },
         nextId: 4
       }
     }
@@ -73,20 +73,20 @@ describe('indexPlayers', () => {
   it('should return an object of players with ids as keys', () => {
     const fakeState = {
       players: {
-        items: [
-          {
+        items: {
+          1: {
             id: 1,
             name: 'Tom'
           },
-          {
+          2: {
             id: 2,
             name: 'Sim'
           },
-          {
+          3: {
             id: 3,
             name: 'Quen'
           }
-        ],
+        },
         nextId: 4
       }
     }

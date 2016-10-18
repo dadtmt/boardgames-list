@@ -11,8 +11,8 @@ describe('allgamesSelector', () => {
     const fakeState = {
       games: {
         nextId: 3,
-        items: [
-          {
+        items: {
+          1: {
             id: 1,
             boardGame: 1,
             players: [
@@ -33,7 +33,7 @@ describe('allgamesSelector', () => {
               }
             ]
           },
-          {
+          2: {
             id: 2,
             boardGame: 2,
             players: [
@@ -48,13 +48,13 @@ describe('allgamesSelector', () => {
                 win: false
               },
               {
-                player:3,
+                player:2,
                 score: 0,
                 win: true
               }
             ]
           }
-        ]
+        }
       }
     }
     expect(allGamesSelector(fakeState)).to.eql(fakeState.games)
@@ -197,39 +197,39 @@ describe('populateGames', () => {
   it('should return games items with populated boardgame and player data', () => {
     const fakeState = {
       boardGames: {
-        items: [
-          {
+        items: {
+          1: {
             id: 1,
             name: 'Earth Reborn'
           },
-          {
+          2: {
             id: 2,
             name: 'Dungeon Twister'
           }
-        ],
+        },
         nextId: 3
       },
       players: {
-        items: [
-          {
+        items: {
+          1: {
             id: 1,
             name: 'Tom'
           },
-          {
+          2: {
             id: 2,
             name: 'Sim'
           },
-          {
+          3: {
             id: 3,
             name: 'Quen'
           }
-        ],
+        },
         nextId: 4
       },
       games: {
         nextId: 3,
-        items: [
-          {
+        items: {
+          1: {
             id: 1,
             boardGame: 1,
             players: [
@@ -250,7 +250,7 @@ describe('populateGames', () => {
               }
             ]
           },
-          {
+          2: {
             id: 2,
             boardGame: 2,
             players: [
@@ -271,7 +271,7 @@ describe('populateGames', () => {
               }
             ]
           }
-        ]
+        }
       }
     }
     const expected = [

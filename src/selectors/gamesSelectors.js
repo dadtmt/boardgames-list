@@ -38,6 +38,7 @@ export const populateGames = createSelector(
           populateBoardgame(boardGamesIndex),
           populatePlayers(playersIndex)
         )
-      )
+      ),
+      R.values
     )(gamesState)
 )

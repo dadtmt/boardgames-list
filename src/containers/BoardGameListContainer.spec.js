@@ -10,16 +10,16 @@ describe('BoardGameListContainer mapStateToProps', () => {
   it('should return {items: sorted by name array of items}', () => {
     const fakeState = {
       boardGames: {
-        items: [
-          {
+        items: {
+          1: {
             id: 1,
             name: 'Earth Reborn'
           },
-          {
+          2: {
             id: 2,
             name: 'Dungeon Twister'
           }
-        ],
+        },
         nextId: 3
       }
     }
