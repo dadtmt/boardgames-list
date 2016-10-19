@@ -13,11 +13,13 @@ describe('Store', () =>{
       items: {
         1: {
           id: 1,
-          name: 'Earth Reborn'
+          name: 'Earth Reborn',
+          [ItemCategory.GAME]: [1]
         },
         2: {
           id: 2,
-          name: 'Dungeon Twister'
+          name: 'Dungeon Twister',
+          [ItemCategory.GAME]: [2]
         }
       },
       nextId: 3
@@ -34,18 +36,47 @@ describe('Store', () =>{
     ))
     const expected = {
       items: {
+        1: {
+          id: 1,
+          name: 'Earth Reborn',
+          [ItemCategory.GAME]: [1]
+        },
         2: {
           id: 2,
-          name: 'Dungeon Twister'
+          name: 'Dungeon Twister',
+          [ItemCategory.GAME]: [2]
         },
         3: {
           id: 3,
           name: 'RuneWars'
         }
       },
+      linkError: {
+        payload: {
+          id: 1,
+        },
+        type: 'DELETE_BOARDGAME'
+      },
       nextId: 4
     }
     expect(store.getState().boardGames).to.deep.equal(expected)
+    store.dispatch(ItemActions.deleteItem(ItemCategory.BOARDGAME, 3))
+    const expectedAfterDelete = {
+      items: {
+        1: {
+          id: 1,
+          name: 'Earth Reborn',
+          [ItemCategory.GAME]: [1]
+        },
+        2: {
+          id: 2,
+          name: 'Dungeon Twister',
+          [ItemCategory.GAME]: [2]
+        }
+      },
+      nextId: 4
+    }
+    expect(store.getState().boardGames).to.deep.equal(expectedAfterDelete)
   })
 
   it('should set initialState for players', () => {
@@ -54,15 +85,18 @@ describe('Store', () =>{
       items: {
         1: {
           id: 1,
-          name: 'Tom'
+          name: 'Tom',
+          [ItemCategory.GAME]: [1, 2]
         },
         2: {
           id: 2,
-          name: 'Sim'
+          name: 'Sim',
+          [ItemCategory.GAME]: [1, 2]
         },
         3: {
           id: 3,
-          name: 'Quen'
+          name: 'Quen',
+          [ItemCategory.GAME]: [1, 2]
         }
       },
       nextId: 4
@@ -79,22 +113,57 @@ describe('Store', () =>{
     ))
     const expected = {
       items: {
+        1: {
+          id: 1,
+          name: 'Tom',
+          [ItemCategory.GAME]: [1, 2]
+        },
         2: {
           id: 2,
-          name: 'Sim'
+          name: 'Sim',
+          [ItemCategory.GAME]: [1, 2]
         },
         3: {
           id: 3,
-          name: 'Quen'
+          name: 'Quen',
+          [ItemCategory.GAME]: [1, 2]
         },
         4: {
           id: 4,
           name: 'Jojo'
         }
       },
+      linkError: {
+        payload: {
+          id: 1,
+        },
+        type: 'DELETE_PLAYER'
+      },
       nextId: 5
     }
     expect(store.getState().players).to.deep.equal(expected)
+    store.dispatch(ItemActions.deleteItem(ItemCategory.PLAYER, 4))
+    const expectedAfterDelete = {
+      items: {
+        1: {
+          id: 1,
+          name: 'Tom',
+          [ItemCategory.GAME]: [1, 2]
+        },
+        2: {
+          id: 2,
+          name: 'Sim',
+          [ItemCategory.GAME]: [1, 2]
+        },
+        3: {
+          id: 3,
+          name: 'Quen',
+          [ItemCategory.GAME]: [1, 2]
+        }
+      },
+      nextId: 5
+    }
+    expect(store.getState().players).to.deep.equal(expectedAfterDelete)
   })
 
   it('should set initialState for games', () => {

@@ -3,7 +3,8 @@ import { buildActionType } from '../actions/itemActions'
 import {
   getActionType,
   deleteItemFromStateByAction,
-  addItemToStateByAction
+  addItemToStateByAction,
+  lensItems
 } from './itemsUtils'
 import * as ItemsActionTypes from '../constants/itemActionTypes'
 
@@ -26,7 +27,6 @@ export const addByNameable  = (category)  =>
       addItemToStateByAction
   })
 
-//WTF linkedcategory is not in action got bed
 export const isLinked = (linkedCategory, action) => R.pipe(
   R.view(
     R.lensPath(
@@ -37,7 +37,10 @@ export const isLinked = (linkedCategory, action) => R.pipe(
       ]
     )
   ),
-  R.complement(R.isEmpty)
+  R.allPass([
+    R.complement(R.isNil),
+    R.complement(R.isEmpty)
+  ])
 )
 
 export const linkable = R.curry((linkedCategory, category, reducer) =>
@@ -51,6 +54,17 @@ export const linkable = R.curry((linkedCategory, category, reducer) =>
             R.dissoc('linkError'),
             R.flip(reducer)(action)
           )
-      )(state)
+      )(state),
+    [buildActionType(ItemsActionTypes.DELETE, linkedCategory)]:
+        (state, action) =>
+          R.over(
+            lensItems,
+            R.map(
+              R.over(
+                R.lensProp(linkedCategory),
+                R.without([R.path(['payload', 'id'], action)])
+              )
+            )
+          )(state)
   })(reducer)
 )

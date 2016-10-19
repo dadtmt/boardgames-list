@@ -1,13 +1,17 @@
+import { GAME } from '../constants/itemCategory'
+
 export default {
   boardGames: {
     items: {
       1: {
         id: 1,
-        name: 'Earth Reborn'
+        name: 'Earth Reborn',
+        [GAME]: [1]
       },
       2: {
         id: 2,
-        name: 'Dungeon Twister'
+        name: 'Dungeon Twister',
+        [GAME]: [2]
       }
     },
     nextId: 3
@@ -16,15 +20,18 @@ export default {
     items: {
       1: {
         id: 1,
-        name: 'Tom'
+        name: 'Tom',
+        [GAME]: [1, 2]
       },
       2: {
         id: 2,
-        name: 'Sim'
+        name: 'Sim',
+        [GAME]: [1, 2]
       },
       3: {
         id: 3,
-        name: 'Quen'
+        name: 'Quen',
+        [GAME]: [1, 2]
       }
     },
     nextId: 4

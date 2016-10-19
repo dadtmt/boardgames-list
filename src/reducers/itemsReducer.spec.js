@@ -31,9 +31,12 @@ describe('isLinked', () => {
         2: {
           id: 2,
           LINKED_CATEGORY: []
+        },
+        3: {
+          id: 3
         }
       },
-      nextId: 3
+      nextId: 4
     }
     const invalidDeleteAction = {
       type: 'DELETE_CATEGORY',
@@ -47,9 +50,17 @@ describe('isLinked', () => {
         id: 2
       }
     }
+    const anotherValidDeleteAction = {
+      type: 'DELETE_CATEGORY',
+      payload: {
+        id: 3
+      }
+    }
     expect(isLinked('LINKED_CATEGORY', invalidDeleteAction)(fakeState))
       .to.be.true
     expect(isLinked('LINKED_CATEGORY', validDeleteAction)(fakeState))
+      .to.be.false
+    expect(isLinked('LINKED_CATEGORY', anotherValidDeleteAction)(fakeState))
       .to.be.false
   })
 })
@@ -165,6 +176,45 @@ describe('linkable', () => {
     )
     expect(linkableDeletableReducer(stateWithLinkError, validDeleteAction))
       .to.eql(expected)
+  })
+
+  it('should remove LINKED_CATEGORY item id in CATEGORY links', () => {
+    const fakeState = {
+      items: {
+        1: {
+          id: 1,
+          LINKED_CATEGORY: [1]
+        },
+        2: {
+          id: 2,
+          LINKED_CATEGORY: [1]
+        }
+      },
+      nextId: 3
+    }
+    const action = {
+      type: 'DELETE_LINKED_CATEGORY',
+      payload: {
+        id: 1
+      }
+    }
+    const expected = {
+      items: {
+        1: {
+          id: 1,
+          LINKED_CATEGORY: []
+        },
+        2: {
+          id: 2,
+          LINKED_CATEGORY: []
+        }
+      },
+      nextId: 3
+    }
+    const linkableReducer = linkable(
+      'LINKED_CATEGORY',
+      'CATEGORY')(curriedReducer({}, {}))
+    expect(linkableReducer(fakeState, action)).to.eql(expected)
   })
 })
 
