@@ -43,6 +43,8 @@ export const isLinked = (linkedCategory, action) => R.pipe(
   ])
 )
 
+//LinkError must be somewhere else or handled by a reducer/middleware
+
 export const linkable = R.curry((linkedCategory, category, reducer) =>
   enhanceReducer({
     [buildActionType(ItemsActionTypes.DELETE, category)]:
@@ -55,6 +57,7 @@ export const linkable = R.curry((linkedCategory, category, reducer) =>
             R.flip(reducer)(action)
           )
       )(state),
+    // optimization pass CATEGORY: [ids] in delete action
     [buildActionType(ItemsActionTypes.DELETE, linkedCategory)]:
         (state, action) =>
           R.over(
@@ -65,6 +68,33 @@ export const linkable = R.curry((linkedCategory, category, reducer) =>
                 R.without([R.path(['payload', 'id'], action)])
               )
             )
-          )(state)
+          )(state),
+    [buildActionType(ItemsActionTypes.ADD, linkedCategory)]:
+        (state, action) =>
+        R.over(
+          R.lensProp('items'),
+          R.pipe(
+            R.pick(R.path(['payload', category], action)),
+            R.map(
+              R.pipe(
+                R.when(
+                  R.pipe(
+                    R.prop('LINKED_CATEGORY'),
+                    R.isNil
+                  ),
+                  R.assoc('LINKED_CATEGORY', [])
+                ),
+                R.evolve({
+                  LINKED_CATEGORY: R.flip(R.concat)(
+                    [R.path(['payload', 'id'], action)]
+                  )
+                })
+              )
+            ),
+            R.merge(
+              R.view(R.lensProp('items'))(state)
+            )
+          )
+      )(state)
   })(reducer)
 )
