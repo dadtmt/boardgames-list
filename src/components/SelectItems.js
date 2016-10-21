@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 
-const SelectItems = ({items}) => (
-  <select>
+const SelectItems = ({input, items}) => (
+  <select {...input}>
     {items.map(
       (item) =>
         <option key={item.id} value={item.id}>{item.name}</option>
@@ -10,6 +10,8 @@ const SelectItems = ({items}) => (
 )
 
 SelectItems.propTypes = {
+  input: PropTypes.object.isRequired,
+  name: PropTypes.string.isRequired,
   items: PropTypes.array.isRequired
 }
 

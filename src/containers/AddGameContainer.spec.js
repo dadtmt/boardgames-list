@@ -19,6 +19,23 @@ describe('AddGameContainer mapStateToProps', () => {
           }
         ],
         nextId: 3
+      },
+      players: {
+        items: {
+          1: {
+            id: 1,
+            name: 'Tom'
+          },
+          2: {
+            id: 2,
+            name: 'Sim'
+          },
+          3: {
+            id: 3,
+            name: 'Quen'
+          }
+        },
+        nextId: 4
       }
     }
 
@@ -31,6 +48,20 @@ describe('AddGameContainer mapStateToProps', () => {
         {
           id: 1,
           name: 'Earth Reborn'
+        }
+      ],
+      players: [
+        {
+          id: 3,
+          name: 'Quen'
+        },
+        {
+          id: 2,
+          name: 'Sim'
+        },
+        {
+          id: 1,
+          name: 'Tom'
         }
       ]
     }
