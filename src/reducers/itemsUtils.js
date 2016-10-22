@@ -15,13 +15,17 @@ export const lensItemLinksForCategory = (id, linkedCategory) =>
 
 export const lensNextId = R.lensProp('nextId')
 
+export const addItemById = (item) => R.pipe(
+  R.over(
+    lensItems,
+    R.assoc(R.prop('id', item),item)
+  ),
+  R.over(lensNextId, R.inc)
+)
+
 export const addItemToNextId = R.curry(
-  (item, state) => R.pipe(
-    R.over(lensItems, R.assoc(
-      R.view(lensNextId, state),
-      R.assoc('id', R.view(lensNextId, state), item))
-    ),
-    R.over(lensNextId, R.inc)
+  (item, state) => addItemById(
+    R.assoc('id', R.view(lensNextId, state), item)
   )(state)
 )
 
@@ -96,6 +100,9 @@ export const getLinks = (links, item) => {
 }
 
 export const addItemToStateByAction = (state, action) =>
+  addItemById(getActionPayload(action))(state)
+
+export const addItemByNameToStateByAction = (state, action) =>
   addItemIfValid(getActionPayload(action))(state)
 
 export const deleteItemFromStateByAction = (state, action) =>

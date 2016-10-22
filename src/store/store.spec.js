@@ -1,9 +1,12 @@
+import R from 'ramda'
 import { expect } from 'chai'
 import { createStore } from 'redux'
 import initialState from '../reducers/initialState'
 import rootReducer from '../reducers'
 import * as ItemActions from '../actions/itemActions'
+import * as ItemActionsCreators from '../actions/itemActionCreators'
 import * as ItemCategory from '../constants/itemCategory'
+import { gamesNextId } from '../selectors/gamesSelectors'
 
 describe('Store', () =>{
 
@@ -173,20 +176,20 @@ describe('Store', () =>{
       items: {
         1: {
           id: 1,
-          boardGame: 1,
+          [ItemCategory.BOARDGAME]: 1,
           players: [
             {
-              player:2,
+              [ItemCategory.PLAYER]: 2,
               score: 5,
               win: false
             },
             {
-              player:1,
+              [ItemCategory.PLAYER]: 1,
               score: 25,
               win: true
             },
             {
-              player:3,
+              [ItemCategory.PLAYER]: 3,
               score: 5,
               win: false
             }
@@ -194,20 +197,20 @@ describe('Store', () =>{
         },
         2: {
           id: 2,
-          boardGame: 2,
+          [ItemCategory.BOARDGAME]: 2,
           players: [
             {
-              player:3,
+              [ItemCategory.PLAYER]: 3,
               score: 5,
               win: true
             },
             {
-              player:1,
+              [ItemCategory.PLAYER]: 1,
               score: 0,
               win: false
             },
             {
-              player:2,
+              [ItemCategory.PLAYER]: 2,
               score: 0,
               win: true
             }
@@ -222,31 +225,169 @@ describe('Store', () =>{
     const store = createStore(rootReducer, initialState)
     store.dispatch(ItemActions.deleteItem(ItemCategory.GAME, 1))
     const expected = {
-      nextId: 3,
-      items: {
-        2: {
-          id: 2,
-          boardGame: 2,
-          players: [
-            {
-              player:3,
-              score: 5,
-              win: true
-            },
-            {
-              player:1,
-              score: 0,
-              win: false
-            },
-            {
-              player:2,
-              score: 0,
-              win: true
-            }
-          ]
+      boardGames: {
+        items: {
+          1: {
+            id: 1,
+            name: 'Earth Reborn',
+            [ItemCategory.GAME]: []
+          },
+          2: {
+            id: 2,
+            name: 'Dungeon Twister',
+            [ItemCategory.GAME]: [2]
+          }
+        },
+        nextId: 3
+      },
+      players: {
+        items: {
+          1: {
+            id: 1,
+            name: 'Tom',
+            [ItemCategory.GAME]: [2]
+          },
+          2: {
+            id: 2,
+            name: 'Sim',
+            [ItemCategory.GAME]: [2]
+          },
+          3: {
+            id: 3,
+            name: 'Quen',
+            [ItemCategory.GAME]: [2]
+          }
+        },
+        nextId: 4
+      },
+      games: {
+        nextId: 3,
+        items: {
+          2: {
+            id: 2,
+            [ItemCategory.BOARDGAME]: 2,
+            players: [
+              {
+                [ItemCategory.PLAYER]: 3,
+                score: 5,
+                win: true
+              },
+              {
+                [ItemCategory.PLAYER]: 1,
+                score: 0,
+                win: false
+              },
+              {
+                [ItemCategory.PLAYER]: 2,
+                score: 0,
+                win: true
+              }
+            ]
+          }
         }
       }
     }
-    expect(store.getState().games).to.deep.equal(expected)
+    const pickOnlyData = R.pickAll(['boardGames', 'players', 'games'])
+    expect(pickOnlyData(store.getState())).to.deep.equal(expected)
+    store.dispatch(ItemActions.addItemWithLinks(
+      {
+        id: 3,
+        [ItemCategory.BOARDGAME]: 1,
+        players: [
+          {
+            [ItemCategory.PLAYER]: 3,
+            score: 5,
+            win: true
+          },
+          {
+            [ItemCategory.PLAYER]: 1,
+            score: 0,
+            win: false
+          }
+        ]
+      },
+      ItemCategory.GAME,
+      [ItemCategory.BOARDGAME, ItemCategory.PLAYER]
+    ))
+    const expectedAfterAdd = {
+      boardGames: {
+        items: {
+          1: {
+            id: 1,
+            name: 'Earth Reborn',
+            [ItemCategory.GAME]: [3]
+          },
+          2: {
+            id: 2,
+            name: 'Dungeon Twister',
+            [ItemCategory.GAME]: [2]
+          }
+        },
+        nextId: 3
+      },
+      players: {
+        items: {
+          1: {
+            id: 1,
+            name: 'Tom',
+            [ItemCategory.GAME]: [2, 3]
+          },
+          2: {
+            id: 2,
+            name: 'Sim',
+            [ItemCategory.GAME]: [2]
+          },
+          3: {
+            id: 3,
+            name: 'Quen',
+            [ItemCategory.GAME]: [2, 3]
+          }
+        },
+        nextId: 4
+      },
+      games: {
+        nextId: 4,
+        items: {
+          2: {
+            id: 2,
+            [ItemCategory.BOARDGAME]: 2,
+            players: [
+              {
+                [ItemCategory.PLAYER]: 3,
+                score: 5,
+                win: true
+              },
+              {
+                [ItemCategory.PLAYER]: 1,
+                score: 0,
+                win: false
+              },
+              {
+                [ItemCategory.PLAYER]: 2,
+                score: 0,
+                win: true
+              }
+            ]
+          },
+          3: {
+            id: 3,
+            [ItemCategory.BOARDGAME]: 1,
+            players: [
+              {
+                [ItemCategory.PLAYER]: 3,
+                score: 5,
+                win: true
+              },
+              {
+                [ItemCategory.PLAYER]: 1,
+                score: 0,
+                win: false
+              }
+            ]
+          }
+        }
+      }
+    }
+    expect(pickOnlyData(store.getState())).to.deep.equal(expectedAfterAdd)
   })
 })

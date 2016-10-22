@@ -118,6 +118,33 @@ describe('lensNextId', ()=>{
   })
 })
 
+describe('addItemById', ()=>{
+  it('should add item by id and increments nextId', () => {
+    const item = {
+      id: 3,
+      name: 'Blood Bowl'
+    }
+    const expected = {
+      items: {
+        1: {
+          id: 1,
+          name: 'Earth Reborn'
+        },
+        2: {
+          id: 2,
+          name: 'Dungeon Twister'
+        },
+        3: {
+          id: 3,
+          name: 'Blood Bowl'
+        }
+      },
+      nextId: 4
+    }
+    expect(ItemsUtils.addItemById(item)(fakeState)).eql(expected)
+  })
+})
+
 describe('addItemToNextId', ()=>{
   it('should add item to items and setting item id to next id and increments item', () => {
     const item = {
@@ -140,7 +167,7 @@ describe('addItemToNextId', ()=>{
       },
       nextId: 4
     }
-    expect(ItemsUtils.addItemToNextId(item, fakeState)).eql(expected)
+    expect(ItemsUtils.addItemToNextId(item)(fakeState)).eql(expected)
   })
 })
 
@@ -350,6 +377,33 @@ describe('getLinks', () => {
 
 describe('addItemToStateByAction', () => {
   it('should add action.payload as item with id: nextId and increments nextId', () => {
+    const action = {
+      payload: {
+        id: 3
+      }
+    }
+    const expected = {
+      items: {
+        1: {
+          id: 1,
+          name: 'Earth Reborn'
+        },
+        2: {
+          id: 2,
+          name: 'Dungeon Twister'
+        },
+        3: {
+          id: 3
+        }
+      },
+      nextId: 4
+    }
+    expect(ItemsUtils.addItemToStateByAction(fakeState, action)).eql(expected)
+  })
+})
+
+describe('addItemByNameToStateByAction', () => {
+  it('should add action.payload as item with id: nextId and increments nextId', () => {
     const actionWithNewName = {
       payload: {
         name: 'Blood Bowl'
@@ -377,9 +431,9 @@ describe('addItemToStateByAction', () => {
       },
       nextId: 4
     }
-    expect(ItemsUtils.addItemToStateByAction(fakeState, actionWithNewName))
+    expect(ItemsUtils.addItemByNameToStateByAction(fakeState, actionWithNewName))
     .eql(expected)
-    expect(ItemsUtils.addItemToStateByAction(fakeState, actionWithExistingName))
+    expect(ItemsUtils.addItemByNameToStateByAction(fakeState, actionWithExistingName))
     .eql(fakeState)
   })
 })

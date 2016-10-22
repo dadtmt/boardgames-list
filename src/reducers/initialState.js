@@ -1,4 +1,4 @@
-import { GAME } from '../constants/itemCategory'
+import { BOARDGAME, GAME, PLAYER } from '../constants/itemCategory'
 
 export default {
   boardGames: {
@@ -41,20 +41,20 @@ export default {
     items: {
       1: {
         id: 1,
-        boardGame: 1,
+        [BOARDGAME]: 1,
         players: [
           {
-            player:2,
+            [PLAYER]: 2,
             score: 5,
             win: false
           },
           {
-            player:1,
+            [PLAYER]: 1,
             score: 25,
             win: true
           },
           {
-            player:3,
+            [PLAYER]: 3,
             score: 5,
             win: false
           }
@@ -62,20 +62,20 @@ export default {
       },
       2: {
         id: 2,
-        boardGame: 2,
+        [BOARDGAME]: 2,
         players: [
           {
-            player:3,
+            [PLAYER]: 3,
             score: 5,
             win: true
           },
           {
-            player:1,
+            [PLAYER]: 1,
             score: 0,
             win: false
           },
           {
-            player:2,
+            [PLAYER]: 2,
             score: 0,
             win: true
           }

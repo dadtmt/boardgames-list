@@ -5,7 +5,7 @@ import { PLAYER } from '../constants/itemCategory'
 
 const AddGamePlayer = ({name, items}) => (
   <div>
-  <Field name={`${name}_${PLAYER}`} component={SelectItems} items={items} />
+  <Field name={`${name}.${PLAYER}`} component={SelectItems} items={items} />
   <Field name={`${name}.score`} component='input' type='number' />
   <Field name={`${name}.win`} component='input' type='checkbox' />
   </div>

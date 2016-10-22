@@ -1,6 +1,9 @@
 import { connect } from 'react-redux'
 import { sortedBoardGamesArraySelector } from '../selectors/boardGamesSelectors'
 import { sortedPlayersArraySelector } from '../selectors/playersSelectors'
+import { gamesNextId } from '../selectors/gamesSelectors'
+import { createAddAction } from '../actions/itemActionCreators'
+import { BOARDGAME, PLAYER, GAME } from '../constants/itemCategory'
 import AddGame from '../components/AddGame'
 
 export function mapStateToProps(state){
@@ -10,9 +13,16 @@ export function mapStateToProps(state){
   }
 }
 
-export function mapDispatchToProps(){
+export function mapDispatchToProps(dispatch){
   return {
-    onSubmit: values => console.log(values)
+    onSubmit: values => dispatch(
+      createAddAction(
+          GAME,
+          [BOARDGAME, PLAYER],
+          gamesNextId,
+          values
+        )
+    )
   }
 }
 

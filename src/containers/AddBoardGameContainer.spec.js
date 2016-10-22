@@ -9,7 +9,7 @@ import { addItemByName } from '../actions/itemActions'
 // TOFIX unable to apply because o redux-form
 // TypeError: Cannot read property 'contextTypes' of undefined
 // describe('<AddBoardGameContainer />', () => {
-//   it.only('should renders same as <AddBoardGame />', () => {
+//   it('should renders same as <AddBoardGame />', () => {
 //     const wrapperContainer = shallow(
 //       <PureAddBoardGameContainer addItem={() => {}} />
 //     )

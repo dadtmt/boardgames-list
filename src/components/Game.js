@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react'
 import GamePlayer from './GamePlayer'
 
-const Game = ({boardGame: {name}, players}) => (
+const Game = ({BOARDGAME: {name}, players}) => (
 <div>
   <h4>Played to {name}</h4>
   <div>{players.map((item, key) => <GamePlayer key={key} {...item} /> )}</div>
@@ -9,7 +9,7 @@ const Game = ({boardGame: {name}, players}) => (
 )
 
 Game.propTypes = {
-  boardGame: PropTypes.shape(
+  BOARDGAME: PropTypes.shape(
     {
       name: PropTypes.string.isRequired
     }

@@ -6,12 +6,12 @@ import GamePlayer from './GamePlayer'
 
 const item = {
   id: 1,
-  boardGame: {
+  BOARDGAME: {
     name: 'Earth Reborn'
   },
   players: [
     {
-      player:{
+      PLAYER:{
         id: 2,
         name: 'Sim'
       },
@@ -19,7 +19,7 @@ const item = {
       win: false
     },
     {
-      player:{
+      PLAYER:{
         id: 1,
         name: 'Tom'
       },
@@ -27,7 +27,7 @@ const item = {
       win: true
     },
     {
-      player:{
+      PLAYER:{
         id: 3,
         name: 'Quen'
       },
@@ -41,7 +41,7 @@ const wrapper = shallow(<Game {...item} />)
 
 describe('<Game />', () => {
   it('should contains boardgame name', () => {
-    const expected = item.boardGame.name
+    const expected = item.BOARDGAME.name
 
     expect(wrapper.text()).to.contains(expected)
   })

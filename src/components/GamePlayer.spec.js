@@ -5,9 +5,9 @@ import GamePlayer from './GamePlayer'
 
 
 describe('<GamePlayer />', () => {
-  it('should contains player name', () => {
+  it('should contains PLAYER name', () => {
     const item = {
-      player:{
+      PLAYER:{
         id: 2,
         name: 'Sim'
       },
@@ -21,7 +21,7 @@ describe('<GamePlayer />', () => {
 
   it('should contains score', () => {
     const item = {
-      player:{
+      PLAYER:{
         id: 2,
         name: 'Sim'
       },
@@ -35,7 +35,7 @@ describe('<GamePlayer />', () => {
 
   it('should contains lose status if win is false', () => {
     const item = {
-      player:{
+      PLAYER:{
         id: 2,
         name: 'Sim'
       },
@@ -49,7 +49,7 @@ describe('<GamePlayer />', () => {
 
   it('should contains win status if win is true', () => {
     const item = {
-      player:{
+      PLAYER:{
         id: 2,
         name: 'Sim'
       },

@@ -1,7 +1,6 @@
-import {expect} from 'chai'
+import { expect } from 'chai'
 import {
-   mapStateToProps,
-   mapDispatchToProps
+   mapStateToProps
  } from './AddGameContainer'
 
 describe('AddGameContainer mapStateToProps', () => {
@@ -69,10 +68,16 @@ describe('AddGameContainer mapStateToProps', () => {
   })
 })
 
-describe('AddGameContainer mapDispatchToProps', () => {
-  it('should return {}', () => {
-    const fakeDispatch = (someFunction) => someFunction
-    const expected = {}
-    expect(mapDispatchToProps(fakeDispatch)).to.eql(expected)
-  })
-})
+// describe('AddGameContainer mapDispatchToProps', () => {
+//   it('should return {onSubmit: createAddAction}', () => {
+//     const fakeDispatch = (someFunction) => someFunction
+//     const values = {some: 'thing'}
+//     const expected = createAddAction(
+//         GAME,
+//         [BOARDGAME, PLAYER],
+//         gamesNextId,
+//         values
+//       )
+//     expect(mapDispatchToProps(fakeDispatch).onSubmit(values)).to.eql(expected)
+//   })
+// })

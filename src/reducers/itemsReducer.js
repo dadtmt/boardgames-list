@@ -4,6 +4,7 @@ import {
   getActionType,
   deleteItemFromStateByAction,
   addItemToStateByAction,
+  addItemByNameToStateByAction,
   lensItems
 } from './itemsUtils'
 import * as ItemsActionTypes from '../constants/itemActionTypes'
@@ -15,6 +16,12 @@ export const enhanceReducer = R.curry((handlers, reducer) =>
     handlers
   )(state, action))
 
+export const addable = category =>
+enhanceReducer({
+  [buildActionType(ItemsActionTypes.ADD, category)]:
+    addItemToStateByAction
+})
+
 export const deletable  = (category) =>
   enhanceReducer({
     [buildActionType(ItemsActionTypes.DELETE, category)]:
@@ -24,7 +31,7 @@ export const deletable  = (category) =>
 export const addByNameable  = (category)  =>
   enhanceReducer({
     [buildActionType(ItemsActionTypes.ADDBYNAME, category)]:
-      addItemToStateByAction
+      addItemByNameToStateByAction
   })
 
 export const isLinked = (linkedCategory, action) => R.pipe(
@@ -79,13 +86,13 @@ export const linkable = R.curry((linkedCategory, category, reducer) =>
               R.pipe(
                 R.when(
                   R.pipe(
-                    R.prop('LINKED_CATEGORY'),
+                    R.prop(linkedCategory),
                     R.isNil
                   ),
-                  R.assoc('LINKED_CATEGORY', [])
+                  R.assoc(linkedCategory, [])
                 ),
                 R.evolve({
-                  LINKED_CATEGORY: R.flip(R.concat)(
+                  [linkedCategory]: R.flip(R.concat)(
                     [R.path(['payload', 'id'], action)]
                   )
                 })

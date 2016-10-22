@@ -4,7 +4,7 @@ import { createAddAction } from './itemActionCreators'
 import { gamesNextId } from '../selectors/gamesSelectors'
 
 describe('createAddAction', () => {
-  it.only('should create an addItemWithLinks action', () => {
+  it('should create an addItemWithLinks action', () => {
     const item = {
       BOARDGAME: 2,
       players: [

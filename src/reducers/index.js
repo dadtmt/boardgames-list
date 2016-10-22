@@ -3,7 +3,7 @@ import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
 import { reducer as form } from 'redux-form'
 import createReducer from './createReducer'
-import { deletable, addByNameable, linkable } from './itemsReducer'
+import { addable, deletable, addByNameable, linkable } from './itemsReducer'
 import { BOARDGAME, PLAYER, GAME } from '../constants/itemCategory'
 import initialState from './initialState'
 
@@ -18,7 +18,10 @@ const rootReducer = combineReducers({
     addByNameable(PLAYER),
     linkable(GAME, PLAYER)
     )(createReducer(initialState.players, {})),
-  games: deletable(GAME)(createReducer(initialState.games, {})),
+  games: R.pipe(
+      addable(GAME),
+      deletable(GAME)
+    )(createReducer(initialState.games, {})),
   routing: routerReducer,
   form
 })

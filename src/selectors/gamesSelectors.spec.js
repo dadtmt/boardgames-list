@@ -15,20 +15,20 @@ describe('allgamesSelector', () => {
         items: {
           1: {
             id: 1,
-            boardGame: 1,
+            BOARDGAME: 1,
             players: [
               {
-                player:2,
+                PLAYER:2,
                 score: 5,
                 win: false
               },
               {
-                player:1,
+                PLAYER:1,
                 score: 25,
                 win: true
               },
               {
-                player:3,
+                PLAYER:3,
                 score: 5,
                 win: false
               }
@@ -36,20 +36,20 @@ describe('allgamesSelector', () => {
           },
           2: {
             id: 2,
-            boardGame: 2,
+            BOARDGAME: 2,
             players: [
               {
-                player:3,
+                PLAYER:3,
                 score: 5,
                 win: true
               },
               {
-                player:1,
+                PLAYER:1,
                 score: 0,
                 win: false
               },
               {
-                player:2,
+                PLAYER:2,
                 score: 0,
                 win: true
               }
@@ -70,20 +70,20 @@ describe('gamesNextId', () => {
         items: {
           1: {
             id: 1,
-            boardGame: 1,
+            BOARDGAME: 1,
             players: [
               {
-                player:2,
+                PLAYER:2,
                 score: 5,
                 win: false
               },
               {
-                player:1,
+                PLAYER:1,
                 score: 25,
                 win: true
               },
               {
-                player:3,
+                PLAYER:3,
                 score: 5,
                 win: false
               }
@@ -91,20 +91,20 @@ describe('gamesNextId', () => {
           },
           2: {
             id: 2,
-            boardGame: 2,
+            BOARDGAME: 2,
             players: [
               {
-                player:3,
+                PLAYER:3,
                 score: 5,
                 win: true
               },
               {
-                player:1,
+                PLAYER:1,
                 score: 0,
                 win: false
               },
               {
-                player:2,
+                PLAYER:2,
                 score: 0,
                 win: true
               }
@@ -131,20 +131,20 @@ describe('populateBoardgame', () => {
     }
     const game = {
       id: 1,
-      boardGame: 1,
+      BOARDGAME: 1,
       players: [
         {
-          player:2,
+          PLAYER:2,
           score: 5,
           win: false
         },
         {
-          player:1,
+          PLAYER:1,
           score: 25,
           win: true
         },
         {
-          player:3,
+          PLAYER:3,
           score: 5,
           win: false
         }
@@ -152,23 +152,23 @@ describe('populateBoardgame', () => {
     }
     const expected = {
       id: 1,
-      boardGame: {
+      BOARDGAME: {
         id: 1,
         name: 'Earth Reborn'
       },
       players: [
         {
-          player:2,
+          PLAYER:2,
           score: 5,
           win: false
         },
         {
-          player:1,
+          PLAYER:1,
           score: 25,
           win: true
         },
         {
-          player:3,
+          PLAYER:3,
           score: 5,
           win: false
         }
@@ -196,20 +196,20 @@ describe('populatePlayers', () => {
     }
     const game = {
       id: 1,
-      boardGame: 1,
+      BOARDGAME: 1,
       players: [
         {
-          player:'2',
+          PLAYER:'2',
           score: 5,
           win: false
         },
         {
-          player:1,
+          PLAYER:1,
           score: 25,
           win: true
         },
         {
-          player:3,
+          PLAYER:3,
           score: 5,
           win: false
         }
@@ -217,10 +217,10 @@ describe('populatePlayers', () => {
     }
     const expected = {
       id: 1,
-      boardGame: 1,
+      BOARDGAME: 1,
       players: [
         {
-          player: {
+          PLAYER: {
             id: 2,
             name: 'Sim'
           },
@@ -228,7 +228,7 @@ describe('populatePlayers', () => {
           win: false
         },
         {
-          player: {
+          PLAYER: {
             id: 1,
             name: 'Tom'
           },
@@ -236,7 +236,7 @@ describe('populatePlayers', () => {
           win: true
         },
         {
-          player: {
+          PLAYER: {
             id: 3,
             name: 'Quen'
           },
@@ -287,20 +287,20 @@ describe('populateGames', () => {
         items: {
           1: {
             id: 1,
-            boardGame: 1,
+            BOARDGAME: 1,
             players: [
               {
-                player:2,
+                PLAYER:2,
                 score: 5,
                 win: false
               },
               {
-                player:1,
+                PLAYER:1,
                 score: 25,
                 win: true
               },
               {
-                player:3,
+                PLAYER:3,
                 score: 5,
                 win: false
               }
@@ -308,20 +308,20 @@ describe('populateGames', () => {
           },
           2: {
             id: 2,
-            boardGame: 2,
+            BOARDGAME: 2,
             players: [
               {
-                player:3,
+                PLAYER:3,
                 score: 5,
                 win: true
               },
               {
-                player:1,
+                PLAYER:1,
                 score: 0,
                 win: false
               },
               {
-                player:2,
+                PLAYER:2,
                 score: 0,
                 win: true
               }
@@ -333,13 +333,13 @@ describe('populateGames', () => {
     const expected = [
       {
         id: 1,
-        boardGame: {
+        BOARDGAME: {
           id: 1,
           name: 'Earth Reborn'
         },
         players: [
           {
-            player:{
+            PLAYER:{
               id: 2,
               name: 'Sim'
             },
@@ -347,7 +347,7 @@ describe('populateGames', () => {
             win: false
           },
           {
-            player:{
+            PLAYER:{
               id: 1,
               name: 'Tom'
             },
@@ -355,7 +355,7 @@ describe('populateGames', () => {
             win: true
           },
           {
-            player:{
+            PLAYER:{
               id: 3,
               name: 'Quen'
             },
@@ -366,13 +366,13 @@ describe('populateGames', () => {
       },
       {
         id: 2,
-        boardGame: {
+        BOARDGAME: {
           id: 2,
           name: 'Dungeon Twister'
         },
         players: [
           {
-            player:{
+            PLAYER:{
               id: 3,
               name: 'Quen'
             },
@@ -380,7 +380,7 @@ describe('populateGames', () => {
             win: true
           },
           {
-            player:{
+            PLAYER:{
               id: 1,
               name: 'Tom'
             },
@@ -388,7 +388,7 @@ describe('populateGames', () => {
             win: false
           },
           {
-            player:{
+            PLAYER:{
               id: 2,
               name: 'Sim'
             },
