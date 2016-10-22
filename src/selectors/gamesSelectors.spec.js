@@ -1,6 +1,7 @@
 import { expect } from 'chai'
 import {
   allGamesSelector,
+  gamesNextId,
   populateBoardgame,
   populatePlayers,
   populateGames
@@ -58,6 +59,61 @@ describe('allgamesSelector', () => {
       }
     }
     expect(allGamesSelector(fakeState)).to.eql(fakeState.games)
+  })
+})
+
+describe('gamesNextId', () => {
+  it('should return games nextId', () => {
+    const fakeState = {
+      games: {
+        nextId: 3,
+        items: {
+          1: {
+            id: 1,
+            boardGame: 1,
+            players: [
+              {
+                player:2,
+                score: 5,
+                win: false
+              },
+              {
+                player:1,
+                score: 25,
+                win: true
+              },
+              {
+                player:3,
+                score: 5,
+                win: false
+              }
+            ]
+          },
+          2: {
+            id: 2,
+            boardGame: 2,
+            players: [
+              {
+                player:3,
+                score: 5,
+                win: true
+              },
+              {
+                player:1,
+                score: 0,
+                win: false
+              },
+              {
+                player:2,
+                score: 0,
+                win: true
+              }
+            ]
+          }
+        }
+      }
+    }
+    expect(gamesNextId(fakeState)).to.equal(3)
   })
 })
 

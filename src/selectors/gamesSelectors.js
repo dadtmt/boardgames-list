@@ -3,9 +3,14 @@ import R from 'ramda'
 import { createSelector } from 'reselect'
 import { indexBoardGames } from './boardGamesSelectors'
 import { indexPlayers } from './playersSelectors'
-import { lensItems } from '../reducers/itemsUtils'
+import { lensItems, lensNextId } from '../reducers/itemsUtils'
 
 export const allGamesSelector = R.prop('games')
+
+export const gamesNextId = createSelector(
+  allGamesSelector,
+  R.view(lensNextId)
+)
 
 export const populateBoardgame = R.curry(
   (boardGamesIndex, game) =>
