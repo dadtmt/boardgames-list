@@ -307,7 +307,46 @@ describe('deleteItemById', () => {
   })
 })
 
+describe ('nestedObjectToPairs', () => {
+  it('should flatten an object', () => {
+    expect(ItemsUtils.nestedObjectToPairs({
+      any: 'thing',
+      many: {
+        thing1:{
+          some: 'thing'
+        }
+      }
+    })).to.eql([
+      ['any', 'thing'],
+      ['many.thing1.some', 'thing']
+    ])
+  })
+})
 
+const item = {
+  id: 1,
+  LINK1: 2,
+  any: {
+    1: {
+      LINK2: 3,
+      some: 'thing'
+    },
+    2: {
+      LINK2: 4,
+      some: 'thing'
+    }
+  }
+}
+
+describe('getLinks', () => {
+  it('should return an object with links', () => {
+    const expected = {
+      'LINK1': [2],
+      'LINK2': [3, 4]
+    }
+    expect(ItemsUtils.getLinks(['LINK1', 'LINK2'], item)).to.eql(expected)
+  })
+})
 
 describe('addItemToStateByAction', () => {
   it('should add action.payload as item with id: nextId and increments nextId', () => {

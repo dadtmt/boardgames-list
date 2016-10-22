@@ -220,9 +220,11 @@ describe('linkable', () => {
   it('should add LINKED_CATEGORY item id as link in CATEGORY item when specified in action', () => {
     const action = {
       type: 'ADD_LINKED_CATEGORY',
-      payload : {
-        id: 4,
+      links: {
         CATEGORY: [1, 3]
+      },
+      payload : {
+        id: 4
       }
     }
     const fakeState = {

@@ -69,6 +69,32 @@ export const addItemIfValid = item =>
 
 export const deleteItemById = id => R.over(lensItems, R.dissoc(String(id)))
 
+export const nestedObjectToPairs = obj_ => R.chain(([k, v]) => {
+  if (typeof v == 'object') {
+    return R.map(([k_, v_]) => [`${k}.${k_}`, v_], nestedObjectToPairs(v))
+  } else {
+    return [[k, v]]
+  }
+}, R.toPairs(obj_))
+
+export const getLinks = (links, item) => {
+  const result = R.pipe(
+    R.invertObj,
+    R.map(R.always([]))
+  )(links)
+  const storeLinkIds = (acc, value) => {
+    R.forEach(
+      link => {
+        if(R.head(value).indexOf(link) != -1) {
+          acc = R.over(R.lensProp(link),R.flip(R.concat)(R.tail(value)), acc)
+        }
+      }
+    )(links)
+    return acc
+  }
+  return R.reduce(storeLinkIds, result, nestedObjectToPairs(item))
+}
+
 export const addItemToStateByAction = (state, action) =>
   addItemIfValid(getActionPayload(action))(state)
 

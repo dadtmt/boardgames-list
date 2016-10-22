@@ -74,7 +74,7 @@ export const linkable = R.curry((linkedCategory, category, reducer) =>
         R.over(
           R.lensProp('items'),
           R.pipe(
-            R.pick(R.path(['payload', category], action)),
+            R.pick(R.path(['links', category], action)),
             R.map(
               R.pipe(
                 R.when(
