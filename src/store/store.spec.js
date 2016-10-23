@@ -4,9 +4,7 @@ import { createStore } from 'redux'
 import initialState from '../reducers/initialState'
 import rootReducer from '../reducers'
 import * as ItemActions from '../actions/itemActions'
-import * as ItemActionsCreators from '../actions/itemActionCreators'
 import * as ItemCategory from '../constants/itemCategory'
-import { gamesNextId } from '../selectors/gamesSelectors'
 
 describe('Store', () =>{
 

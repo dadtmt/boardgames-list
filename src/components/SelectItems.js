@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 
 const SelectItems = ({input, items}) => (
   <select {...input}>
+    <option />
     {items.map(
       (item) =>
         <option key={item.id} value={item.id}>{item.name}</option>

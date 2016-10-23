@@ -1,4 +1,3 @@
-import R from 'ramda'
 import { expect } from 'chai'
 import * as ItemActions from './itemActions'
 
