@@ -1,29 +1,36 @@
+import R from 'ramda'
 import { connect } from 'react-redux'
 import { sortedBoardGamesArraySelector } from '../selectors/boardGamesSelectors'
-import { sortedPlayersArraySelector } from '../selectors/playersSelectors'
 import { gamesNextId } from '../selectors/gamesSelectors'
-import { createAddAction } from '../actions/itemActionCreators'
 import { BOARDGAME, PLAYER, GAME } from '../constants/itemCategory'
+import { addItemWithLinks } from '../actions/itemActions'
 import AddGame from '../components/AddGame'
 
 export function mapStateToProps(state){
   return {
     boardGames: sortedBoardGamesArraySelector(state),
-    players: sortedPlayersArraySelector(state)
+    nextId: gamesNextId(state)
   }
 }
 
 export function mapDispatchToProps(dispatch){
   return {
-    onSubmit: values => dispatch(
-      createAddAction(
+    onSubmit: (nextId, values) => dispatch(
+      addItemWithLinks(
+          R.assoc('id', nextId, values),
           GAME,
-          [BOARDGAME, PLAYER],
-          gamesNextId,
-          values
+          [BOARDGAME, PLAYER]
         )
     )
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddGame)
+function mergeProps(stateProps, dispatchProps, ownProps) {
+  return {
+    ...ownProps,
+    ...stateProps,
+    onSubmit: values => dispatchProps.onSubmit(stateProps.nextId, values)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(AddGame)

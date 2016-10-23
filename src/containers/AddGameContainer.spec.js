@@ -4,7 +4,7 @@ import {
  } from './AddGameContainer'
 
 describe('AddGameContainer mapStateToProps', () => {
-  it('should return {}', () => {
+  it('should return {boardGames, gameNextId}', () => {
     const fakeState = {
       boardGames: {
         items: [
@@ -19,7 +19,7 @@ describe('AddGameContainer mapStateToProps', () => {
         ],
         nextId: 3
       },
-      players: {
+      games: {
         items: {
           1: {
             id: 1,
@@ -49,35 +49,8 @@ describe('AddGameContainer mapStateToProps', () => {
           name: 'Earth Reborn'
         }
       ],
-      players: [
-        {
-          id: 3,
-          name: 'Quen'
-        },
-        {
-          id: 2,
-          name: 'Sim'
-        },
-        {
-          id: 1,
-          name: 'Tom'
-        }
-      ]
+      nextId: 4
     }
     expect(mapStateToProps(fakeState)).to.eql(expected)
   })
 })
-
-// describe('AddGameContainer mapDispatchToProps', () => {
-//   it('should return {onSubmit: createAddAction}', () => {
-//     const fakeDispatch = (someFunction) => someFunction
-//     const values = {some: 'thing'}
-//     const expected = createAddAction(
-//         GAME,
-//         [BOARDGAME, PLAYER],
-//         gamesNextId,
-//         values
-//       )
-//     expect(mapDispatchToProps(fakeDispatch).onSubmit(values)).to.eql(expected)
-//   })
-// })
