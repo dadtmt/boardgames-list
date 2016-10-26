@@ -1,22 +1,24 @@
 import React, { PropTypes } from 'react'
 import { Field } from 'redux-form'
 import AddGamePlayer from '../containers/AddGamePlayerContainer'
+import { Button, Glyphicon } from 'react-bootstrap'
 
 const AddGamePlayers = ({fields}) => (
   <div>
-    <button type='button' title='add game player' onClick={() => fields.push({})} >
+    <Button type='button' title='add game player' onClick={() => fields.push({})} >
       add a player to this game
-    </button>
+    </Button>
     {fields.map(
       (field, index) =>
         <div key={index}>
-          <button
+          <Button
             type='button'
             title='remove game player'
             onClick={() => fields.remove(index)}
+            bsStyle='danger'
           >
-            remove this game player
-          </button>
+            <Glyphicon glyph='trash' />
+          </Button>
           <Field name={field} component={AddGamePlayer} index={index} />
         </div>
     )}

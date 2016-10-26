@@ -3,12 +3,20 @@ import { reduxForm, Field, FieldArray } from 'redux-form'
 import SelectItems from './SelectItems'
 import AddGamePlayers from './AddGamePlayers'
 import { BOARDGAME } from '../constants/itemCategory'
+import {  Button } from 'react-bootstrap'
 
 const AddGame = ({handleSubmit, boardGames}) => (
   <form onSubmit={handleSubmit}>
-    <Field name={BOARDGAME} component={SelectItems} items={boardGames} />
+    <Field
+      name={BOARDGAME}
+      component={SelectItems}
+      items={boardGames}
+      placeholder='Select a boardgame'
+      controlId='selectBoardGame'
+      label='What we play:'
+    />
     <FieldArray name='players' component={AddGamePlayers} />
-    <button type='submit'>Add game</button>
+    <Button type='submit'>Add game</Button>
   </form>
 )
 
