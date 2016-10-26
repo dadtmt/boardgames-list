@@ -11,9 +11,6 @@ describe('deletableItem', () => {
     const DeletAbleItem = deletableItem(DumbComponent)
     const wrapper = shallow(<DeletAbleItem onDelete={onDelete} />)
     const deleteButtonWrapper = wrapper.find('button')
-    const expected = 'delete'
-
-    expect(deleteButtonWrapper.text()).to.equal(expected)
     deleteButtonWrapper.simulate('click')
     expect(onDelete.calledOnce).to.be.true
   })

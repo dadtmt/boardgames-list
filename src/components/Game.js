@@ -1,11 +1,11 @@
 import React, {PropTypes} from 'react'
+import { Panel } from 'react-bootstrap'
 import GamePlayer from './GamePlayer'
 
 const Game = ({BOARDGAME: {name}, players}) => (
-<div>
-  <h4>Played to {name}</h4>
-  <div>{players.map((item, key) => <GamePlayer key={key} {...item} /> )}</div>
-</div>
+  <Panel header={<h4>Played to {name}</h4>}>
+    {players.map((item, key) => <GamePlayer key={key} {...item} /> )}
+  </Panel>
 )
 
 Game.propTypes = {

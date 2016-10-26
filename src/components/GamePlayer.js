@@ -1,9 +1,16 @@
 import React, {PropTypes} from 'react'
+import { Badge, Col, Label } from 'react-bootstrap'
 
 const GamePlayer = ({PLAYER: {name}, score, win}) => (
-<div>
-  <p>{name} score: {score} {win ? 'WIN' : 'LOSE'}</p>
-</div>
+  <Col sm={3}>
+    <p>
+      <Label bsStyle='primary'>{name}</Label>
+      <Label bsStyle='info'>score: <Badge>{score}</Badge></Label>
+      {win ?
+        (<Badge bsStyle='success'>WIN</Badge>) :
+        (<Badge bsStyle='danger'>LOSE</Badge>)}
+      </p>
+  </Col>
 )
 
 GamePlayer.propTypes = {
