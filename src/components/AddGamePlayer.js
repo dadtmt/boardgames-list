@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import { Field } from 'redux-form'
 import { Col } from 'react-bootstrap'
 import FieldGroup from './FieldGroup'
+import CheckBoxGroup from './CheckBoxGroup'
 import SelectItems from './SelectItems'
 import { PLAYER } from '../constants/itemCategory'
 
@@ -29,10 +30,8 @@ const AddGamePlayer = ({name, items}) => (
     <Col sm={2}>
       <Field
         name={`${name}.win`}
-        component={FieldGroup}
-        type='checkbox'
-        controlId={`${name}_win`}
-        label='is a winner ?'
+        component={CheckBoxGroup}
+        label='is a winner'
       />
     </Col>
   </div>

@@ -1,15 +1,21 @@
 import React, {PropTypes} from 'react'
-import { Badge, Col, Label } from 'react-bootstrap'
+import { Alert, Col, Label, Row } from 'react-bootstrap'
 
 const GamePlayer = ({PLAYER: {name}, score, win}) => (
   <Col sm={3}>
-    <p>
-      <Label bsStyle='primary'>{name}</Label>
-      <Label bsStyle='info'>score: <Badge>{score}</Badge></Label>
-      {win ?
-        (<Badge bsStyle='success'>WIN</Badge>) :
-        (<Badge bsStyle='danger'>LOSE</Badge>)}
-      </p>
+    <Alert bsStyle={win ? 'success':'danger'}>
+    <Row>
+      <Col xs={4}>
+      <strong>{name}</strong>
+      </Col>
+      <Col xs={4}>
+      <Label bsStyle='info'>score: {score}</Label>
+      </Col>
+      <Col xs={4}>
+        <strong>{win ? 'WIN' : 'LOSE'}</strong>
+      </Col>
+      </Row>
+      </Alert>
   </Col>
 )
 

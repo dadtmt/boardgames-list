@@ -43,7 +43,7 @@ describe('<Game />', () => {
   it('should contains boardgame name', () => {
     const expected = item.BOARDGAME.name
 
-    expect(wrapper.text()).to.contains(expected)
+    expect(wrapper.html()).to.contains(expected)
   })
 
   const gamePlayerWrappers = wrapper.find(GamePlayer)

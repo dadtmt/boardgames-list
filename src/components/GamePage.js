@@ -1,7 +1,7 @@
 import React from 'react'
 import AddGame from '../containers/AddGameContainer'
 import GameList from '../containers/GameListContainer'
-import { Button, Collapse, Glyphicon, Panel } from 'react-bootstrap'
+import { Button, Collapse, FormGroup, Glyphicon, Panel } from 'react-bootstrap'
 
 class GamePage extends React.Component {
   constructor(...args) {
@@ -13,9 +13,11 @@ class GamePage extends React.Component {
   render() {
     return (
       <div>
-        <Button bsStyle='primary' onClick={()=> this.setState({ showAddForm: !this.state.showAddForm })}>
-          <Glyphicon glyph={this.state.showAddForm ? 'minus':'plus'} />
-        </Button>
+        <FormGroup>
+          <Button bsStyle='primary' onClick={()=> this.setState({ showAddForm: !this.state.showAddForm })}>
+            <Glyphicon glyph={this.state.showAddForm ? 'minus':'plus'} />
+          </Button>
+        </FormGroup>
         <Collapse in={this.state.showAddForm}>
           <Panel>
             <AddGame />

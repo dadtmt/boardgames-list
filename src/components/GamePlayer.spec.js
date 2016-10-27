@@ -16,7 +16,7 @@ describe('<GamePlayer />', () => {
     }
     const wrapper = shallow(<GamePlayer {...item} />)
     const expected = 'Sim'
-    expect(wrapper.text()).to.contains(expected)
+    expect(wrapper.html()).to.contains(expected)
   })
 
   it('should contains score', () => {
@@ -30,7 +30,7 @@ describe('<GamePlayer />', () => {
     }
     const wrapper = shallow(<GamePlayer {...item} />)
     const expected = 5
-    expect(wrapper.text()).to.contains(expected)
+    expect(wrapper.html()).to.contains(expected)
   })
 
   it('should contains lose status if win is false', () => {
@@ -44,7 +44,7 @@ describe('<GamePlayer />', () => {
     }
     const wrapper = shallow(<GamePlayer {...item} />)
     const expected = 'LOSE'
-    expect(wrapper.text()).to.contains(expected)
+    expect(wrapper.html()).to.contains(expected)
   })
 
   it('should contains win status if win is true', () => {
@@ -58,6 +58,6 @@ describe('<GamePlayer />', () => {
     }
     const wrapper = shallow(<GamePlayer {...item} />)
     const expected = 'WIN'
-    expect(wrapper.text()).to.contains(expected)
+    expect(wrapper.html()).to.contains(expected)
   })
 })

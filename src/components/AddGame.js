@@ -3,9 +3,9 @@ import { reduxForm, Field, FieldArray } from 'redux-form'
 import SelectItems from './SelectItems'
 import AddGamePlayers from './AddGamePlayers'
 import { BOARDGAME } from '../constants/itemCategory'
-import {  Button } from 'react-bootstrap'
+import {  Button, FormGroup, Glyphicon } from 'react-bootstrap'
 
-const AddGame = ({handleSubmit, boardGames}) => (
+const AddGame = ({handleSubmit, reset, boardGames}) => (
   <form onSubmit={handleSubmit}>
     <Field
       name={BOARDGAME}
@@ -16,12 +16,32 @@ const AddGame = ({handleSubmit, boardGames}) => (
       label='What we play:'
     />
     <FieldArray name='players' component={AddGamePlayers} />
-    <Button type='submit'>Add game</Button>
+    <FormGroup className='text-center'>
+      <Button
+        type='submit'
+        bsStyle='primary'
+        title='Save game'
+        bsSize='large'
+      >
+        <Glyphicon glyph='ok' />
+      </Button>
+      {' '}
+      <Button
+        type='button'
+        bsStyle='warning'
+        title='Reset'
+        bsSize='large'
+        onClick={reset}
+      >
+        <Glyphicon glyph='remove' />
+      </Button>
+    </FormGroup>
   </form>
 )
 
 AddGame.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired,
   boardGames: PropTypes.array.isRequired
 }
 
