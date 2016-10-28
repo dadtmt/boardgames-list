@@ -1,23 +1,18 @@
 import React, { PropTypes } from 'react'
-import { Button, FormGroup, Glyphicon } from 'react-bootstrap'
+import { addUi } from './ui'
 
 const deletableItem = WrappedComponent => {
   const DeletableItemWrapper = class extends React.Component {
     render() {
       return (
-        <div>
-          <FormGroup>
-            <Button
-              type='button'
-              title='delete'
-              onClick={this.props.onDelete}
-              bsStyle='danger'
-            >
-              <Glyphicon glyph='trash' />
-            </Button>
-            </FormGroup>
-            <WrappedComponent {...this.props} />
-        </div>
+        <WrappedComponent {...addUi({
+          glyph: 'trash',
+          buttonProps:{
+            title: 'delete',
+            bsStyle: 'danger',
+            onClick: this.props.onDelete
+          }
+        })(this.props)} />
       )
     }
   }
