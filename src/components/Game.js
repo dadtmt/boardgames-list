@@ -6,10 +6,10 @@ import GamePlayer from './GamePlayer'
 const Game = ({BOARDGAME: {name}, players, uis}) => {
   const header = (
     <Row>
-      <Col xs={11}>
+      <Col xs={9}>
         <h4>We played to {name}</h4>
       </Col>
-      <Col xs={1}>
+      <Col xs={3}>
         {uis && (<ItemUi uis={uis} />)}
       </Col>
     </Row>

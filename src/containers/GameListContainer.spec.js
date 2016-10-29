@@ -1,4 +1,5 @@
 import {expect} from 'chai'
+import { initialize } from 'redux-form'
 import {
    mapStateToProps,
    mapDispatchToProps
@@ -120,7 +121,28 @@ describe('GameListContainer mapStateToProps', () => {
               score: 5,
               win: false
             }
-          ]
+          ],
+          values: {
+            id: 1,
+            BOARDGAME: 1,
+            players: [
+              {
+                PLAYER:2,
+                score: 5,
+                win: false
+              },
+              {
+                PLAYER:1,
+                score: 25,
+                win: true
+              },
+              {
+                PLAYER:3,
+                score: 5,
+                win: false
+              }
+            ]
+          }
         },
         {
           id: 2,
@@ -153,7 +175,28 @@ describe('GameListContainer mapStateToProps', () => {
               score: 0,
               win: true
             }
-          ]
+          ],
+          values: {
+            id: 2,
+            BOARDGAME: 2,
+            players: [
+              {
+                PLAYER:3,
+                score: 5,
+                win: true
+              },
+              {
+                PLAYER:1,
+                score: 0,
+                win: false
+              },
+              {
+                PLAYER:2,
+                score: 0,
+                win: true
+              }
+            ]
+          }
         }
       ]
     }
@@ -169,5 +212,64 @@ describe('GameListContainer mapDispatchToProps', () => {
     }
     expect(mapDispatchToProps(fakeDispatch).itemsHOF(fakeItem).onDelete())
     .to.eql(deleteItem(GAME, 1))
+  })
+  it('should return {itemsHOF: a higher function that build onEdit function', () => {
+    const fakeDispatch = (someFunction) => someFunction
+    const fakeItem = {
+      id: 1,
+      BOARDGAME: {
+        id: 1,
+        name: 'Earth Reborn'
+      },
+      players: [
+        {
+          PLAYER:{
+            id: 2,
+            name: 'Sim'
+          },
+          score: 5,
+          win: false
+        },
+        {
+          PLAYER:{
+            id: 1,
+            name: 'Tom'
+          },
+          score: 25,
+          win: true
+        },
+        {
+          PLAYER:{
+            id: 3,
+            name: 'Quen'
+          },
+          score: 5,
+          win: false
+        }
+      ],
+      values: {
+        id: 1,
+        BOARDGAME: 1,
+        players: [
+          {
+            PLAYER:2,
+            score: 5,
+            win: false
+          },
+          {
+            PLAYER:1,
+            score: 25,
+            win: true
+          },
+          {
+            PLAYER:3,
+            score: 5,
+            win: false
+          }
+        ]
+      }
+    }
+    expect(mapDispatchToProps(fakeDispatch).itemsHOF(fakeItem).onEdit())
+    .to.eql(initialize('addGame', fakeItem.values))
   })
 })

@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react'
 import { Button, ButtonToolbar, Glyphicon } from 'react-bootstrap'
 
 const ItemUi = ({uis}) => (
-        <ButtonToolbar>
+        <ButtonToolbar className='pull-right'>
           {uis.map(({glyph, buttonProps}, key) =>
             <Button
               type='button'

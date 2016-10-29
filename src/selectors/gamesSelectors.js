@@ -39,11 +39,11 @@ export const populateGames = createSelector(
   (gamesState, boardGamesIndex, playersIndex) =>
     R.pipe(
       R.view(lensItems),
-      R.map(
+      R.map(item =>
         R.pipe(
           populateBoardgame(boardGamesIndex),
           populatePlayers(playersIndex)
-        )
+        )(R.assoc('values', item, item))
       ),
       R.values
     )(gamesState)

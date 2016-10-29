@@ -362,7 +362,28 @@ describe('populateGames', () => {
             score: 5,
             win: false
           }
-        ]
+        ],
+        values: {
+          id: 1,
+          BOARDGAME: 1,
+          players: [
+            {
+              PLAYER:2,
+              score: 5,
+              win: false
+            },
+            {
+              PLAYER:1,
+              score: 25,
+              win: true
+            },
+            {
+              PLAYER:3,
+              score: 5,
+              win: false
+            }
+          ]
+        }
       },
       {
         id: 2,
@@ -395,7 +416,28 @@ describe('populateGames', () => {
             score: 0,
             win: true
           }
-        ]
+        ],
+        values: {
+          id: 2,
+          BOARDGAME: 2,
+          players: [
+            {
+              PLAYER:3,
+              score: 5,
+              win: true
+            },
+            {
+              PLAYER:1,
+              score: 0,
+              win: false
+            },
+            {
+              PLAYER:2,
+              score: 0,
+              win: true
+            }
+          ]
+        }
       }
     ]
     expect(populateGames(fakeState)).to.eql(expected)
