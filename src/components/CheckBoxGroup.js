@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { Checkbox } from 'react-bootstrap'
 
 const FieldGroup = ({input, label}) => (
-    <Checkbox {...input} >{label}</Checkbox >
+    <Checkbox {...input} checked={input.value} >{label}</Checkbox >
 )
 
 FieldGroup.propTypes = {
