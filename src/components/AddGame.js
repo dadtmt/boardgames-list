@@ -50,6 +50,3 @@ export {AddGame as PureAddGame}
 export default reduxForm({
   form: 'addGame'
 })(AddGame)
-
-// Next remove incorrect spec files
-// Thunk add game

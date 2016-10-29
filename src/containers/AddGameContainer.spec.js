@@ -49,7 +49,9 @@ describe('AddGameContainer mapStateToProps', () => {
           name: 'Earth Reborn'
         }
       ],
-      nextId: 4
+      initialValues: {
+        id: 4
+      }
     }
     expect(mapStateToProps(fakeState)).to.eql(expected)
   })

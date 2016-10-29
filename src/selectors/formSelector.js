@@ -3,12 +3,19 @@ import { createSelector } from 'reselect'
 import { allPlayersSelector } from './playersSelectors'
 const NA = 'N/A'
 
+// use this http://redux-form.com/6.1.1/docs/api/FormValueSelector.md/
+
 export const selectedPlayers = R.pipe(
   R.pathOr([],['form', 'addGame', 'values', 'players']),
-  R.map(R.propOr(NA, 'PLAYER'))
+  R.map(
+    R.pipe(
+      R.propOr(NA, 'PLAYER'),
+      String
+    )
+  )
 )
 
-export const availableAndSelectedPlayers = createSelector(
+export const availableAndSelectedPlayersSelector = createSelector(
   [selectedPlayers, allPlayersSelector],
   (selection, players) => ({
     selected: R.map(
@@ -21,8 +28,8 @@ export const availableAndSelectedPlayers = createSelector(
   })
 )
 
-export const availableItemsAndSelectedForIndex = (index, state) =>
-  R.converge(
+export const availableItemsAndSelectedForIndex = (index, state) =>{
+  return R.converge(
     R.pipe(
       R.append,
       R.without(NA),
@@ -39,4 +46,4 @@ export const availableItemsAndSelectedForIndex = (index, state) =>
       ),
       R.prop('available')
     ]
-  )(availableAndSelectedPlayers(state))
+  )(availableAndSelectedPlayersSelector(state))}

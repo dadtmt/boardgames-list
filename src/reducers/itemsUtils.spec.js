@@ -143,6 +143,26 @@ describe('addItemById', ()=>{
     }
     expect(ItemsUtils.addItemById(item)(fakeState)).eql(expected)
   })
+  it('should not increments id if id<nextId (update)', () => {
+    const item = {
+      id: 2,
+      name: 'Dungeon'
+    }
+    const expected = {
+      items: {
+        1: {
+          id: 1,
+          name: 'Earth Reborn'
+        },
+        2: {
+          id: 2,
+          name: 'Dungeon'
+        }
+      },
+      nextId: 3
+    }
+    expect(ItemsUtils.addItemById(item)(fakeState)).to.eql(expected)
+  })
 })
 
 describe('addItemToNextId', ()=>{

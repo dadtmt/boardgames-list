@@ -20,7 +20,10 @@ export const addItemById = (item) => R.pipe(
     lensItems,
     R.assoc(R.prop('id', item),item)
   ),
-  R.over(lensNextId, R.inc)
+  R.over(lensNextId, R.when(
+    R.equals(R.prop('id', item)),
+    R.inc
+  ))
 )
 
 export const addItemToNextId = R.curry(

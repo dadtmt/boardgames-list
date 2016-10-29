@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import {
   selectedPlayers,
-  availableAndSelectedPlayers,
+  availableAndSelectedPlayersSelector,
   availableItemsAndSelectedForIndex
 } from './formSelector'
 
@@ -177,8 +177,8 @@ describe('selectedPlayers', () => {
   })
 })
 
-describe('availableAndSelectedPlayers', () => {
-  it('should returns availableAndSelectedPlayers form state', () => {
+describe('availableAndSelectedPlayersSelector', () => {
+  it('should returns availableAndSelectedPlayersSelector form state', () => {
     const expected = {
       available: [
         {
@@ -239,8 +239,8 @@ describe('availableAndSelectedPlayers', () => {
       ],
       selected: []
     }
-    expect(availableAndSelectedPlayers(fakeState)).to.eql(expected)
-    expect(availableAndSelectedPlayers(emptyFormState)).to.eql(expectedWithFormEmpty)
+    expect(availableAndSelectedPlayersSelector(fakeState)).to.eql(expected)
+    expect(availableAndSelectedPlayersSelector(emptyFormState)).to.eql(expectedWithFormEmpty)
   })
 })
 

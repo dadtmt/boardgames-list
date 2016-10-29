@@ -1,4 +1,3 @@
-import R from 'ramda'
 import { connect } from 'react-redux'
 import { sortedBoardGamesArraySelector } from '../selectors/boardGamesSelectors'
 import { gamesNextId } from '../selectors/gamesSelectors'
@@ -9,15 +8,17 @@ import AddGame from '../components/AddGame'
 export function mapStateToProps(state){
   return {
     boardGames: sortedBoardGamesArraySelector(state),
-    nextId: gamesNextId(state)
+    initialValues: {
+      id: gamesNextId(state)
+    }
   }
 }
 
 export function mapDispatchToProps(dispatch){
   return {
-    onSubmit: (nextId, values) => dispatch(
+    onSubmit: (values) => dispatch(
       addItemWithLinks(
-          R.assoc('id', nextId, values),
+          values,
           GAME,
           [BOARDGAME, PLAYER]
         )
@@ -25,12 +26,4 @@ export function mapDispatchToProps(dispatch){
   }
 }
 
-function mergeProps(stateProps, dispatchProps, ownProps) {
-  return {
-    ...ownProps,
-    ...stateProps,
-    onSubmit: values => dispatchProps.onSubmit(stateProps.nextId, values)
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(AddGame)
+export default connect(mapStateToProps, mapDispatchToProps)(AddGame)

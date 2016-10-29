@@ -7,8 +7,7 @@ const SelectItems = ({input, placeholder, items, controlId, label}) => (
     <FormControl componentClass='select' {...input}>
       <option disabled hidden value=''>{placeholder}</option>
       {items.map(
-        (item) =>
-          <option key={item.id} value={item.id}>{item.name}</option>
+        (item) => <option key={item.id} value={item.id}>{item.name}</option>
       )}
     </FormControl>
   </FormGroup>
