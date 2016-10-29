@@ -8,7 +8,7 @@ const wrapper = shallow(<ItemUi uis={[
     buttonProps: {
       title: 'update',
       bsStyle: 'warning',
-      onClick: 'onUpdate'
+      onClick: () => 'onUpdate'
     },
     glyph: 'update'
   },
@@ -17,13 +17,13 @@ const wrapper = shallow(<ItemUi uis={[
     buttonProps:{
       title: 'delete',
       bsStyle: 'danger',
-      onClick: 'onDelete'
+      onClick: () => 'onDelete'
     }
   }
 ]} />)
 
 describe('<ItemUi />', () => {
   it('should as many Button as ui', () => {
-    expect(wrapper.find('Button')).to.have.length(2)
+    expect(wrapper.find('ButtonToolbar').children()).to.have.length(2)
   })
 })

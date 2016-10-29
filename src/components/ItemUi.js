@@ -1,8 +1,8 @@
 import React, {PropTypes} from 'react'
-import { Button, FormGroup, Glyphicon } from 'react-bootstrap'
+import { Button, ButtonToolbar, Glyphicon } from 'react-bootstrap'
 
 const ItemUi = ({uis}) => (
-        <FormGroup>
+        <ButtonToolbar>
           {uis.map(({glyph, buttonProps}, key) =>
             <Button
               type='button'
@@ -11,7 +11,7 @@ const ItemUi = ({uis}) => (
             >
               <Glyphicon glyph={glyph} />
             </Button>)}
-        </FormGroup>
+        </ButtonToolbar>
   )
 
 ItemUi.propTypes = {

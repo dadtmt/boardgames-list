@@ -4,8 +4,8 @@ import { expect } from 'chai'
 import deletableItem from './deletableItem'
 
 describe('deletableItem', () => {
-  it('should add a delete button', () => {
-    const onDelete = 'some function'
+  it('should add delete ui', () => {
+    const onDelete = () => 'delete'
     const DumbComponent = () => <div>dumb</div>
     const DeletableItem = deletableItem(DumbComponent)
     const wrapper = shallow(<DeletableItem onDelete={onDelete} />)
@@ -15,7 +15,7 @@ describe('deletableItem', () => {
         buttonProps:{
           title: 'delete',
           bsStyle: 'danger',
-          onClick: 'some function'
+          onClick: onDelete
         }
       }]
     )
