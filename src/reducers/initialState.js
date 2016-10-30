@@ -1,6 +1,9 @@
 import { BOARDGAME, GAME, PLAYER } from '../constants/itemCategory'
 
 export default {
+  ui:{
+    confirm: {}
+  },
   boardGames: {
     items: {
       1: {

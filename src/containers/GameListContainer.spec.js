@@ -5,6 +5,7 @@ import {
    mapDispatchToProps
  } from './GameListContainer'
 import { GAME } from '../constants/itemCategory'
+import { needConfirm } from '../actions/uiActions'
 import { deleteItem } from '../actions/itemActions'
 
 describe('GameListContainer mapStateToProps', () => {
@@ -211,7 +212,11 @@ describe('GameListContainer mapDispatchToProps', () => {
       id: 1
     }
     expect(mapDispatchToProps(fakeDispatch).itemsHOF(fakeItem).onDelete())
-    .to.eql(deleteItem(GAME, 1))
+    .to.eql(needConfirm({
+      title: 'Delete game confirmation',
+      body: 'Click confirm to delete this game',
+      action: deleteItem(GAME, 1)
+    }))
   })
   it('should return {itemsHOF: a higher function that build onEdit function', () => {
     const fakeDispatch = (someFunction) => someFunction

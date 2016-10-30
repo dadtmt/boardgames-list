@@ -5,8 +5,38 @@ import initialState from '../reducers/initialState'
 import rootReducer from '../reducers'
 import * as ItemActions from '../actions/itemActions'
 import * as ItemCategory from '../constants/itemCategory'
+import * as UiActions from '../actions/uiActions'
 
 describe('Store', () =>{
+
+  it('should set initialState for ui', () => {
+    const store = createStore(rootReducer, initialState)
+    const expected = {
+      confirm: {}
+    }
+    expect(store.getState().ui).to.deep.equal(expected)
+  })
+
+  it('should handle actions for ui', () => {
+    const store = createStore(rootReducer, initialState)
+    const expected = {
+      confirm: {
+        title: 'Please confirm',
+        body: 'do you confirm ?',
+        action: {type: 'SOME_ACTION_TYPE'}
+      }
+    }
+    store.dispatch(UiActions.needConfirm({
+      title: 'Please confirm',
+      body: 'do you confirm ?',
+      action: {type: 'SOME_ACTION_TYPE'}
+    }))
+    expect(store.getState().ui).to.deep.equal(expected)
+    store.dispatch(UiActions.clearConfirm())
+    expect(store.getState().ui).to.deep.equal({
+      confirm: {}
+    })
+  })
 
   it('should be initialState for boardGames', () => {
     const store = createStore(rootReducer, initialState)
