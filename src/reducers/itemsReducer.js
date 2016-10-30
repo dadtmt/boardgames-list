@@ -81,27 +81,46 @@ export const linkable = R.curry((linkedCategory, category, reducer) =>
         R.over(
           R.lensProp('items'),
           R.pipe(
-            R.pick(R.path(['links', category], action)),
-            R.map(
-              R.pipe(
-                R.when(
-                  R.pipe(
-                    R.prop(linkedCategory),
-                    R.isNil
-                  ),
-                  R.assoc(linkedCategory, [])
-                ),
-                R.evolve({
-                  [linkedCategory]: R.flip(R.concat)(
-                    [R.path(['payload', 'id'], action)]
+            R.converge(
+              R.merge,
+              [
+                R.pipe(
+                  R.pick(R.path(['links', category], action)),
+                  R.map(
+                    R.pipe(
+                      R.when(
+                        R.pipe(
+                          R.prop(linkedCategory),
+                          R.isNil
+                        ),
+                        R.assoc(linkedCategory, [])
+                      ),
+                      R.evolve({
+                        [linkedCategory]: R.flip(R.concat)(
+                          [R.path(['payload', 'id'], action)]
+                        )
+                      })
+                    )
                   )
-                })
-              )
+                ),
+                R.pipe(
+                  R.pick(R.path(['removeLinks', category], action)),
+                  R.map(
+                    R.pipe(
+                      R.evolve({
+                        [linkedCategory]: R.without(
+                          [R.path(['payload', 'id'], action)]
+                        )
+                      })
+                    )
+                  )
+                )
+              ]
             ),
-            R.merge(
-              R.view(R.lensProp('items'))(state)
-            )
+          R.merge(
+            R.view(R.lensProp('items'))(state)
           )
+        )
       )(state)
   })(reducer)
 )

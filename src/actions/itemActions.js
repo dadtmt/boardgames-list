@@ -17,10 +17,13 @@ export const addItemByName = (category, item) => ({
   payload: item
 })
 
-export const addItemWithLinks = (item, category, links) =>(
-  {
+export const addItemWithLinks = (oldItem, item, category, links) =>{
+  const oldItemLinks = getLinks(links, oldItem)
+  const itemLinks = getLinks(links, item)
+  return {
     type: buildActionType(ItemActionTypes.ADD, category),
-    links: getLinks(links, item),
+    links: R.mergeWith(R.without, oldItemLinks, itemLinks),
+    removeLinks: R.mergeWith(R.without, itemLinks, oldItemLinks),
     payload: item
   }
-)
+}

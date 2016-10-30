@@ -392,6 +392,9 @@ describe('linkable', () => {
       links: {
         CATEGORY: [1, 3]
       },
+      removeLinks: {
+        CATEGORY: []
+      },
       payload : {
         id: 4
       }
@@ -426,6 +429,67 @@ describe('linkable', () => {
         3: {
           id: 3,
           LINKED_CATEGORY: [4]
+        }
+      },
+      nextId: 3
+    }
+    const linkableReducer = linkable(
+      'LINKED_CATEGORY',
+      'CATEGORY')(curriedReducer({}, {}))
+    expect(linkableReducer(fakeState, action)).to.eql(expected)
+  })
+
+  it('should remove LINKED_CATEGORY item id as link in CATEGORY item when specified in action.removeLinks', () => {
+    const action = {
+      type: 'ADD_LINKED_CATEGORY',
+      links: {
+        CATEGORY: [1, 3]
+      },
+      removeLinks: {
+        CATEGORY: [2]
+      },
+      payload : {
+        id: 4
+      }
+    }
+    const fakeState = {
+      items: {
+        1: {
+          id: 1,
+          LINKED_CATEGORY: []
+        },
+        2: {
+          id: 2,
+          LINKED_CATEGORY: [4]
+        },
+        3: {
+          id: 3,
+          LINKED_CATEGORY: []
+        },
+        4: {
+          id: 4,
+          LINKED_CATEGORY: []
+        }
+      },
+      nextId: 3
+    }
+    const expected = {
+      items: {
+        1: {
+          id: 1,
+          LINKED_CATEGORY: [4]
+        },
+        2: {
+          id: 2,
+          LINKED_CATEGORY: []
+        },
+        3: {
+          id: 3,
+          LINKED_CATEGORY: [4]
+        },
+        4: {
+          id: 4,
+          LINKED_CATEGORY: []
         }
       },
       nextId: 3

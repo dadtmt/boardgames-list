@@ -1,12 +1,16 @@
-
 import R from 'ramda'
 import { createSelector } from 'reselect'
 import { indexBoardGames } from './boardGamesSelectors'
 import { indexPlayers } from './playersSelectors'
-import { lensItems, lensNextId } from '../reducers/itemsUtils'
+import { lensItems, lensNextId, getItemById } from '../reducers/itemsUtils'
 import { BOARDGAME, PLAYER} from '../constants/itemCategory'
 
 export const allGamesSelector = R.prop('games')
+
+export const getGameById = id => R.pipe(
+  allGamesSelector,
+  getItemById(id)
+)
 
 export const gamesNextId = createSelector(
   allGamesSelector,

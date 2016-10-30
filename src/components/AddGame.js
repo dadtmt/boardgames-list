@@ -5,7 +5,7 @@ import AddGamePlayers from './AddGamePlayers'
 import { BOARDGAME } from '../constants/itemCategory'
 import {  Button, FormGroup, Glyphicon } from 'react-bootstrap'
 
-const AddGame = ({handleSubmit, reset, boardGames}) => (
+const AddGame = ({handleSubmit, pristine, reset, boardGames}) => (
   <form onSubmit={handleSubmit}>
     <Field
       name={BOARDGAME}
@@ -22,8 +22,9 @@ const AddGame = ({handleSubmit, reset, boardGames}) => (
         bsStyle='primary'
         title='Save game'
         bsSize='large'
+        disabled={pristine}
       >
-        <Glyphicon glyph='ok' />
+        <Glyphicon glyph='send' />
       </Button>
       {' '}
       <Button
@@ -32,8 +33,9 @@ const AddGame = ({handleSubmit, reset, boardGames}) => (
         title='Reset'
         bsSize='large'
         onClick={reset}
+        disabled={pristine}
       >
-        <Glyphicon glyph='remove' />
+        <Glyphicon glyph='erase' />
       </Button>
     </FormGroup>
   </form>
@@ -42,11 +44,13 @@ const AddGame = ({handleSubmit, reset, boardGames}) => (
 AddGame.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
+  pristine: PropTypes.bool.isRequired,
   boardGames: PropTypes.array.isRequired
 }
 
 export {AddGame as PureAddGame}
 
 export default reduxForm({
-  form: 'addGame'
+  form: 'addGame',
+  enableReinitialize: true
 })(AddGame)

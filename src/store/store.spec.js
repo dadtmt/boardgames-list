@@ -318,6 +318,7 @@ describe('Store', () =>{
     const pickOnlyData = R.pickAll(['boardGames', 'players', 'games'])
     expect(pickOnlyData(store.getState())).to.deep.equal(expected)
     store.dispatch(ItemActions.addItemWithLinks(
+      {},
       {
         id: 3,
         [ItemCategory.BOARDGAME]: 1,
