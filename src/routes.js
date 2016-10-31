@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, IndexRoute } from 'react-router'
 
 import App from './components/App'
-import GamePage from './components/GamePage'
+import GamePage from './containers/GamePageContainer'
 import BoardGamePage from './components/BoardGamePage'
 import PlayerPage from './components/PlayerPage'
 import AboutPage from './components/AboutPage.js'

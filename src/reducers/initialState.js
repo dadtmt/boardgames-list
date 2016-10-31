@@ -2,7 +2,10 @@ import { BOARDGAME, GAME, PLAYER } from '../constants/itemCategory'
 
 export default {
   ui:{
-    confirm: {}
+    confirm: {},
+    gamePage: {
+      showAddForm: false
+    }
   },
   boardGames: {
     items: {

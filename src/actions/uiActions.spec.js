@@ -32,3 +32,23 @@ describe('clearConfirm', () => {
     expect(UiActions.clearConfirm()).to.eql(expected)
   })
 })
+
+describe('toggleUi', () => {
+  it('should toggle a ui describe by path', () => {
+    const expected = {
+      type: 'TOGGLE_UI',
+      path: ['page', 'ui']
+    }
+    expect(UiActions.toggleUi(['page', 'ui'])).to.eql(expected)
+  })
+})
+
+describe('showUi', () => {
+  it('should show a ui describe by path', () => {
+    const expected = {
+      type: 'SHOW_UI',
+      path: ['page', 'ui']
+    }
+    expect(UiActions.showUi(['page', 'ui'])).to.eql(expected)
+  })
+})

@@ -10,7 +10,11 @@ const handlers = {
   [UiActionTypes.CLEAR_CONFIRM]: state => R.assoc(
     'confirm',
     {}
-  )(state)
+  )(state),
+  [UiActionTypes.TOGGLE_UI]: (state, action) => R.over(
+    R.lensPath(R.prop('path', action)), R.not)(state),
+  [UiActionTypes.SHOW_UI]: (state, action) => R.set(
+    R.lensPath(R.prop('path', action)), R.T())(state)
 }
 
 const initialState = {

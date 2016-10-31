@@ -12,7 +12,10 @@ describe('Store', () =>{
   it('should set initialState for ui', () => {
     const store = createStore(rootReducer, initialState)
     const expected = {
-      confirm: {}
+      confirm: {},
+      gamePage: {
+        showAddForm: false
+      }
     }
     expect(store.getState().ui).to.deep.equal(expected)
   })
@@ -24,6 +27,9 @@ describe('Store', () =>{
         title: 'Please confirm',
         body: 'do you confirm ?',
         action: {type: 'SOME_ACTION_TYPE'}
+      },
+      gamePage: {
+        showAddForm: false
       }
     }
     store.dispatch(UiActions.needConfirm({
@@ -34,7 +40,10 @@ describe('Store', () =>{
     expect(store.getState().ui).to.deep.equal(expected)
     store.dispatch(UiActions.clearConfirm())
     expect(store.getState().ui).to.deep.equal({
-      confirm: {}
+      confirm: {},
+      gamePage: {
+        showAddForm: false
+      }
     })
   })
 

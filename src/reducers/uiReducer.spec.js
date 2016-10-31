@@ -46,4 +46,58 @@ describe('uiReducer', () => {
     }
     expect(uiReducer(fakeState, action)).to.eql(expected)
   })
+
+  it('should handle TOGGLE_UI action', () => {
+    const trueState = {
+      page: {
+        uiToToggle: true
+      }
+    }
+    const falseState = {
+      page: {
+        uiToToggle: false
+      }
+    }
+    const action = {
+      type: 'TOGGLE_UI',
+      path: ['page', 'uiToToggle']
+    }
+    expect(uiReducer(trueState, action)).to.eql({
+      page: {
+        uiToToggle: false
+      }
+    })
+    expect(uiReducer(falseState, action)).to.eql({
+      page: {
+        uiToToggle: true
+      }
+    })
+  })
+
+  it('should handle SHOW_UI action', () => {
+    const trueState = {
+      page: {
+        uiToToggle: true
+      }
+    }
+    const falseState = {
+      page: {
+        uiToToggle: false
+      }
+    }
+    const action = {
+      type: 'SHOW_UI',
+      path: ['page', 'uiToToggle']
+    }
+    expect(uiReducer(trueState, action)).to.eql({
+      page: {
+        uiToToggle: true
+      }
+    })
+    expect(uiReducer(falseState, action)).to.eql({
+      page: {
+        uiToToggle: true
+      }
+    })
+  })
 })

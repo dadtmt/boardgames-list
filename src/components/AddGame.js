@@ -1,11 +1,17 @@
+import R from 'ramda'
 import React, { PropTypes } from 'react'
-import { reduxForm, Field, FieldArray } from 'redux-form'
+import {
+  reduxForm,
+  Field,
+  FieldArray,
+  propTypes as formProptypes
+} from 'redux-form'
 import SelectItems from './SelectItems'
 import AddGamePlayers from './AddGamePlayers'
 import { BOARDGAME } from '../constants/itemCategory'
-import {  Button, FormGroup, Glyphicon } from 'react-bootstrap'
+import {  Button, ButtonToolbar, Glyphicon } from 'react-bootstrap'
 
-const AddGame = ({handleSubmit, pristine, reset, boardGames}) => (
+const AddGame = ({handleSubmit, pristine, reset, boardGames, currentItem}) => (
   <form onSubmit={handleSubmit}>
     <Field
       name={BOARDGAME}
@@ -16,7 +22,7 @@ const AddGame = ({handleSubmit, pristine, reset, boardGames}) => (
       label='What we play:'
     />
     <FieldArray name='players' component={AddGamePlayers} />
-    <FormGroup className='text-center'>
+    <ButtonToolbar>
       <Button
         type='submit'
         bsStyle='primary'
@@ -26,26 +32,33 @@ const AddGame = ({handleSubmit, pristine, reset, boardGames}) => (
       >
         <Glyphicon glyph='send' />
       </Button>
-      {' '}
       <Button
         type='button'
         bsStyle='warning'
-        title='Reset'
+        title='Clear modifications'
         bsSize='large'
         onClick={reset}
         disabled={pristine}
       >
         <Glyphicon glyph='erase' />
       </Button>
-    </FormGroup>
+      {!R.isEmpty(currentItem) && <Button
+        type='button'
+        bsStyle='info'
+        title='Clear values and create new game'
+        bsSize='large'
+        onClick={() => {}}
+      >
+        <Glyphicon glyph='new-window' />
+      </Button>}
+    </ButtonToolbar>
   </form>
 )
 
 AddGame.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
-  reset: PropTypes.func.isRequired,
-  pristine: PropTypes.bool.isRequired,
-  boardGames: PropTypes.array.isRequired
+  ...formProptypes,
+  boardGames: PropTypes.array.isRequired,
+  currentItem: PropTypes.object.isRequired
 }
 
 export {AddGame as PureAddGame}
