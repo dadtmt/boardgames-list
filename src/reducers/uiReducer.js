@@ -17,10 +17,6 @@ const handlers = {
     R.lensPath(R.prop('path', action)), R.T())(state)
 }
 
-const initialState = {
-  confirm: {}
-}
-
-const uiReducer = createReducer(initialState, handlers)
+const uiReducer = initialState => createReducer(initialState, handlers)
 
 export default uiReducer

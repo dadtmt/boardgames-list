@@ -22,7 +22,7 @@ describe('uiReducer', () => {
         action: {type: 'SOME_ACTION_TYPE'}
       }
     }
-    expect(uiReducer(fakeState, action)).to.eql(expected)
+    expect(uiReducer({})(fakeState, action)).to.eql(expected)
   })
 
   it('should handle CLEAR_CONFIRM action', () => {
@@ -44,7 +44,7 @@ describe('uiReducer', () => {
     const expected = {
       confirm: {}
     }
-    expect(uiReducer(fakeState, action)).to.eql(expected)
+    expect(uiReducer({})(fakeState, action)).to.eql(expected)
   })
 
   it('should handle TOGGLE_UI action', () => {
@@ -62,12 +62,12 @@ describe('uiReducer', () => {
       type: 'TOGGLE_UI',
       path: ['page', 'uiToToggle']
     }
-    expect(uiReducer(trueState, action)).to.eql({
+    expect(uiReducer({})(trueState, action)).to.eql({
       page: {
         uiToToggle: false
       }
     })
-    expect(uiReducer(falseState, action)).to.eql({
+    expect(uiReducer({})(falseState, action)).to.eql({
       page: {
         uiToToggle: true
       }
@@ -89,12 +89,12 @@ describe('uiReducer', () => {
       type: 'SHOW_UI',
       path: ['page', 'uiToToggle']
     }
-    expect(uiReducer(trueState, action)).to.eql({
+    expect(uiReducer({})(trueState, action)).to.eql({
       page: {
         uiToToggle: true
       }
     })
-    expect(uiReducer(falseState, action)).to.eql({
+    expect(uiReducer({})(falseState, action)).to.eql({
       page: {
         uiToToggle: true
       }

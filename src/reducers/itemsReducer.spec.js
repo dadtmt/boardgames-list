@@ -2,24 +2,12 @@ import R from 'ramda'
 import { expect } from 'chai'
 import createReducer,{ curriedReducer } from './createReducer'
 import {
-  enhanceReducer,
   addable,
   deletable,
   addByNameable,
   linkable,
   isLinked
 } from './itemsReducer'
-
-describe('enhanceReducer', () => {
-  it('should enhance a reducer with action handlers', () => {
-    const handlers = {
-      'SOME_ACTION_TYPE': () => 'some state'
-    }
-    const reducer = createReducer('initial state', {})
-    expect(enhanceReducer(handlers)(reducer)('initial state', { type: 'SOME_ACTION_TYPE' }))
-      .to.equal('some state')
-  })
-})
 
 describe('addable', () => {
   it('should return a reducer that handles ADD_CATEGORY action', () => {
