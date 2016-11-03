@@ -1,9 +1,10 @@
 import { expect } from 'chai'
 import * as UiActionTypes from '../constants/uiActionTypes'
 import createReducer from './createReducer'
-import uiReducer, { confirmable } from './uiReducer'
+import uiReducer, { confirmable, hidable } from './uiReducer'
 
 describe('confirmable', () => {
+
   it('should handle NEED_CONFIRM', () => {
     const fakeState = {
       confirm: {}
@@ -26,6 +27,7 @@ describe('confirmable', () => {
     const confirmableReducer = confirmable(['a','path'])(createReducer({},{}))
     expect(confirmableReducer(fakeState, action)).to.eql(expected)
   })
+
   it('should handle NEED_CONFIRM with confirm not specified', () => {
     const fakeState = {}
     const action = {
@@ -46,6 +48,7 @@ describe('confirmable', () => {
     const confirmableReducer = confirmable(['a','path'])(createReducer({},{}))
     expect(confirmableReducer(fakeState, action)).to.eql(expected)
   })
+
   it('should handle CLEAR_CONFIRM', () => {
     const fakeState = {
       confirm: {
@@ -71,6 +74,7 @@ describe('confirmable', () => {
 })
 
 describe('uiReducer', () => {
+
   it('should handle NEED_CONFIRM action', () => {
     const fakeState = {
       confirm: {}
@@ -167,5 +171,26 @@ describe('uiReducer', () => {
         uiToToggle: true
       }
     })
+  })
+
+  it('should close ui on specified action', () => {
+    const trueState = {
+      page: {
+        uiToToggle: true
+      }
+    }
+    const action = {
+      type: 'SOME_ACTION_TYPE'
+    }
+    const expected = {
+      page: {
+        uiToToggle: false
+      }
+    }
+    const hidableUiReducer = hidable(
+      ['page', 'uiToToggle'],
+      'SOME_ACTION_TYPE'
+    )(uiReducer)
+    expect(hidableUiReducer(trueState, action)).to.eql(expected)
   })
 })

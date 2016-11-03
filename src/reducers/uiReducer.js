@@ -18,11 +18,19 @@ export const confirmable = path => enhanceReducer(
   }
 )
 
+export const hidable = (path, type) => enhanceReducer(
+  {
+    [type]: state => R.assocPath(path, R.F())(state)
+  }
+)
+
 const handlers = {
   [UiActionTypes.TOGGLE_UI]: (state, action) => R.over(
-    R.lensPath(R.prop('path', action)), R.not)(state),
+    R.lensPath(R.prop('path', action)), R.not
+  )(state),
   [UiActionTypes.SHOW_UI]: (state, action) => R.set(
-    R.lensPath(R.prop('path', action)), R.T())(state)
+    R.lensPath(R.prop('path', action)), R.T()
+  )(state)
 }
 
 const uiReducer = initialState =>
