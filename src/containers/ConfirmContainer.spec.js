@@ -25,7 +25,7 @@ describe('ConfirmContainer mapStateToProps', () => {
       action: {type: 'SOME_ACTION_TYPE'},
       show: true
     }
-    expect(mapStateToProps(fakeState)).to.eql(expected)
+    expect(mapStateToProps(fakeState, { path: ['ui'] })).to.eql(expected)
   })
   it('should return {title, body, show, action} empty if confirm empty in state', () => {
     const fakeState = {
@@ -39,20 +39,33 @@ describe('ConfirmContainer mapStateToProps', () => {
       action: {},
       show: false
     }
-    expect(mapStateToProps(fakeState)).to.eql(expected)
+    expect(mapStateToProps(fakeState, { path: ['ui'] })).to.eql(expected)
+  })
+  it('should return {title, body, show, action} empty if confirm not in state', () => {
+    const fakeState = {
+      ui: {}
+    }
+    const expected = {
+      title: '',
+      body: '',
+      action: {},
+      show: false
+    }
+    expect(mapStateToProps(fakeState, { path: ['ui'] })).to.eql(expected)
   })
 })
 
 describe('ConfirmContainer mapDispatchToProps', () => {
   it('should return {onClose: dispatch CLEAR_CONFIRM}', () => {
     const fakeDispatch = (someFunction) => someFunction
-    expect(mapDispatchToProps(fakeDispatch).onClose()).to.eql(clearConfirm())
+    expect(mapDispatchToProps(fakeDispatch, { path: ['ui'] }).onClose())
+    .to.eql(clearConfirm(['ui']))
   })
   it('should return {onConfirm: dispatch CLEAR_CONFIRM and the action}', () => {
     const fakeDispatch = sinon.spy()
     const action = { type: 'SOME_ACTION_TYPE'}
-    mapDispatchToProps(fakeDispatch).onConfirm(action)
-    expect(fakeDispatch.args).to.eql([[clearConfirm()], [action]])
+    mapDispatchToProps(fakeDispatch, { path: ['ui'] }).onConfirm(action)
+    expect(fakeDispatch.args).to.eql([[clearConfirm(['ui'])], [action]])
   })
 })
 
@@ -68,19 +81,15 @@ describe('ConfirmContainer mergeProps', () => {
         }
       }
     }
-    const fakeProps = {
-      some: 'prop',
-      any: 'prop'
-    }
     const expected = {
-      ...fakeProps,
-      ...mapStateToProps(fakeState),
-      ...mapDispatchToProps(fakeDispatch)
+      path: ['ui'],
+      ...mapStateToProps(fakeState, { path: ['ui'] }),
+      ...mapDispatchToProps(fakeDispatch, { path: ['ui'] })
     }
     const mergedProps = mergeProps(
-      mapStateToProps(fakeState),
-      mapDispatchToProps(fakeDispatch),
-      fakeProps
+      mapStateToProps(fakeState, { path: ['ui'] }),
+      mapDispatchToProps(fakeDispatch, { path: ['ui'] }),
+      { path: ['ui'] }
     )
     expect(
       R.omit(
@@ -91,8 +100,8 @@ describe('ConfirmContainer mergeProps', () => {
     mergedProps.onClose()
     mergedProps.onConfirm()
     expect(fakeDispatch.args).to.eql([
-      [clearConfirm()],
-      [clearConfirm()],
+      [clearConfirm(['ui'])],
+      [clearConfirm(['ui'])],
       [fakeState.ui.confirm.action]])
   })
 })

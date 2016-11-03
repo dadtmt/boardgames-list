@@ -6,7 +6,7 @@ import ConfirmContainer from '../containers/ConfirmContainer'
 
 const App = (props) => (
   <div>
-    <ConfirmContainer />
+    <ConfirmContainer path={['ui']} />
     <Navbar inverse>
       <Navbar.Header>
         <Navbar.Brand>

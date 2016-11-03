@@ -5,6 +5,7 @@ import { sortedBoardGamesArraySelector } from '../selectors/boardGamesSelectors'
 import { gamesNextId, getGameById } from '../selectors/gamesSelectors'
 import { BOARDGAME, PLAYER, GAME } from '../constants/itemCategory'
 import { addItemWithLinks } from '../actions/itemActions'
+import { initializeWithConfirm } from '../actions/formActions'
 import AddGame from '../components/AddGame'
 
 export function mapStateToProps(state){
@@ -27,6 +28,9 @@ export function mapDispatchToProps(dispatch){
         GAME,
         [BOARDGAME, PLAYER]
       )
+    ),
+    onReset: (initialValues) => dispatch(
+      initializeWithConfirm('addGame')(initialValues)
     )
   }
 }
@@ -35,6 +39,7 @@ export function mergeProps(stateProps, dispatchProps, ownProps){
   return {
     ...ownProps,
     ...stateProps,
+    ...dispatchProps,
     onSubmit: (values) => dispatchProps.onSubmit(
       stateProps.currentItem,
       R.when(
@@ -43,7 +48,8 @@ export function mergeProps(stateProps, dispatchProps, ownProps){
           R.isNil
         ),
         R.assoc('id', stateProps.nextId)
-    )(values))
+    )(values)),
+    onReset: () => dispatchProps.onReset(stateProps.currentItem)
   }
 }
 

@@ -1,11 +1,12 @@
 import {expect} from 'chai'
-import { initialize } from 'redux-form'
+import sinon from 'sinon'
 import {
    mapStateToProps,
    mapDispatchToProps
  } from './GameListContainer'
 import { GAME } from '../constants/itemCategory'
-import { needConfirm } from '../actions/uiActions'
+import { needConfirm, showUi } from '../actions/uiActions'
+import { initializeWithConfirm } from '../actions/formActions'
 import { deleteItem } from '../actions/itemActions'
 
 describe('GameListContainer mapStateToProps', () => {
@@ -212,14 +213,16 @@ describe('GameListContainer mapDispatchToProps', () => {
       id: 1
     }
     expect(mapDispatchToProps(fakeDispatch).itemsHOF(fakeItem).onDelete())
-    .to.eql(needConfirm({
-      title: 'Delete game confirmation',
-      body: 'Click confirm to delete this game',
-      action: deleteItem(GAME, 1)
-    }))
+    .to.eql(needConfirm(['ui'])(
+      {
+        title: 'Delete game confirmation',
+        body: 'Click confirm to delete this game',
+        action: deleteItem(GAME, 1)
+      }
+    ))
   })
   it('should return {itemsHOF: a higher function that build onEdit function', () => {
-    const fakeDispatch = (someFunction) => someFunction
+    const fakeDispatch = sinon.spy()
     const fakeItem = {
       id: 1,
       BOARDGAME: {
@@ -274,7 +277,14 @@ describe('GameListContainer mapDispatchToProps', () => {
         ]
       }
     }
-    // expect(mapDispatchToProps(fakeDispatch).itemsHOF(fakeItem).onEdit())
-    // .to.eql(initialize('addGame', fakeItem.values))
+    mapDispatchToProps(fakeDispatch).itemsHOF(fakeItem).onEdit()
+    expect(fakeDispatch.args).to.eql([
+      [
+        initializeWithConfirm('addGame')(fakeItem.values)
+      ],
+      [
+        showUi(['gamePage', 'showAddForm'])
+      ]
+    ])
   })
 })

@@ -4,8 +4,8 @@ import { routerReducer } from 'react-router-redux'
 import { reducer as form } from 'redux-form'
 import createReducer from './createReducer'
 import { addable, deletable, addByNameable, linkable } from './itemsReducer'
-import { clearable } from './formPluginReducer'
-import uiReducer from './uiReducer'
+import { clearable, initializable } from './formPluginReducer'
+import uiReducer, { confirmable } from './uiReducer'
 import { BOARDGAME, PLAYER, GAME } from '../constants/itemCategory'
 import { buildActionType } from '../actions/itemActions'
 import initialState from './initialState'
@@ -28,7 +28,11 @@ const rootReducer = combineReducers({
   ui: uiReducer(initialState.ui),
   routing: routerReducer,
   form: form.plugin({
-    addGame: clearable(buildActionType('ADD', GAME))(createReducer({}, {}))
+    addGame: R.pipe(
+      confirmable(['form', 'addGame']),
+      initializable,
+      clearable(buildActionType('ADD', GAME))
+    )(createReducer({}, {}))
   })
 })
 

@@ -1,3 +1,4 @@
+
 import R from 'ramda'
 import React, { PropTypes } from 'react'
 import {
@@ -11,7 +12,13 @@ import AddGamePlayers from './AddGamePlayers'
 import { BOARDGAME } from '../constants/itemCategory'
 import {  Button, ButtonToolbar, Glyphicon } from 'react-bootstrap'
 
-const AddGame = ({handleSubmit, pristine, reset, boardGames, currentItem}) => (
+const AddGame = ({
+  handleSubmit,
+  pristine,
+  onReset,
+  boardGames,
+  currentItem
+}) => (
   <form onSubmit={handleSubmit}>
     <Field
       name={BOARDGAME}
@@ -37,7 +44,7 @@ const AddGame = ({handleSubmit, pristine, reset, boardGames, currentItem}) => (
         bsStyle='warning'
         title='Clear modifications'
         bsSize='large'
-        onClick={reset}
+        onClick={onReset}
         disabled={pristine}
       >
         <Glyphicon glyph='erase' />
@@ -58,7 +65,8 @@ const AddGame = ({handleSubmit, pristine, reset, boardGames, currentItem}) => (
 AddGame.propTypes = {
   ...formProptypes,
   boardGames: PropTypes.array.isRequired,
-  currentItem: PropTypes.object.isRequired
+  currentItem: PropTypes.object.isRequired,
+  onReset: PropTypes.func.isRequired
 }
 
 export {AddGame as PureAddGame}

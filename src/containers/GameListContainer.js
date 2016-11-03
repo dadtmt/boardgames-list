@@ -1,9 +1,9 @@
 import R from 'ramda'
 import { connect } from 'react-redux'
-import { initialize } from 'redux-form'
 import { populateGames } from '../selectors/gamesSelectors'
 import { GAME } from '../constants/itemCategory'
 import { needConfirm, showUi } from '../actions/uiActions'
+import { initializeWithConfirm } from '../actions/formActions'
 import { deleteItem } from '../actions/itemActions'
 import deletableItem from '../hoc/deletableItem'
 import editableItem from '../hoc/editableItem'
@@ -19,13 +19,17 @@ export function mapStateToProps(state){
 export function mapDispatchToProps(dispatch){
   return {
     itemsHOF: (item) => ({
-      onDelete: () => dispatch(needConfirm({
-        title: 'Delete game confirmation',
-        body: 'Click confirm to delete this game',
-        action: deleteItem(GAME, item.id)
-      })),
+      onDelete: () => dispatch(
+        needConfirm(['ui'])(
+          {
+            title: 'Delete game confirmation',
+            body: 'Click confirm to delete this game',
+            action: deleteItem(GAME, item.id)
+          }
+        )
+      ),
       onEdit: () => {
-        dispatch(initialize('addGame', item.values))
+        dispatch(initializeWithConfirm('addGame')(item.values))
         dispatch(showUi(['gamePage', 'showAddForm']))
       }
     })

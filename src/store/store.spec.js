@@ -32,13 +32,13 @@ describe('Store', () =>{
         showAddForm: false
       }
     }
-    store.dispatch(UiActions.needConfirm({
+    store.dispatch(UiActions.needConfirm(['ui'])({
       title: 'Please confirm',
       body: 'do you confirm ?',
       action: {type: 'SOME_ACTION_TYPE'}
     }))
     expect(store.getState().ui).to.deep.equal(expected)
-    store.dispatch(UiActions.clearConfirm())
+    store.dispatch(UiActions.clearConfirm(['ui']))
     expect(store.getState().ui).to.deep.equal({
       confirm: {},
       gamePage: {

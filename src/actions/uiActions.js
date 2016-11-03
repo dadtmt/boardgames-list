@@ -1,13 +1,17 @@
 import R from 'ramda'
 import * as UiActionTypes from '../constants/uiActionTypes'
+import { prefixTypeByPath } from './utils'
 
-export const needConfirm = R.pipe(
+export const needConfirm = path => R.pipe(
   R.assoc('payload',R.__, {}),
-  R.assoc('type', UiActionTypes.NEED_CONFIRM)
+  R.assoc(
+    'type',
+    prefixTypeByPath(UiActionTypes.NEED_CONFIRM)(path)
+  )
 )
 
-export const clearConfirm = () =>
-  R.assoc('type', UiActionTypes.CLEAR_CONFIRM, {})
+export const clearConfirm = path =>
+  R.assoc('type', prefixTypeByPath(UiActionTypes.CLEAR_CONFIRM)(path), {})
 
 export const toggleUi = R.pipe(
   R.assoc('path',R.__, {}),

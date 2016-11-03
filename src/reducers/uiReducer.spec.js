@@ -1,6 +1,74 @@
 import { expect } from 'chai'
 import * as UiActionTypes from '../constants/uiActionTypes'
-import uiReducer from './uiReducer'
+import createReducer from './createReducer'
+import uiReducer, { confirmable } from './uiReducer'
+
+describe('confirmable', () => {
+  it('should handle NEED_CONFIRM', () => {
+    const fakeState = {
+      confirm: {}
+    }
+    const action = {
+      type: 'a-path/'+UiActionTypes.NEED_CONFIRM,
+      payload: {
+        title: 'Please confirm',
+        body: 'do you confirm ?',
+        action: {type: 'SOME_ACTION_TYPE'}
+      }
+    }
+    const expected = {
+      confirm: {
+        title: 'Please confirm',
+        body: 'do you confirm ?',
+        action: {type: 'SOME_ACTION_TYPE'}
+      }
+    }
+    const confirmableReducer = confirmable(['a','path'])(createReducer({},{}))
+    expect(confirmableReducer(fakeState, action)).to.eql(expected)
+  })
+  it('should handle NEED_CONFIRM with confirm not specified', () => {
+    const fakeState = {}
+    const action = {
+      type: 'a-path/'+UiActionTypes.NEED_CONFIRM,
+      payload: {
+        title: 'Please confirm',
+        body: 'do you confirm ?',
+        action: {type: 'SOME_ACTION_TYPE'}
+      }
+    }
+    const expected = {
+      confirm: {
+        title: 'Please confirm',
+        body: 'do you confirm ?',
+        action: {type: 'SOME_ACTION_TYPE'}
+      }
+    }
+    const confirmableReducer = confirmable(['a','path'])(createReducer({},{}))
+    expect(confirmableReducer(fakeState, action)).to.eql(expected)
+  })
+  it('should handle CLEAR_CONFIRM', () => {
+    const fakeState = {
+      confirm: {
+        title: 'Please confirm',
+        body: 'do you confirm ?',
+        action: {type: 'SOME_ACTION_TYPE'}
+      }
+    }
+    const action = {
+      type: 'a-path/'+UiActionTypes.CLEAR_CONFIRM,
+      payload: {
+        title: 'Please confirm',
+        body: 'do you confirm ?',
+        action: {type: 'SOME_ACTION_TYPE'}
+      }
+    }
+    const expected = {
+      confirm: {}
+    }
+    const confirmableReducer = confirmable(['a','path'])(createReducer({},{}))
+    expect(confirmableReducer(fakeState, action)).to.eql(expected)
+  })
+})
 
 describe('uiReducer', () => {
   it('should handle NEED_CONFIRM action', () => {
@@ -8,7 +76,7 @@ describe('uiReducer', () => {
       confirm: {}
     }
     const action = {
-      type: UiActionTypes.NEED_CONFIRM,
+      type: 'ui/'+UiActionTypes.NEED_CONFIRM,
       payload: {
         title: 'Please confirm',
         body: 'do you confirm ?',
@@ -34,7 +102,7 @@ describe('uiReducer', () => {
       }
     }
     const action = {
-      type: UiActionTypes.CLEAR_CONFIRM,
+      type: 'ui/'+UiActionTypes.CLEAR_CONFIRM,
       payload: {
         title: 'Please confirm',
         body: 'do you confirm ?',

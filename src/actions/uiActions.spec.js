@@ -9,27 +9,29 @@ describe('needConfirm',() => {
     const title = 'please confirm'
     const body = 'do you confirm ?'
     const expected = {
-      type: 'NEED_CONFIRM',
+      type: 'path-to-ui/NEED_CONFIRM',
       payload: {
         title,
         body,
         action
       }
     }
-    expect(UiActions.needConfirm({
-      title,
-      body,
-      action
-    })).to.eql(expected)
+    expect(UiActions.needConfirm(['path', 'to', 'ui'])(
+      {
+        title,
+        body,
+        action
+      }
+    )).to.eql(expected)
   })
 })
 
 describe('clearConfirm', () => {
   it('should return clearConfirm action', () => {
     const expected = {
-      type: 'CLEAR_CONFIRM'
+      type: 'path-to-ui/CLEAR_CONFIRM'
     }
-    expect(UiActions.clearConfirm()).to.eql(expected)
+    expect(UiActions.clearConfirm(['path', 'to', 'ui'])).to.eql(expected)
   })
 })
 

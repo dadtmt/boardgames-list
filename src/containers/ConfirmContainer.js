@@ -3,8 +3,8 @@ import {connect} from 'react-redux'
 import Confirm from '../components/Confirm'
 import { clearConfirm } from '../actions/uiActions'
 
-export const mapStateToProps = state => R.ifElse(
-  R.isEmpty,
+export const mapStateToProps = (state, { path }) => R.ifElse(
+  R.anyPass([R.isEmpty, R.isNil]),
   R.always({
     title: '',
     body: '',
@@ -12,13 +12,13 @@ export const mapStateToProps = state => R.ifElse(
     show: false
   }),
   R.assoc('show', true)
-)(R.path(['ui', 'confirm'], state))
+)(R.path([...path, 'confirm'], state))
 
-export const mapDispatchToProps = dispatch => (
+export const mapDispatchToProps = (dispatch, { path }) => (
   {
-    onClose: () => dispatch(clearConfirm()),
+    onClose: () => dispatch(clearConfirm(path)),
     onConfirm: action => {
-      dispatch(clearConfirm())
+      dispatch(clearConfirm(path))
       dispatch(action)
     }
   }
