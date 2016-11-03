@@ -49,6 +49,7 @@ export const populateGames = createSelector(
           populatePlayers(playersIndex)
         )(R.assoc('values', item, item))
       ),
-      R.values
+      R.values,
+      R.reverse
     )(gamesState)
 )
