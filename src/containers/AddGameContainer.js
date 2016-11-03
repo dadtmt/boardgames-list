@@ -21,6 +21,9 @@ export function mapStateToProps(state){
 
 export function mapDispatchToProps(dispatch){
   return {
+    onNew: () => dispatch(
+      initializeWithConfirm('addGame')({})
+    ),
     onSubmit: (oldValues, values) => dispatch(
       addItemWithLinks(
         oldValues,

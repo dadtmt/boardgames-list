@@ -15,6 +15,7 @@ import {  Button, ButtonToolbar, Glyphicon } from 'react-bootstrap'
 const AddGame = ({
   handleSubmit,
   pristine,
+  onNew,
   onReset,
   boardGames,
   currentItem
@@ -54,7 +55,7 @@ const AddGame = ({
         bsStyle='info'
         title='Clear values and create new game'
         bsSize='large'
-        onClick={() => {}}
+        onClick={onNew}
       >
         <Glyphicon glyph='new-window' />
       </Button>}
@@ -66,6 +67,7 @@ AddGame.propTypes = {
   ...formProptypes,
   boardGames: PropTypes.array.isRequired,
   currentItem: PropTypes.object.isRequired,
+  onNew: PropTypes.func.isRequired,
   onReset: PropTypes.func.isRequired
 }
 

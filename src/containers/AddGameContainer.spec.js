@@ -146,6 +146,11 @@ describe('AddGameContainer mapDispatchToProps', () => {
     expect(mapDispatchToProps(fakeDispatch).onReset(initialValues))
     .to.eql(initializeWithConfirm('addGame')(initialValues))
   })
+  it('should return onNew', () => {
+    const fakeDispatch = (someFunction) => someFunction
+    expect(mapDispatchToProps(fakeDispatch).onNew())
+    .to.eql(initializeWithConfirm('addGame')({}))
+  })
 })
 
 describe('AddGameContainer mergeProps', () => {
@@ -198,11 +203,11 @@ describe('AddGameContainer mergeProps', () => {
     )
     expect(
       R.omit(
-        ['onSubmit', 'onReset'],
+        ['onSubmit', 'onReset', 'onNew'],
         mergedProps
       )
     ).to.eql(R.omit(
-      ['onSubmit', 'onReset'],
+      ['onSubmit', 'onReset', 'onNew'],
       {
         ...fakeProps,
         ...mapStateToProps(fakeState),
