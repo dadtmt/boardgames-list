@@ -1,10 +1,11 @@
 import React, { PropTypes } from 'react'
+import { ListGroup } from 'react-bootstrap'
 
 const listableItem = WrappedComponent => {
   const ListableItemWrapper = class extends React.Component {
     render() {
       return (
-        <div>
+        <ListGroup>
           {this.props.items.map(
             (item, key) => {
               return (<WrappedComponent
@@ -14,7 +15,7 @@ const listableItem = WrappedComponent => {
               />)
             }
           )}
-        </div>
+        </ListGroup>
       )
     }
   }

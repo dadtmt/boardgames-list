@@ -14,6 +14,6 @@ describe('<Player />', () => {
   it('should contains player name', () => {
     const expected = item.name
 
-    expect(wrapper.text()).to.contains(expected)
+    expect(wrapper.html()).to.contains(expected)
   })
 })

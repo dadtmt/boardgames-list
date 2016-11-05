@@ -249,7 +249,7 @@ describe('linkable', () => {
     nextId: 3
   }
 
-  it('should return state with same items and the action in linkError if item has link', () => {
+  it('should return state with same items and error message in linkError if item has link', () => {
     const expected = {
       items: {
         1: {
@@ -311,6 +311,34 @@ describe('linkable', () => {
     )(curriedReducer({}, {}))
     expect(linkableDeletableReducer(fakeState, validDeleteAction))
       .to.eql(expected)
+  })
+
+  it('should clear linkError on any action', () => {
+    const expected = {
+      items: {
+        1: {
+          id: 1,
+          LINKED_CATEGORY: [1]
+        },
+        2: {
+          id: 2,
+          LINKED_CATEGORY: []
+        }
+      },
+      nextId: 3
+    }
+    const linkableDeletableReducer = R.pipe(
+      deletable('CATEGORY'),
+      linkable('LINKED_CATEGORY', 'CATEGORY')
+    )(curriedReducer({}, {}))
+    const stateWithLinkError = linkableDeletableReducer(
+      fakeState,
+      invalidDeleteAction
+    )
+    expect(linkableDeletableReducer(
+      stateWithLinkError,
+      {type: 'SOME_ACTION_TYPE'}
+    )).to.eql(expected)
   })
 
   it('should clear linkError when a delete action is valid', () => {

@@ -1,6 +1,8 @@
+import R from 'ramda'
 import { expect } from 'chai'
 import {
   allBoardGamesSelector,
+  getBoardGameById,
   sortedBoardGamesArraySelector,
   indexBoardGames
 } from './boardGamesSelectors'
@@ -23,6 +25,32 @@ describe('allBoardGamesSelector', () => {
       }
     }
     expect(allBoardGamesSelector(fakeState)).to.eql(fakeState.boardGames)
+  })
+})
+
+describe('getBoardGameById', () => {
+  it('should return borgame by id', () => {
+    const fakeState = {
+      boardGames: {
+        items: {
+          1: {
+            id: 1,
+            name: 'Earth Reborn'
+          },
+          2: {
+            id: 2,
+            name: 'Dungeon Twister'
+          }
+        },
+        nextId: 3
+      }
+    }
+    const expected = {
+      id: 1,
+      name: 'Earth Reborn'
+    }
+    expect(getBoardGameById(1)(fakeState)).to.eql(expected)
+    expect(R.flip(getBoardGameById)(fakeState)(1)).to.eql(expected)
   })
 })
 

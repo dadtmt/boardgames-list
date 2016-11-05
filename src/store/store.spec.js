@@ -91,12 +91,6 @@ describe('Store', () =>{
           name: 'RuneWars'
         }
       },
-      linkError: {
-        payload: {
-          id: 1,
-        },
-        type: 'DELETE_BOARDGAME'
-      },
       nextId: 4
     }
     expect(store.getState().boardGames).to.deep.equal(expected)
@@ -172,12 +166,6 @@ describe('Store', () =>{
           id: 4,
           name: 'Jojo'
         }
-      },
-      linkError: {
-        payload: {
-          id: 1,
-        },
-        type: 'DELETE_PLAYER'
       },
       nextId: 5
     }
