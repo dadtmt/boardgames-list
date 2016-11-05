@@ -248,7 +248,30 @@ describe('Store', () =>{
 
   it('should handle actions for games', () => {
     const store = createStore(rootReducer, initialState)
-    store.dispatch(ItemActions.deleteItem(ItemCategory.GAME, 1))
+    store.dispatch(ItemActions.deleteItemWithLinks({
+      id: 1,
+      [ItemCategory.BOARDGAME]: 1,
+      players: [
+        {
+          [ItemCategory.PLAYER]: 2,
+          score: 5,
+          win: false
+        },
+        {
+          [ItemCategory.PLAYER]: 1,
+          score: 25,
+          win: true
+        },
+        {
+          [ItemCategory.PLAYER]: 3,
+          score: 5,
+          win: false
+        }
+      ]
+    },
+    ItemCategory.GAME,
+    [ItemCategory.BOARDGAME, ItemCategory.PLAYER]
+    ))
     const expected = {
       boardGames: {
         items: {

@@ -1,10 +1,10 @@
 import R from 'ramda'
 import { connect } from 'react-redux'
 import { populateGames } from '../selectors/gamesSelectors'
-import { GAME } from '../constants/itemCategory'
+import { BOARDGAME, GAME, PLAYER } from '../constants/itemCategory'
 import { needConfirm, showUi } from '../actions/uiActions'
 import { initializeWithConfirm } from '../actions/formActions'
-import { deleteItem } from '../actions/itemActions'
+import { deleteItemWithLinks } from '../actions/itemActions'
 import deletableItem from '../hoc/deletableItem'
 import editableItem from '../hoc/editableItem'
 import listableItem from '../hoc/listableItem'
@@ -24,7 +24,7 @@ export function mapDispatchToProps(dispatch){
           {
             title: 'Delete game confirmation',
             body: 'Click confirm to delete this game',
-            action: deleteItem(GAME, item.id)
+            action: deleteItemWithLinks(item, GAME, [BOARDGAME, PLAYER])
           }
         )
       ),

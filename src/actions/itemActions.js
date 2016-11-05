@@ -17,7 +17,7 @@ export const addItemByName = (category, item) => ({
   payload: item
 })
 
-export const addItemWithLinks = (oldItem, item, category, links) =>{
+export const addItemWithLinks = (oldItem, item, category, links) => {
   const oldItemLinks = getLinks(links, oldItem)
   const itemLinks = getLinks(links, item)
   return {
@@ -27,3 +27,11 @@ export const addItemWithLinks = (oldItem, item, category, links) =>{
     payload: item
   }
 }
+
+export const deleteItemWithLinks = (item, category, links) => ({
+  type: buildActionType(ItemActionTypes.DELETE, category),
+  removeLinks: getLinks(links, item),
+  payload: {
+    id : R.prop('id', item)
+  }
+})

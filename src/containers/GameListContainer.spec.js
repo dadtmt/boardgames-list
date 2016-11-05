@@ -4,10 +4,10 @@ import {
    mapStateToProps,
    mapDispatchToProps
  } from './GameListContainer'
-import { GAME } from '../constants/itemCategory'
+import { BOARDGAME, GAME, PLAYER } from '../constants/itemCategory'
 import { needConfirm, showUi } from '../actions/uiActions'
 import { initializeWithConfirm } from '../actions/formActions'
-import { deleteItem } from '../actions/itemActions'
+import { deleteItemWithLinks } from '../actions/itemActions'
 
 describe('GameListContainer mapStateToProps', () => {
   it('should return { items: populateGames}', () => {
@@ -217,7 +217,7 @@ describe('GameListContainer mapDispatchToProps', () => {
       {
         title: 'Delete game confirmation',
         body: 'Click confirm to delete this game',
-        action: deleteItem(GAME, 1)
+        action: deleteItemWithLinks(fakeItem, GAME, [BOARDGAME, PLAYER])
       }
     ))
   })

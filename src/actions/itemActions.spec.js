@@ -111,3 +111,37 @@ describe('addItemWithLinks', () => {
       oldItem, item, 'CATEGORY', ['LINK1', 'LINK2'])).to.eql(expected)
   })
 })
+
+describe('deleteItemWithLinks', () => {
+  it('should delete action with links to remove', () => {
+    const item = {
+      id: 1,
+      LINK1: 1,
+      any: {
+        1: {
+          LINK2: 2,
+          some: 'thing'
+        },
+        2: {
+          LINK2: 4,
+          some: 'thing'
+        }
+      }
+    }
+    const expected = {
+      type: 'DELETE_CATEGORY',
+      removeLinks: {
+        LINK1: [1],
+        LINK2: [2, 4]
+      },
+      payload: {
+        id: 1
+      }
+    }
+    expect(ItemActions.deleteItemWithLinks(
+      item,
+      'CATEGORY',
+      ['LINK1', 'LINK2']
+    )).to.eql(expected)
+  })
+})

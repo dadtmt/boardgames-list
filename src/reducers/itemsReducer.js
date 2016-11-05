@@ -43,6 +43,39 @@ export const isLinked = (linkedCategory, action) => R.pipe(
   ])
 )
 
+export const addLinks = (linkedCategory, category, action) => R.pipe(
+  R.pick(R.path(['links', category], action)),
+  R.map(
+    R.pipe(
+      R.when(
+        R.pipe(
+          R.prop(linkedCategory),
+          R.isNil
+        ),
+        R.assoc(linkedCategory, [])
+      ),
+      R.evolve({
+        [linkedCategory]: R.flip(R.concat)(
+          [R.path(['payload', 'id'], action)]
+        )
+      })
+    )
+  )
+)
+
+export const removeLinks = (linkedCategory, category, action) => R.pipe(
+  R.pick(R.path(['removeLinks', category], action)),
+  R.map(
+    R.pipe(
+      R.evolve({
+        [linkedCategory]: R.without(
+          [R.path(['payload', 'id'], action)]
+        )
+      })
+    )
+  )
+)
+
 //LinkError must be somewhere else or handled by a reducer/middleware
 
 export const linkable = R.curry((linkedCategory, category, reducer) =>
@@ -56,15 +89,14 @@ export const linkable = R.curry((linkedCategory, category, reducer) =>
             R.assoc('linkError', action),
             R.flip(reducer)(action)
         )(state),
-      // optimization pass CATEGORY: [ids] in delete action
       [buildActionType(ItemsActionTypes.DELETE, linkedCategory)]:
           (state, action) =>
             R.over(
               lensItems,
-              R.map(
-                R.over(
-                  R.lensProp(linkedCategory),
-                  R.without([R.path(['payload', 'id'], action)])
+              R.pipe(
+                removeLinks(linkedCategory, category, action),
+                R.merge(
+                  R.view(R.lensProp('items'))(state)
                 )
               )
             )(state),
@@ -76,37 +108,8 @@ export const linkable = R.curry((linkedCategory, category, reducer) =>
               R.converge(
                 R.merge,
                 [
-                  R.pipe(
-                    R.pick(R.path(['links', category], action)),
-                    R.map(
-                      R.pipe(
-                        R.when(
-                          R.pipe(
-                            R.prop(linkedCategory),
-                            R.isNil
-                          ),
-                          R.assoc(linkedCategory, [])
-                        ),
-                        R.evolve({
-                          [linkedCategory]: R.flip(R.concat)(
-                            [R.path(['payload', 'id'], action)]
-                          )
-                        })
-                      )
-                    )
-                  ),
-                  R.pipe(
-                    R.pick(R.path(['removeLinks', category], action)),
-                    R.map(
-                      R.pipe(
-                        R.evolve({
-                          [linkedCategory]: R.without(
-                            [R.path(['payload', 'id'], action)]
-                          )
-                        })
-                      )
-                    )
-                  )
+                  addLinks(linkedCategory, category, action),
+                  removeLinks(linkedCategory, category, action)
                 ]
               ),
             R.merge(

@@ -3,10 +3,12 @@ import { expect } from 'chai'
 import createReducer,{ curriedReducer } from './createReducer'
 import {
   addable,
+  addLinks,
   deletable,
   addByNameable,
   linkable,
-  isLinked
+  isLinked,
+  removeLinks
 } from './itemsReducer'
 
 describe('addable', () => {
@@ -222,6 +224,85 @@ describe('isLinked', () => {
   })
 })
 
+describe ('addLinks', () => {
+  it('should return items with added links', () => {
+    const items = {
+      1: {
+        id: 1,
+        LINKED_CATEGORY: [1]
+      },
+      2: {
+        id: 2,
+        LINKED_CATEGORY: []
+      },
+      3: {
+        id: 3
+      }
+    }
+    const action = {
+      type: 'ADD_LINKED_CATEGORY',
+      links: {
+        CATEGORY: [1, 3]
+      },
+      payload : {
+        id: 4
+      }
+    }
+    const expected = {
+      1: {
+        id: 1,
+        LINKED_CATEGORY: [1, 4]
+      },
+      3: {
+        id: 3,
+        LINKED_CATEGORY: [4]
+      }
+    }
+    expect(addLinks('LINKED_CATEGORY', 'CATEGORY', action)(items))
+    .to.eql(expected)
+  })
+})
+
+describe ('removeLinks', () => {
+  it('should return items with added links', () => {
+    const items = {
+      1: {
+        id: 1,
+        LINKED_CATEGORY: [1, 4]
+      },
+      2: {
+        id: 2,
+        LINKED_CATEGORY: []
+      },
+      3: {
+        id: 3,
+        LINKED_CATEGORY: [4]
+      }
+    }
+    const action = {
+      type: 'DELETE',
+      removeLinks: {
+        CATEGORY: [1, 3]
+      },
+      payload : {
+        id: 4
+      }
+    }
+    const expected = {
+      1: {
+        id: 1,
+        LINKED_CATEGORY: [1]
+      },
+      3: {
+        id: 3,
+        LINKED_CATEGORY: []
+      }
+    }
+    expect(removeLinks('LINKED_CATEGORY', 'CATEGORY', action)(items))
+    .to.eql(expected)
+  })
+})
+
 describe('linkable', () => {
   const invalidDeleteAction = {
     type: 'DELETE_CATEGORY',
@@ -373,12 +454,18 @@ describe('linkable', () => {
         2: {
           id: 2,
           LINKED_CATEGORY: [1]
+        },
+        3: {
+          id: 3
         }
       },
       nextId: 3
     }
     const action = {
       type: 'DELETE_LINKED_CATEGORY',
+      removeLinks: {
+        CATEGORY: [1, 2]
+      },
       payload: {
         id: 1
       }
@@ -392,6 +479,9 @@ describe('linkable', () => {
         2: {
           id: 2,
           LINKED_CATEGORY: []
+        },
+        3: {
+          id: 3
         }
       },
       nextId: 3
