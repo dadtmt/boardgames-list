@@ -1,9 +1,20 @@
 import R from 'ramda'
-import {getActionType} from './itemsUtils'
+import { getActionType } from './itemsUtils'
+
+export const isAppAction = R.pipe(
+  R.prop('type'),
+  R.anyPass([
+    R.contains('@@'),
+    R.contains('redux-form')
+  ]),
+  R.not
+)
 
 export const preReducer = R.curry((prepare, reducer) =>
-  (state, action) => R.contains('@@', R.prop('type', action)) ?
-    reducer(state, action) : reducer(prepare(state), action)
+  (state, action) => reducer(
+    isAppAction(action) ? prepare(state) : state,
+    action
+  )
 )
 
 export const enhanceReducer = R.curry((handlers, reducer) =>

@@ -1,5 +1,32 @@
-import {expect} from 'chai'
-import createReducer, { enhanceReducer, preReducer } from './createReducer'
+import { expect } from 'chai'
+import createReducer, {
+  enhanceReducer,
+  preReducer,
+  isAppAction
+} from './createReducer'
+
+describe('isAppAction', () => {
+  it('should return false if action contains @@', () => {
+    expect(isAppAction({type: '@@INIT'})).to.be.false
+  })
+  it('should return false if action contains redux-form', () => {
+    expect(isAppAction({type: 'redux-form/INIT'})).to.be.false
+  })
+})
+
+describe('preReducer', () => {
+  it('should enhance a reducer with a reducer called on every action', () => {
+    const prepare = state => state + ' prepared by preReducer'
+    const handlers = {
+      'SOME_ACTION_TYPE': state => state + ' handled by some action'
+    }
+    const reducer = createReducer('initial state', handlers)
+    expect(preReducer(prepare)(reducer)('initial state',
+      { type: 'SOME_ACTION_TYPE' }
+    ))
+    .to.equal('initial state prepared by preReducer handled by some action')
+  })
+})
 
 describe('createReducer', () => {
   const handlers = {
@@ -29,17 +56,5 @@ describe('enhanceReducer', () => {
     const reducer = createReducer('initial state', {})
     expect(enhanceReducer(handlers)(reducer)('initial state', { type: 'SOME_ACTION_TYPE' }))
       .to.equal('some state')
-  })
-})
-
-describe('preReducer', () => {
-  it('should enhance a reducer with a reducer called on every action', () => {
-    const prepare = state => state + ' prepared by preReducer'
-    const handlers = {
-      'SOME_ACTION_TYPE': state => state + ' handled by some action'
-    }
-    const reducer = createReducer('initial state', handlers)
-    expect(preReducer(prepare)(reducer)('initial state', { type: 'SOME_ACTION_TYPE' }))
-      .to.equal('initial state prepared by preReducer handled by some action')
   })
 })
