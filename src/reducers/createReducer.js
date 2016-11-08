@@ -24,14 +24,13 @@ export const enhanceReducer = R.curry((handlers, reducer) =>
     handlers
   )(state, action))
 
+const createReducer = (initialState, handlers) =>
+  (state = initialState, action) => R.propOr(
+  R.identity,
+  getActionType(action),
+  handlers
+)(state, action)
+
 export const curriedReducer = R.curry(createReducer)
 
-export default function createReducer(initialState, handlers) {
-  return function reducer(state = initialState, action) {
-    return R.propOr(
-      R.identity,
-      getActionType(action),
-      handlers
-    )(state, action)
-  }
-}
+export default createReducer
